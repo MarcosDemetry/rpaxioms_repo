@@ -1,0 +1,233 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/logs/figure2_and_3_26 Feb 2020.log
+  log type:  text
+ opened on:  26 Feb 2020, 09:59:02
+
+. 
+. set rmsg on
+r; t=0.00 9:59:02
+
+. 
+. ****************
+. *** Programs ***
+. ****************
+. 
+. capture program drop customSaveImage
+r; t=0.00 9:59:02
+
+. program customSaveImage
+  1. 
+.         local name `1'
+  2.         
+.         foreach extension in eps png pdf {
+  3.                 graph export "${outputdir}/figures/`name'.`extension'", replace
+  4.         }
+  5.                 
+. end
+r; t=0.00 9:59:02
+
+. 
+. 
+. use "${outputdir}/tables/figure2_and_3_data_combined.dta", clear
+r; t=0.00 9:59:02
+
+. 
+. drop if axiom == ""
+(148 observations deleted)
+r; t=0.00 9:59:02
+
+. 
+. ************
+. *** Prep ***
+. ************
+. 
+. * Calculating avg power and ps per axiom and efficiency level
+. foreach var of varlist p ps {
+  2.         
+.         bysort axiom efficiency: egen `var'_avg = mean(`var')
+  3. 
+. }
+r; t=0.03 9:59:02
+
+. 
+. * Tag for figures
+. egen tag = tag(axiom efficiency)
+r; t=0.02 9:59:02
+
+. 
+. replace efficiency = efficiency/100
+(26,506 real changes made)
+r; t=0.00 9:59:02
+
+. 
+. ****************
+. *** Figure 2 ***
+. ****************
+. 
+. * Stata journal scheme (manual colors) with legend
+. twoway  (line p_avg efficiency if tag & axiom == "eHARP", lcolor(edkblue))              ///
+>                 (line p_avg efficiency if tag & axiom == "eCM", lcolor(orange_red))     ///
+>                 (line p_avg efficiency if tag & axiom == "eGARP", lcolor(gray))                 ///
+>                 (line p_avg efficiency if tag & axiom == "eWGARP", lcolor(sand))                ///
+>                 (line p_avg efficiency if tag & axiom == "eSARP", lcolor(blue))                 ///
+>                 (line p_avg efficiency if tag & axiom == "eWARP", lcolor(forest_green)  ///
+>                 ytitle("Power") xtitle("Efficiency (e)")                ///
+>                 ylabel(0(0.1)1, format(%3.1f) angle(horisontal)) ///
+>                 xlabel(0.4(0.05)1, format(%3.2f) angle(vertical)) ///
+>                 legend(order(1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eWGARP" 5 "eSARP" 6 "eWARP") rows(2)) ///
+>                 scheme(sj))
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+r; t=0.98 9:59:03
+
+.                 
+. customSaveImage fig2
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig2.eps written in EPS format)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig2.png written in PNG format)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig2.pdf written in PDF format)
+r; t=0.25 9:59:03
+
+. 
+. ***************************
+. *** Figure 3: Panel (a) ***
+. ***************************
+. 
+.  * Stata journal scheme (manual colors) with legend
+. twoway  (line ps_avg efficiency if tag & axiom == "eHARP", lcolor(edkblue))             ///
+>                 (line ps_avg efficiency if tag & axiom == "eCM", lcolor(orange_red))    ///
+>                 (line ps_avg efficiency if tag & axiom == "eGARP", lcolor(gray))                ///
+>                 (line ps_avg efficiency if tag & axiom == "eWGARP", lcolor(sand))               ///
+>                 (line ps_avg efficiency if tag & axiom == "eSARP", lcolor(blue))                ///
+>                 (line ps_avg efficiency if tag & axiom == "eWARP", lcolor(forest_green) ///
+>                 title("(a)") ytitle("Mean Predictive Success") xtitle("Efficiency (e)")  ///
+>                 ylabel(0(0.1)1, format(%3.1f) angle(horisontal))                                                ///
+>                 xlabel(0.4(0.05)1, format(%3.2f) angle(vertical))                                               ///
+>                 legend(order(1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eWGARP" 5 "eSARP" 6 "eWARP") rows(2)) ///
+>                 scheme(sj) name(fig3_panel_a, replace))
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+r; t=0.87 9:59:04
+
+. 
+. ************************************
+. *** Figure 3a, 3b, 3c: panel (b) ***
+. ************************************
+. preserve
+r; t=0.00 9:59:04
+
+. 
+. gen ps_egarp = ps if axiom == "eGARP"
+(22,104 missing values generated)
+r; t=0.00 9:59:04
+
+. gen ps_eharp = ps if axiom == "eHARP"
+(22,074 missing values generated)
+r; t=0.00 9:59:04
+
+. 
+. collapse (firstnm) ps_egarp ps_eharp, by(subject efficiency)
+r; t=0.04 9:59:04
+
+. 
+. label var ps_egarp "Predictive Success (eGARP)"
+r; t=0.00 9:59:04
+
+. label var ps_eharp "Predictive Success (eHARP)"
+r; t=0.00 9:59:04
+
+. 
+.  * fig3a: At efficiency level == 1
+. twoway (scatter ps_egarp ps_eharp if efficiency == 1, msize(small) ///
+>                 ytitle("Predictive Success (eGARP)")    ///
+>                 xtitle("Predictive Success (eHARP)")    ///
+>                 title("(b)")                                    ///             
+>                 ylabel(-0.65(0.1)1, format(%3.1f) angle(horisontal)) ///
+>                 xlabel(-0.65(0.1)1, format(%3.1f) angle(vertical)) ///
+>                 scheme(sj) name(fig3a_panel_b, replace)) ||     ///
+>                 (line ps_eharp ps_eharp, sort legend(off))
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+r; t=0.55 9:59:04
+
+. 
+. 
+.  * fig3b: All efficiency levels
+. twoway (scatter ps_egarp ps_eharp, ///
+>                 ytitle("Predictive Success (eGARP)")    ///
+>                 xtitle("Predictive Success (eHARP)")    ///
+>                 title("(b)")                                    ///             
+>                 ylabel(-0.65(0.1)1, format(%3.1f) angle(horisontal)) ///
+>                 xlabel(-0.65(0.1)1, format(%3.1f) angle(vertical)) ///
+>                 scheme(sj) name(fig3b_panel_b, replace)) ||     ///
+>                 (line ps_eharp ps_eharp, sort legend(off))
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+r; t=0.61 9:59:05
+
+. 
+. 
+.  * fig3c: All efficiency levels; with marker labels att certain levels
+. gen efficiency_mlabel = efficiency if efficiency == 0.7 |efficiency == 0.8 | efficiency == 0.9 | efficiency == 1
+(3,864 missing values generated)
+r; t=0.00 9:59:05
+
+. tostring efficiency_mlabel, replace
+efficiency_mlabel was double now str2
+r; t=0.00 9:59:05
+
+. replace efficiency_mlabel = "" if efficiency_mlabel == "."
+(3,864 real changes made)
+r; t=0.00 9:59:05
+
+. 
+. twoway (scatter ps_egarp ps_eharp, mlabel(efficiency_mlabel) mlabposition(4) msize(vsmall) ///
+>                 ytitle("Predictive Success (eGARP)")    ///
+>                 xtitle("Predictive Success (eHARP)")    ///
+>                 title("(b)")                                    ///             
+>                 ylabel(-0.7(0.1)1, format(%3.1f) angle(horisontal)) ///
+>                 xlabel(-0.7(0.1)1, format(%3.1f) angle(vertical)) ///
+>                 scheme(sj) name(fig3c_panel_b, replace)) ||     ///
+>                 (line ps_eharp ps_eharp, sort legend(off))
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+r; t=0.78 9:59:06
+
+. 
+. export excel using "${datadir}/figure3_panelb_data.xlsx", replace firstrow(variables)
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/data/figure3_panelb_data.xlsx saved
+r; t=0.23 9:59:06
+
+.                 
+. restore
+r; t=0.00 9:59:06
+
+. 
+. *************************
+. *** Figure 3 combined ***
+. *************************
+. foreach letter in a b c {
+  2.         
+.         grc1leg fig3_panel_a fig3`letter'_panel_b, commonscheme scheme(sj) legendfrom(fig3_panel_a)
+  3.         customSaveImage fig3`letter'
+  4. 
+. }
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3a.eps written in EPS format)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3a.png written in PNG format)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3a.pdf written in PDF format)
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3b.eps written in EPS format)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3b.png written in PNG format)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3b.pdf written in PDF format)
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3c.eps written in EPS format)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3c.png written in PNG format)
+(file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/figures/fig3c.pdf written in PDF format)
+r; t=5.99 9:59:12
+
+. 
+. log close
+      name:  <unnamed>
+       log:  C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/logs/figure2_and_3_26 Feb 2020.log
+  log type:  text
+ closed on:  26 Feb 2020, 09:59:12
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

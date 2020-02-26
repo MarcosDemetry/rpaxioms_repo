@@ -1,0 +1,25 @@
+{com}. 
+. powerps, price(P) quantity(Q1) axiom(eGARP) efficiency(1)
+{res}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Sim}{space 1}{space 1}{ralign 9:Eff}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .725}}}{space 1}{space 1}{ralign 9:{res:{sf:     .725}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        2}}}{space 1}{space 1}{ralign 9:{res:{sf:        8}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+ 
+Summary statistics for simulations:
+{res}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:Num_Vio}{space 1}{space 1}{ralign 9:Frac_Vio}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    5.134}}}{space 1}{space 1}{ralign 9:{res:{sf:  9.16862}}}{space 1}
+{space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 6.079556}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.85578}}}{space 1}
+{space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        3}}}{space 1}{space 1}{ralign 9:{res:{sf:     5.36}}}{space 1}
+{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      8.5}}}{space 1}{space 1}{ralign 9:{res:{sf:    15.18}}}{space 1}
+{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       28}}}{space 1}{space 1}{ralign 9:{res:{sf:       50}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}
+
+
+{com}. 

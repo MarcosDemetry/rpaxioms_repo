@@ -1,0 +1,43 @@
+. import excel using "${\lbr}datadir{\rbr}/prices.xls", clear
+(5 vars, 20 obs)
+{\smallskip}
+. mkmat A B C D E, matrix(P)
+{\smallskip}
+. import excel using "${\lbr}datadir{\rbr}/quantities.xls", clear
+(5 vars, 20 obs)
+{\smallskip}
+. mkmat A B C D E, matrix(X)
+{\smallskip}
+. checkax, price(P) quantity(X)
+{\smallskip}
+{\smallskip}
+{\smallskip}
+\HLI{13}{\TOPT}\HLI{67}
+       Axiom {\VBAR} Pass     Num_vio    Frac_vio       Goods         Obs         Eff  
+\HLI{13}{\PLUS}\HLI{67}
+       eGARP {\VBAR}    0         136       35.79           5          20        1.00  
+\HLI{13}{\BOTT}\HLI{67}
+{\smallskip}
+. checkax, price(P) quantity(X) axiom(eHARP) efficiency(0.95)
+{\smallskip}
+{\smallskip}
+{\smallskip}
+\HLI{13}{\TOPT}\HLI{67}
+       Axiom {\VBAR} Pass     Num_vio    Frac_vio       Goods         Obs         Eff  
+\HLI{13}{\PLUS}\HLI{67}
+       eHARP {\VBAR}    0          20      100.00           5          20        0.95  
+\HLI{13}{\BOTT}\HLI{67}
+{\smallskip}
+. return list
+{\smallskip}
+scalars:
+               r(PASS) =  0
+            r(NUM_VIO) =  20
+           r(FRAC_VIO) =  100
+              r(GOODS) =  5
+                r(OBS) =  20
+                r(EFF) =  .95
+{\smallskip}
+macros:
+              r(AXIOM) : "eHARP"
+{\smallskip}

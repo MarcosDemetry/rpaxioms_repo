@@ -1,0 +1,26 @@
+{com}. 
+. local axioms ewgarp ewarp egarp esarp eharp ecm
+{txt}
+{com}. 
+. foreach axiom of local axioms {c -(}
+{txt}  2{com}.         
+.         forvalues eff = 700(5)995 {c -(}
+{txt}  3{com}.                 
+.                 local nr_pass = 0
+{txt}  4{com}.                 local share_pass = 0
+{txt}  5{com}.                 
+.                         forvalues subject = 1(1)142 {c -(}
+{txt}  6{com}.                                 
+.                                 checkax, price(P) quantity(Q`subject') axiom(`axiom') efficiency(0.`eff') suppress
+{txt}  7{com}.                                 
+.                                 local nr_pass = `nr_pass' + `r(PASS)'
+{txt}  8{com}.                                 local share_pass = `nr_pass'/142
+{txt}  9{com}. 
+.                         {c )-}
+{txt} 10{com}.         
+.         {c )-}
+{txt} 11{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
+. 

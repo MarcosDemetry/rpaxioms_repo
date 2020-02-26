@@ -1,0 +1,43 @@
+. 
+. use http://www.stata-press.com/data/r16/food.dta, clear
+
+. 
+. mkmat p1 p2 p3 p4, matrix(P)
+
+. 
+. mkmat w1 w2 w3 w4, matrix(X)
+
+. 
+. *********
+. import excel using "${datadir}/prices.xls", clear
+(5 vars, 20 obs)
+
+. 
+. mkmat A B C D E, matrix(P)
+
+. 
+. import excel using "${datadir}/quantities.xls", clear
+(5 vars, 20 obs)
+
+. 
+. mkmat A B C D E, matrix(X)
+
+. ***********
+. aei, price(P) quantity(X) tolerance(6)
+
+----------------------------------------------------------
+       Axiom |       AEI        Tol      Goods        Obs 
+-------------+--------------------------------------------
+       eGARP |     .9056   1.00e-06          5         20 
+----------------------------------------------------------
+
+. 
+. aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
+
+----------------------------------------------------------
+       Axiom |       AEI        Tol      Goods        Obs 
+-------------+--------------------------------------------
+      eWGARP |     .9056   1.00e-06          5         20 
+----------------------------------------------------------
+
+. 

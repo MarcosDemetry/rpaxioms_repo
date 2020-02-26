@@ -1,0 +1,182 @@
+--------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:/Users/marcos.demetry/Desktop///results_for_paper/output/logs/aei_data_server_15 Jan 2020.log
+  log type:  text
+ opened on:  15 Jan 2020, 14:06:44
+r; t=0.00 14:06:44
+
+. 
+. set obs 3
+number of observations (_N) was 0, now 3
+r; t=0.00 14:06:44
+
+. 
+. gen axiom = ""
+(3 missing values generated)
+r; t=0.00 14:06:44
+
+. gen tolerance = .
+(3 missing values generated)
+r; t=0.00 14:06:44
+
+. gen eff = .
+(3 missing values generated)
+r; t=0.00 14:06:44
+
+. 
+. gen p = .
+(3 missing values generated)
+r; t=0.00 14:06:44
+
+. gen ps = .
+(3 missing values generated)
+r; t=0.00 14:06:44
+
+. 
+. gen id = _n
+r; t=0.00 14:06:44
+
+. 
+. * 1: eGARP *
+. aei, price(P) quantity(X) tolerance(0.000001) axiom(egarp)
+With a tolerance level of 1.000e-06, the data passes the eGARP axiom at an efficiency level of 0.3978.
+r; t=66141.72 8:29:06
+
+. return list
+
+scalars:
+          r(TOLERANCE) =  1.00000000000e-06
+         r(EFFICIENCY) =  .3977587223052979
+
+macros:
+              r(AXIOM) : "eGARP"
+r; t=0.00 8:29:06
+
+. 
+. replace axiom = "`r(AXIOM)'"            if id == 1
+variable axiom was str1 now str5
+(1 real change made)
+r; t=0.00 8:29:06
+
+. replace tolerance = `r(TOLERANCE)'      if id == 1
+(1 real change made)
+r; t=0.00 8:29:06
+
+. replace eff = `r(EFFICIENCY)'           if id == 1
+(1 real change made)
+r; t=0.00 8:29:06
+
+. 
+. save "${outputdir}/tables/aei_data", replace
+file C:/Users/marcos.demetry/Desktop///results_for_paper/output/tables/aei_data.dta saved
+r; t=0.01 8:29:06
+
+. 
+. * 2: eWGARP *
+. aei, price(P) quantity(X) tolerance(0.000001) axiom(ewgarp)
+With a tolerance level of 1.000e-06, the data passes the eWGARP axiom at an efficiency level of 0.3978.
+r; t=414.83 8:36:00
+
+. return list
+
+scalars:
+          r(TOLERANCE) =  1.00000000000e-06
+         r(EFFICIENCY) =  .3977587223052979
+
+macros:
+              r(AXIOM) : "eWGARP"
+r; t=0.00 8:36:00
+
+. 
+. replace axiom = "`r(AXIOM)'"            if id == 2
+variable axiom was str5 now str6
+(1 real change made)
+r; t=0.00 8:36:00
+
+. replace tolerance = `r(TOLERANCE)'      if id == 2
+(1 real change made)
+r; t=0.00 8:36:00
+
+. replace eff = `r(EFFICIENCY)'           if id == 2
+(1 real change made)
+r; t=0.00 8:36:00
+
+. 
+. save "${outputdir}/tables/aei_data", replace
+file C:/Users/marcos.demetry/Desktop///results_for_paper/output/tables/aei_data.dta saved
+r; t=0.01 8:36:00
+
+. 
+. 
+. * 3: powerps *
+. powerps, price(P) quantity(X) axiom(ewgarp) efficiency(`r(EFFICIENCY)') sim(1000)
+ 
+
+---------------------------------------------------------
+       Axiom |    Power        PS         Sim       Eff  
+-------------+-------------------------------------------
+      eWGARP |     0.07     -0.93        1000      0.40  
+---------------------------------------------------------
+ 
+ 
+Summary statistics for simulations:
+
+-----------------------------------------------
+             |   Num_Vio   Frac_Vio        AEI 
+-------------+---------------------------------
+        Mean |      .217          0   .4616964 
+   Std. Dev. |  2.670026          0   .0412659 
+         Min |         0          0    .230172 
+          Q1 |         0          0   .4371586 
+      Median |         0          0   .4668612 
+          Q3 |         0          0    .490088 
+         Max |        77          0   .5608201 
+-----------------------------------------------
+ 
+r; t=414002.37 3:36:00
+
+. return list
+
+scalars:
+              r(POWER) =  .067
+                 r(PS) =  -.9330000000000001
+        r(SIMULATIONS) =  1000
+         r(EFFICIENCY) =  .3977587223052979
+
+macros:
+              r(AXIOM) : "eWGARP"
+
+matrices:
+           r(SUMSTATS) :  7 x 3
+         r(SIMRESULTS) :  1000 x 3
+r; t=0.00 3:36:00
+
+. 
+. replace axiom = "`r(AXIOM)'"            if id == 3
+(1 real change made)
+r; t=0.00 3:36:00
+
+. replace eff = `r(EFFICIENCY)'           if id == 3
+(1 real change made)
+r; t=0.00 3:36:00
+
+. replace p = `r(POWER)'                          if id == 3
+(1 real change made)
+r; t=0.00 3:36:00
+
+. replace ps = `r(PS)'                            if id == 3
+(1 real change made)
+r; t=0.00 3:36:00
+
+. 
+. save "${outputdir}/tables/aei_data", replace
+file C:/Users/marcos.demetry/Desktop///results_for_paper/output/tables/aei_data.dta saved
+r; t=0.01 3:36:00
+
+. 
+. log close
+      name:  <unnamed>
+       log:  C:/Users/marcos.demetry/Desktop///results_for_paper/output/logs/aei_data_server_15 Jan 2020.log
+  log type:  text
+ closed on:  21 Jan 2020, 03:36:00
+--------------------------------------------------------------------------------------------------------------------------------

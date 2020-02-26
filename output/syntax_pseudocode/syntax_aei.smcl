@@ -1,0 +1,25 @@
+{com}. 
+. aei, price(P) quantity(X)
+{res}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:AEI}{space 1}{space 1}{ralign 9:Tol}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .9056}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.00e-12}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{com}. 
+. aei, price(P) quantity(X) axiom(eGARP) tolerance(6) suppress
+{res}{txt}
+{com}. 
+. return list
+
+{txt}scalars:
+                r(AEI) =  {res}.9055848121643066
+                {txt}r(TOL) =  {res}1.00000000000e-06
+              {txt}r(GOODS) =  {res}5
+                {txt}r(OBS) =  {res}20
+
+{txt}macros:
+              r(AXIOM) : "{res}eGARP{txt}"
+
+{com}. 

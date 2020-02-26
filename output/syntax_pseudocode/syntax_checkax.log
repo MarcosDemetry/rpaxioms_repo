@@ -1,0 +1,51 @@
+. 
+. import excel using "${datadir}/prices.xls", clear
+(5 vars, 20 obs)
+
+. 
+. mkmat A B C D E, matrix(P)
+
+. 
+. import excel using "${datadir}/quantities.xls", clear
+(5 vars, 20 obs)
+
+. 
+. mkmat A B C D E, matrix(X)
+
+. 
+. checkax, price(P) quantity(X)
+
+
+
+---------------------------------------------------------------------------------
+       Axiom | Pass     Num_vio    Frac_vio       Goods         Obs         Eff  
+-------------+-------------------------------------------------------------------
+       eGARP |    0         136       35.79           5          20        1.00  
+---------------------------------------------------------------------------------
+
+. 
+. checkax, price(P) quantity(X) axiom(eHARP) efficiency(0.95)
+
+
+
+---------------------------------------------------------------------------------
+       Axiom | Pass     Num_vio    Frac_vio       Goods         Obs         Eff  
+-------------+-------------------------------------------------------------------
+       eHARP |    0          20      100.00           5          20        0.95  
+---------------------------------------------------------------------------------
+
+. 
+. return list
+
+scalars:
+               r(PASS) =  0
+            r(NUM_VIO) =  20
+           r(FRAC_VIO) =  100
+              r(GOODS) =  5
+                r(OBS) =  20
+                r(EFF) =  .95
+
+macros:
+              r(AXIOM) : "eHARP"
+
+. 

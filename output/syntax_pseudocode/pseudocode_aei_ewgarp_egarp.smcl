@@ -1,0 +1,43 @@
+{com}. 
+. use http://www.stata-press.com/data/r16/food.dta, clear
+{txt}
+{com}. 
+. mkmat p1 p2 p3 p4, matrix(P)
+{res}{txt}
+{com}. 
+. mkmat w1 w2 w3 w4, matrix(X)
+{res}{txt}
+{com}. 
+. *********
+. import excel using "${c -(}datadir{c )-}/prices.xls", clear
+{res}{text}(5 vars, 20 obs)
+
+{com}. 
+. mkmat A B C D E, matrix(P)
+{res}{txt}
+{com}. 
+. import excel using "${c -(}datadir{c )-}/quantities.xls", clear
+{res}{text}(5 vars, 20 obs)
+
+{com}. 
+. mkmat A B C D E, matrix(X)
+{res}{txt}
+{com}. ***********
+. aei, price(P) quantity(X) tolerance(6)
+{res}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:AEI}{space 1}{space 1}{ralign 9:Tol}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .9056}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.00e-06}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{com}. 
+. aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
+{res}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:AEI}{space 1}{space 1}{ralign 9:Tol}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eWGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .9056}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.00e-06}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+
+{com}. 

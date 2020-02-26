@@ -1,0 +1,25 @@
+. 
+. aei, price(P) quantity(X)
+
+----------------------------------------------------------
+       Axiom |       AEI        Tol      Goods        Obs 
+-------------+--------------------------------------------
+       eGARP |     .9056   1.00e-12          5         20 
+----------------------------------------------------------
+
+. 
+. aei, price(P) quantity(X) axiom(eGARP) tolerance(6) suppress
+
+. 
+. return list
+
+scalars:
+                r(AEI) =  .9055848121643066
+                r(TOL) =  1.00000000000e-06
+              r(GOODS) =  5
+                r(OBS) =  20
+
+macros:
+              r(AXIOM) : "eGARP"
+
+. 

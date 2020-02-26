@@ -1,0 +1,1364 @@
+------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/logs/table1_and_2_31 Jan 2020.log
+  log type:  text
+ opened on:  31 Jan 2020, 08:32:16
+r; t=0.00 8:32:16
+
+. 
+. set rmsg on
+r; t=0.00 8:32:16
+
+. 
+. *** Programs ***
+. 
+. * Fix headers
+. capture program drop fixingHeaders
+r; t=0.00 8:32:16
+
+. program fixingHeaders
+  1. 
+. local k = 1
+  2. ds
+  3. foreach c of varlist `r(varlist)' {
+  4.         rename `c' A_`k'
+  5.         local k=`k'+1
+  6. }
+  7. 
+. ds 
+  8. describe `r(varlist)'
+  9. local m=`=`r(k)''
+ 10. forvalues c = 1/`m' {
+ 11.         replace A_`c'=A_`c'+"_"+A_`c'[_n-1] if regexm(A_`c',A_`c'[_n-1])!=1 & _n==2
+ 12. }
+ 13. 
+. drop if _n == 1
+ 14. 
+. quietly describe
+ 15. quietly return list
+ 16. display "`r(k)'"
+ 17. 
+. forval j = 1/`r(k)' {
+ 18.      local try = strtoname(A_`j'[1]) 
+ 19.      capture rename A_`j'  `try' 
+ 20. }
+ 21. 
+. drop if _n == 1
+ 22. 
+. destring *, replace
+ 23. 
+. end 
+r; t=0.00 8:32:16
+
+. 
+. 
+. * Creating Excel-file for outputing results
+. putexcel set "${outputdir}/tables/table1_and_2_data.xlsx", sheet("checkaxiom") replace 
+Note: file will be replaced when the first putexcel command is issued
+r; t=0.06 8:32:16
+
+. 
+. * List of axioms to be tested
+. local axioms ewgarp ewarp egarp esarp eharp ecm
+r; t=0.00 8:32:16
+
+. 
+. * Value of starting column (1 = A)
+. local excel_column_local = 1
+r; t=0.00 8:32:16
+
+. 
+. foreach axiom of local axioms {
+  2.         * Column names matrix
+.         matrix column_names_matrix_`axiom' = J(1,3,.)
+  3.         matrix colname column_names_matrix_`axiom' = "`axiom'" "`axiom'" "`axiom'" 
+  4.         
+.         * Results matrix
+.         matrix resultsmatrix_`axiom' = J(142,3,.)
+  5.         matrix colname resultsmatrix_`axiom' = Pass Violations Violations_frac
+  6. 
+.         forvalues subject = 1(1)142 {
+  7. 
+.                 * Calculating Pass, Number and Frequency of Violations
+.                 checkax, price(P) quantity(Q`subject') axiom(`axiom') suppress
+  8.                 quietly return list
+  9.                 
+.                 * Pass indicator
+.                 local pass = r(PASS)
+ 10.                 * Number of violations per axiom and subject *
+.                 local violations_number = r(NUM_VIO)
+ 11.                 * Fraction of violations per axiom and subject *
+.                 local violations_fraction = r(FRAC_VIO)
+ 12.                 
+.                 matrix resultsmatrix_`axiom'[`subject',1] = `pass'
+ 13.                 matrix resultsmatrix_`axiom'[`subject',2] = `violations_number'
+ 14.                 matrix resultsmatrix_`axiom'[`subject',3] = `violations_fraction'
+ 15. 
+.         }
+ 16.                         
+.         local col: word `excel_column_local' of `c(ALPHA)'
+ 17.         putexcel `col'1 = matrix(column_names_matrix_`axiom'), colnames
+ 18.         putexcel `col'2 = matrix(resultsmatrix_`axiom'), colnames
+ 19.         
+.         local excel_column_local = `excel_column_local' + 3
+ 20. 
+. }
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+r; t=1.00 8:32:17
+
+. 
+. * Modifying the excel file with an additional sheet
+. putexcel set "${outputdir}/tables/table1_and_2_data.xlsx", sheet("aei") modify 
+r; t=0.00 8:32:17
+
+. 
+. * Value of starting column (1 = A)
+. local excel_column_local = 1
+r; t=0.00 8:32:17
+
+. 
+. foreach axiom of local axioms {
+  2.         
+.         * Column names matrix
+.         matrix column_names_matrix_`axiom' = J(1,1,.)
+  3.         matrix colname column_names_matrix_`axiom' = "`axiom'" 
+  4.                 
+.         * Results matrix
+.         matrix resultsmatrix_`axiom' = J(142,1,.)
+  5.         matrix colname resultsmatrix_`axiom' = AEI
+  6.         
+.         forvalues subject = 1(1)142 {
+  7.                 
+.                 * Calculating Affriat Efficiency Index
+.                 aei, price(P) quantity(Q`subject') axiom("`axiom'")
+  8.                 quietly return list
+  9.                 
+.                 local aei = r(EFFICIENCY)
+ 10.                 
+.                 matrix resultsmatrix_`axiom'[`subject',1] = `aei'
+ 11.         
+.         }       
+ 12.                                 
+.         local col: word `excel_column_local' of `c(ALPHA)'
+ 13.         putexcel `col'1 = matrix(column_names_matrix_`axiom'), colnames
+ 14.         putexcel `col'2 = matrix(resultsmatrix_`axiom'), colnames
+ 15.         local excel_column_local = `excel_column_local' + 1
+ 16. 
+. }
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 0.9167.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 0.8333.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 0.9167.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 0.9750.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWGARP axiom at an efficiency level of 1.0000.
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 0.9167.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 0.8333.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 0.9167.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 0.9750.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eWARP axiom at an efficiency level of 1.0000.
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 0.9167.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 0.8333.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 0.9167.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 0.9750.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eGARP axiom at an efficiency level of 1.0000.
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 0.9167.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 0.8333.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 0.9167.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 0.9750.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eSARP axiom at an efficiency level of 1.0000.
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.8498.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9083.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9014.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9574.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9747.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9428.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9860.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9129.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9655.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9899.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9354.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.8292.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.7071.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9574.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9428.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.8660.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9354.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9647.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9951.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9965.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.7454.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9789.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9874.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9428.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9860.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9791.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9949.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.8367.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9965.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9574.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9538.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9129.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9574.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9661.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9428.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9309.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9661.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9965.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9014.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9574.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9354.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9682.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9129.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9874.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.8832.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9574.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9860.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.8539.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.9435.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 0.8165.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eHARP axiom at an efficiency level of 1.0000.
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 1.0000.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8833.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9855.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8696.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8833.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9710.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9524.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9333.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9710.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9375.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9286.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9833.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8986.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8167.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8000.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9500.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9710.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9420.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8889.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9420.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9623.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9493.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8250.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9130.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9286.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9524.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9507.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9200.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9524.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8952.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9381.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8810.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9833.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9275.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8915.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9638.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9531.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9710.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9200.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9638.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9638.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9048.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9095.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9348.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9430.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9493.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8438.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9190.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.8000.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9855.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+With a tolerance level of 1.000e-12, the data passes the eCM axiom at an efficiency level of 0.9565.
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+file C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/tables/table1_and_2_data.xlsx saved
+r; t=12.25 8:32:30
+
+. 
+. *******************
+. *** Table 1 & 2 ***
+. *******************
+. 
+. * Table 1 *
+. putdocx clear
+r; t=0.06 8:32:30
+
+. putdocx begin
+r; t=0.00 8:32:30
+
+. putdocx paragraph, style(Title) 
+r; t=0.00 8:32:30
+
+. putdocx text ("Table 1")
+r; t=0.00 8:32:30
+
+. 
+. import excel using "${outputdir}/tables/table1_and_2_data.xlsx", sheet("checkaxiom") clear
+(18 vars, 144 obs)
+r; t=0.03 8:32:30
+
+. 
+. * Calling program that fixes headers
+. fixingHeaders
+A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R
+A_1   A_2   A_3   A_4   A_5   A_6   A_7   A_8   A_9   A_10  A_11  A_12  A_13  A_14  A_15  A_16  A_17  A_18
+
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------------
+A_1             str6    %9s                   
+A_2             str10   %10s                  
+A_3             str15   %15s                  
+A_4             str5    %9s                   
+A_5             str10   %10s                  
+A_6             str15   %15s                  
+A_7             str5    %9s                   
+A_8             str10   %10s                  
+A_9             str15   %15s                  
+A_10            str5    %9s                   
+A_11            str10   %10s                  
+A_12            str15   %15s                  
+A_13            str5    %9s                   
+A_14            str10   %10s                  
+A_15            str15   %15s                  
+A_16            str4    %9s                   
+A_17            str10   %10s                  
+A_18            str15   %15s                  
+variable A_1 was str6 now str11
+(1 real change made)
+variable A_2 was str10 now str17
+(1 real change made)
+variable A_3 was str15 now str22
+(1 real change made)
+variable A_4 was str5 now str10
+(1 real change made)
+variable A_5 was str10 now str16
+(1 real change made)
+variable A_6 was str15 now str21
+(1 real change made)
+variable A_7 was str5 now str10
+(1 real change made)
+variable A_8 was str10 now str16
+(1 real change made)
+variable A_9 was str15 now str21
+(1 real change made)
+variable A_10 was str5 now str10
+(1 real change made)
+variable A_11 was str10 now str16
+(1 real change made)
+variable A_12 was str15 now str21
+(1 real change made)
+variable A_13 was str5 now str10
+(1 real change made)
+variable A_14 was str10 now str16
+(1 real change made)
+variable A_15 was str15 now str21
+(1 real change made)
+variable A_16 was str4 now str8
+(1 real change made)
+variable A_17 was str10 now str14
+(1 real change made)
+variable A_18 was str15 now str19
+(1 real change made)
+(1 observation deleted)
+18
+(1 observation deleted)
+Pass_ewgarp: all characters numeric; replaced as byte
+Violations_ewgarp: all characters numeric; replaced as byte
+Violations_frac_ewgarp: all characters numeric; replaced as double
+Pass_ewarp: all characters numeric; replaced as byte
+Violations_ewarp: all characters numeric; replaced as byte
+Violations_frac_ewarp: all characters numeric; replaced as double
+Pass_egarp: all characters numeric; replaced as byte
+Violations_egarp: all characters numeric; replaced as byte
+Violations_frac_egarp: all characters numeric; replaced as double
+Pass_esarp: all characters numeric; replaced as byte
+Violations_esarp: all characters numeric; replaced as byte
+Violations_frac_esarp: all characters numeric; replaced as double
+Pass_eharp: all characters numeric; replaced as byte
+Violations_eharp: all characters numeric; replaced as byte
+Violations_frac_eharp: all characters numeric; replaced as double
+Pass_ecm: all characters numeric; replaced as byte
+Violations_ecm: all characters numeric; replaced as byte
+Violations_frac_ecm: all characters numeric; replaced as double
+r; t=0.07 8:32:30
+
+. 
+. * Creating table
+. gen subject = _n
+r; t=0.00 8:32:30
+
+. order subject
+r; t=0.00 8:32:30
+
+. 
+. gen andreoniMillerSubjects = (subject == 3 |  subject == 38 | subject == 40 | ///
+>         subject == 41 | subject == 47 | subject == 61 | subject == 72 | subject == 87 |  ///
+>         subject == 90 | subject == 90 | subject == 104 | subject == 126 | subject == 137 | ///
+>         subject == 139)
+r; t=0.00 8:32:30
+
+. 
+. order subject andreoniMillerSubjects
+r; t=0.00 8:32:30
+
+. 
+. list subject Violations_egarp Violations_frac_egarp ///
+>         Violations_ewgarp Violations_frac_ewgarp ///
+>         Violations_esarp Violations_frac_esarp ///
+>         Violations_ewarp Violations_frac_ewarp if andreoniMillerSubjects == 1
+
+     +-------------------------------------------------------------------------------------------------+
+     | subject   Violat..   ~c_egarp   Violat..   Violat..   Violat..   ~c_esarp   Violat..   ~c_ewarp |
+     |-------------------------------------------------------------------------------------------------|
+  3. |       3          2       3.57          1       3.57          3       5.36          1       3.57 |
+ 38. |      38          7       12.5          2       7.14          7       12.5          2       7.14 |
+ 40. |      40          7       12.5          3      10.71          8      14.29          3      10.71 |
+ 41. |      41          1       1.79          1       3.57          1       1.79          1       3.57 |
+ 47. |      47          1       1.79          1       3.57          1       1.79          1       3.57 |
+     |-------------------------------------------------------------------------------------------------|
+ 61. |      61          3       5.36          1       3.57          4       7.14          1       3.57 |
+ 72. |      72          1       1.79          1       3.57          1       1.79          1       3.57 |
+ 87. |      87          1       1.79          1       3.57          1       1.79          1       3.57 |
+ 90. |      90          1       1.79          1       3.57          1       1.79          1       3.57 |
+104. |     104          1       1.79          1       3.57          2       3.57          1       3.57 |
+     |-------------------------------------------------------------------------------------------------|
+126. |     126          1       1.79          1       3.57          3       5.36          1       3.57 |
+137. |     137          1       1.79          1       3.57          1       1.79          1       3.57 |
+139. |     139          1       1.79          1       3.57          1       1.79          1       3.57 |
+     +-------------------------------------------------------------------------------------------------+
+r; t=0.00 8:32:30
+
+. 
+. putdocx table Table1 = data(Violations_egarp Violations_frac_egarp ///
+>         Violations_ewgarp Violations_frac_ewgarp ///
+>         Violations_esarp Violations_frac_esarp ///
+>         Violations_ewarp Violations_frac_ewarp) if andreoniMillerSubjects == 1, varnames obsno 
+r; t=0.01 8:32:30
+
+.         
+. putdocx table Table1(2/14,2/8), nformat(%12.2f)
+r; t=0.00 8:32:30
+
+. 
+. putdocx save "${outputdir}/tables/Table1", replace
+successfully replaced "C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA/results_for_paper/output/tables/Table1.docx"
+r; t=0.02 8:32:30
+
+. 
+. * Table 2 *
+. putdocx clear
+r; t=0.00 8:32:30
+
+. putdocx begin
+r; t=0.01 8:32:30
+
+. putdocx paragraph, style(Title) 
+r; t=0.00 8:32:30
+
+. putdocx text ("Table 2")
+r; t=0.00 8:32:30
+
+. 
+. tabstat Violations_eharp Violations_frac_eharp Violations_ecm Violations_frac_ecm, ///
+>         stat(mean sd min p25 p50 p75 max) save
+
+   stats |  Violat..  ~c_eharp  Vi~s_ecm  Vi~c_ecm
+---------+----------------------------------------
+    mean |  6.288732  78.60915  7.683099  96.03873
+      sd |   2.89676   36.2095   1.03396   12.9245
+     min |         0         0         0         0
+     p25 |         5      62.5         8       100
+     p50 |         8       100         8       100
+     p75 |         8       100         8       100
+     max |         8       100         8       100
+--------------------------------------------------
+r; t=0.01 8:32:30
+
+.         
+. return list
+
+matrices:
+          r(StatTotal) :  7 x 4
+r; t=0.00 8:32:30
+
+. 
+. matrix results = r(StatTotal)
+r; t=0.00 8:32:30
+
+. 
+. putdocx table Table2 = matrix(results), rownames colnames
+r; t=0.00 8:32:30
+
+. 
+. putdocx table Table2(.,2/5), nformat(%12.2f)
+r; t=0.01 8:32:30
+
+. 
+. putdocx save "${outputdir}/tables/Table2", replace
+successfully replaced "C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA/results_for_paper/output/tables/Table2.docx"
+r; t=0.01 8:32:30
+
+. 
+. 
+. * Table 1 Last Column *
+. putdocx begin
+r; t=0.01 8:32:30
+
+. import excel using "${outputdir}/tables/table1_and_2_data.xlsx", sheet("aei") clear
+(6 vars, 144 obs)
+r; t=0.01 8:32:30
+
+. 
+. * Calling program that fixes headers
+. fixingHeaders
+A  B  C  D  E  F
+A_1  A_2  A_3  A_4  A_5  A_6
+
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------------
+A_1             str17   %17s                  
+A_2             str17   %17s                  
+A_3             str17   %17s                  
+A_4             str17   %17s                  
+A_5             str17   %17s                  
+A_6             str17   %17s                  
+(1 real change made)
+(1 real change made)
+(1 real change made)
+(1 real change made)
+(1 real change made)
+(1 real change made)
+(1 observation deleted)
+6
+(1 observation deleted)
+AEI_ewgarp: all characters numeric; replaced as double
+AEI_ewarp: all characters numeric; replaced as double
+AEI_egarp: all characters numeric; replaced as double
+AEI_esarp: all characters numeric; replaced as double
+AEI_eharp: all characters numeric; replaced as double
+AEI_ecm: all characters numeric; replaced as double
+r; t=0.01 8:32:30
+
+. 
+. gen subject = _n
+r; t=0.00 8:32:30
+
+. 
+. gen andreoniMillerSubjects = (subject == 3 |  subject == 38 | subject == 40 | ///
+>         subject == 41 | subject == 47 | subject == 61 | subject == 72 | subject == 87 |  ///
+>         subject == 90 | subject == 90 | subject == 104 | subject == 126 | subject == 137 | ///
+>         subject == 139)
+r; t=0.00 8:32:30
+
+. 
+. order subject andreoniMillerSubjects
+r; t=0.00 8:32:30
+
+. 
+. putdocx table Table1 = data(AEI_egarp) if andreoniMillerSubjects == 1, varnames obsno
+r; t=0.01 8:32:30
+
+. 
+. putdocx table Table1(.,2), nformat(%12.3f)
+r; t=0.00 8:32:30
+
+. 
+. putdocx save "${outputdir}/tables/Table1", append
+successfully appended to "C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA/results_for_paper/output/tables/Table1.docx"
+r; t=0.05 8:32:30
+
+. 
+. * Table 2 Last Column *
+. putdocx begin
+r; t=0.01 8:32:30
+
+. 
+. tabstat AEI_eharp AEI_ecm, stat(mean sd min p25 p50 p75 max) save
+
+   stats |  AEI_eh~p   AEI_ecm
+---------+--------------------
+    mean |  .9761269  .9352284
+      sd |  .0492623  .0350927
+     min |  .7071068        .8
+     p25 |  .9660918  .9047619
+     p50 |         1  .9565217
+     p75 |         1  .9565217
+     max |         1         1
+------------------------------
+r; t=0.00 8:32:30
+
+. 
+. matrix results = r(StatTotal)
+r; t=0.00 8:32:30
+
+. 
+. putdocx table Table2 = matrix(results), rownames colnames nformat(%12.3f) 
+r; t=0.00 8:32:30
+
+. 
+. *putdocx table Table2(.,2/3), nformat(%10.5g)
+. 
+. putdocx save "${outputdir}/tables/Table2", append
+successfully appended to "C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA/results_for_paper/output/tables/Table2.docx"
+r; t=0.04 8:32:30
+
+. 
+. 
+. 
+. 
+. log close
+      name:  <unnamed>
+       log:  C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA//results_for_paper/output/logs/table1_and_2_31 Jan 2020.log
+  log type:  text
+ closed on:  31 Jan 2020, 08:32:30
+------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,570 @@
+------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/marcosdemetry/Dropbox/IFN/Per Hjertstrand///results_for_paper/output/logs/figure1_data_ 2 Jan 2020.log
+  log type:  text
+ opened on:   2 Jan 2020, 13:07:48
+r; t=0.00 13:07:48
+
+. 
+. set rmsg on
+r; t=0.00 13:07:48
+
+. 
+. ******************************
+. *** Creating Figure 1 data ***
+. ******************************
+. 
+. * Creating Excel-file for outputing results
+. putexcel set "${outputdir}/tables/figure1_data.xlsx", sheet("checkaxiom") replace 
+Note: file will be replaced when the first putexcel command is issued
+r; t=0.00 13:07:48
+
+. 
+. * Column names matrix
+. matrix resultsmatrix = J(366,4,.)
+r; t=0.00 13:07:48
+
+. matrix colname resultsmatrix = axiom efficiency number_pass share_pass
+r; t=0.00 13:07:48
+
+. 
+. local axioms ewgarp ewarp egarp esarp eharp esld
+r; t=0.00 13:07:48
+
+. 
+. local axiomnumber = 1
+r; t=0.00 13:07:48
+
+. local rownumber = 1
+r; t=0.00 13:07:48
+
+. foreach axiom of local axioms {
+  2. 
+.                 *display "`axiom'"
+.         forvalues eff = 700(5)995 {
+  3. 
+.                 local nr_pass = 0
+  4.                 local share_pass = 0
+  5.                 
+.                 forvalues subject = 1(1)142 {
+  6.                         *display "`subject'"
+.                         
+.                         checkax, price(P) quantity(Q`subject') axiom(`axiom') suppress efficiency(0.`eff')
+  7.                         quietly return list
+  8.                         
+.                         local nr_pass = `nr_pass' + `r(PASS)'
+  9.                         local share_pass = `nr_pass'/142
+ 10. 
+.                 }
+ 11. 
+.                 
+.                 display "Axiom: `axiom'; Efficiency: 0.`eff'; Number Passed: `nr_pass'; Share Passed: `share_pass'"
+ 12.                 matrix resultsmatrix[`rownumber',1] = `axiomnumber'
+ 13.                 matrix resultsmatrix[`rownumber',2] = `eff'
+ 14.                 matrix resultsmatrix[`rownumber',3] = `nr_pass'
+ 15.                 matrix resultsmatrix[`rownumber',4] = `share_pass'
+ 16.                 
+.                                 
+.                 local rownumber = `rownumber' + 1
+ 17. 
+.                 * Special case for efficiency == 1
+.                 if `eff' == 995 {
+ 18.                         
+.                         local nr_pass = 0
+ 19.                         local share_pass = 0
+ 20.                         
+.                         forvalues subject = 1(1)142 {
+ 21.                                 *display "`subject'"
+.                                 
+.                                 checkax, price(P) quantity(Q`subject') axiom(`axiom') suppress efficiency(1)
+ 22.                                 quietly return list
+ 23.                                 
+.                                 local nr_pass = `nr_pass' + `r(PASS)'
+ 24.                                 local share_pass = `nr_pass'/142
+ 25. 
+.                         }
+ 26.                         
+.                         display "Axiom: `axiom'; Efficiency: 1 ; Number Passed: `nr_pass'; Share Passed: `share_pass'"
+ 27.                         matrix resultsmatrix[`rownumber',1] = `axiomnumber'
+ 28.                         matrix resultsmatrix[`rownumber',2] = 1
+ 29.                         matrix resultsmatrix[`rownumber',3] = `nr_pass'
+ 30.                         matrix resultsmatrix[`rownumber',4] = `share_pass'
+ 31.                         
+.                                         
+.                         local rownumber = `rownumber' + 1
+ 32.                         
+.                 }
+ 33. 
+.         }
+ 34. 
+.         local axiomnumber = `axiomnumber' + 1
+ 35. 
+. }
+Axiom: ewgarp; Efficiency: 0.700; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.705; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.710; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.715; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.720; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.725; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.730; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.735; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.740; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.745; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.750; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.755; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.760; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.765; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.770; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.775; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.780; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.785; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.790; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.795; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.800; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.805; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.810; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.815; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.820; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.825; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.830; Number Passed: 142; Share Passed: 1
+Axiom: ewgarp; Efficiency: 0.835; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.840; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.845; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.850; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.855; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.860; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.865; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.870; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.875; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.880; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.885; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.890; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.895; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.900; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.905; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.910; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.915; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewgarp; Efficiency: 0.920; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.925; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.930; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.935; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.940; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.945; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.950; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.955; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.960; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.965; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.970; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.975; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewgarp; Efficiency: 0.980; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewgarp; Efficiency: 0.985; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewgarp; Efficiency: 0.990; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewgarp; Efficiency: 0.995; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewgarp; Efficiency: 1 ; Number Passed: 129; Share Passed: .9084507042253521
+Axiom: ewarp; Efficiency: 0.700; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.705; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.710; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.715; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.720; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.725; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.730; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.735; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.740; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.745; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.750; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.755; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.760; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.765; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.770; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.775; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.780; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.785; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.790; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.795; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.800; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.805; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.810; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.815; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.820; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.825; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.830; Number Passed: 142; Share Passed: 1
+Axiom: ewarp; Efficiency: 0.835; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.840; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.845; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.850; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.855; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.860; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.865; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.870; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.875; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.880; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.885; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.890; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.895; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.900; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.905; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.910; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.915; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: ewarp; Efficiency: 0.920; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.925; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.930; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.935; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.940; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.945; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.950; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.955; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.960; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.965; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.970; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: ewarp; Efficiency: 0.975; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewarp; Efficiency: 0.980; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewarp; Efficiency: 0.985; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewarp; Efficiency: 0.990; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewarp; Efficiency: 0.995; Number Passed: 138; Share Passed: .971830985915493
+Axiom: ewarp; Efficiency: 1 ; Number Passed: 129; Share Passed: .9084507042253521
+Axiom: egarp; Efficiency: 0.700; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.705; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.710; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.715; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.720; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.725; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.730; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.735; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.740; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.745; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.750; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.755; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.760; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.765; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.770; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.775; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.780; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.785; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.790; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.795; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.800; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.805; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.810; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.815; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.820; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.825; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.830; Number Passed: 142; Share Passed: 1
+Axiom: egarp; Efficiency: 0.835; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.840; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.845; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.850; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.855; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.860; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.865; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.870; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.875; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.880; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.885; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.890; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.895; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.900; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.905; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.910; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.915; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: egarp; Efficiency: 0.920; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.925; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.930; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.935; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.940; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.945; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.950; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.955; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.960; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.965; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.970; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.975; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: egarp; Efficiency: 0.980; Number Passed: 138; Share Passed: .971830985915493
+Axiom: egarp; Efficiency: 0.985; Number Passed: 138; Share Passed: .971830985915493
+Axiom: egarp; Efficiency: 0.990; Number Passed: 138; Share Passed: .971830985915493
+Axiom: egarp; Efficiency: 0.995; Number Passed: 138; Share Passed: .971830985915493
+Axiom: egarp; Efficiency: 1 ; Number Passed: 129; Share Passed: .9084507042253521
+Axiom: esarp; Efficiency: 0.700; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.705; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.710; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.715; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.720; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.725; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.730; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.735; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.740; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.745; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.750; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.755; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.760; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.765; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.770; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.775; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.780; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.785; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.790; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.795; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.800; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.805; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.810; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.815; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.820; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.825; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.830; Number Passed: 142; Share Passed: 1
+Axiom: esarp; Efficiency: 0.835; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.840; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.845; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.850; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.855; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.860; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.865; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.870; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.875; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.880; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.885; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.890; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.895; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.900; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.905; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.910; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.915; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: esarp; Efficiency: 0.920; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.925; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.930; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.935; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.940; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.945; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.950; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.955; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.960; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.965; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.970; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esarp; Efficiency: 0.975; Number Passed: 138; Share Passed: .971830985915493
+Axiom: esarp; Efficiency: 0.980; Number Passed: 138; Share Passed: .971830985915493
+Axiom: esarp; Efficiency: 0.985; Number Passed: 138; Share Passed: .971830985915493
+Axiom: esarp; Efficiency: 0.990; Number Passed: 138; Share Passed: .971830985915493
+Axiom: esarp; Efficiency: 0.995; Number Passed: 138; Share Passed: .971830985915493
+Axiom: esarp; Efficiency: 1 ; Number Passed: 129; Share Passed: .9084507042253521
+Axiom: eharp; Efficiency: 0.700; Number Passed: 142; Share Passed: 1
+Axiom: eharp; Efficiency: 0.705; Number Passed: 142; Share Passed: 1
+Axiom: eharp; Efficiency: 0.710; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: eharp; Efficiency: 0.715; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: eharp; Efficiency: 0.720; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: eharp; Efficiency: 0.725; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: eharp; Efficiency: 0.730; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: eharp; Efficiency: 0.735; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: eharp; Efficiency: 0.740; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: eharp; Efficiency: 0.745; Number Passed: 141; Share Passed: .9929577464788732
+Axiom: eharp; Efficiency: 0.750; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.755; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.760; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.765; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.770; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.775; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.780; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.785; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.790; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.795; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.800; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.805; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.810; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.815; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: eharp; Efficiency: 0.820; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: eharp; Efficiency: 0.825; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: eharp; Efficiency: 0.830; Number Passed: 138; Share Passed: .971830985915493
+Axiom: eharp; Efficiency: 0.835; Number Passed: 138; Share Passed: .971830985915493
+Axiom: eharp; Efficiency: 0.840; Number Passed: 137; Share Passed: .9647887323943662
+Axiom: eharp; Efficiency: 0.845; Number Passed: 137; Share Passed: .9647887323943662
+Axiom: eharp; Efficiency: 0.850; Number Passed: 136; Share Passed: .9577464788732394
+Axiom: eharp; Efficiency: 0.855; Number Passed: 135; Share Passed: .9507042253521126
+Axiom: eharp; Efficiency: 0.860; Number Passed: 135; Share Passed: .9507042253521126
+Axiom: eharp; Efficiency: 0.865; Number Passed: 135; Share Passed: .9507042253521126
+Axiom: eharp; Efficiency: 0.870; Number Passed: 134; Share Passed: .9436619718309859
+Axiom: eharp; Efficiency: 0.875; Number Passed: 134; Share Passed: .9436619718309859
+Axiom: eharp; Efficiency: 0.880; Number Passed: 134; Share Passed: .9436619718309859
+Axiom: eharp; Efficiency: 0.885; Number Passed: 133; Share Passed: .9366197183098591
+Axiom: eharp; Efficiency: 0.890; Number Passed: 133; Share Passed: .9366197183098591
+Axiom: eharp; Efficiency: 0.895; Number Passed: 133; Share Passed: .9366197183098591
+Axiom: eharp; Efficiency: 0.900; Number Passed: 133; Share Passed: .9366197183098591
+Axiom: eharp; Efficiency: 0.905; Number Passed: 131; Share Passed: .9225352112676056
+Axiom: eharp; Efficiency: 0.910; Number Passed: 130; Share Passed: .9154929577464789
+Axiom: eharp; Efficiency: 0.915; Number Passed: 127; Share Passed: .8943661971830986
+Axiom: eharp; Efficiency: 0.920; Number Passed: 127; Share Passed: .8943661971830986
+Axiom: eharp; Efficiency: 0.925; Number Passed: 127; Share Passed: .8943661971830986
+Axiom: eharp; Efficiency: 0.930; Number Passed: 127; Share Passed: .8943661971830986
+Axiom: eharp; Efficiency: 0.935; Number Passed: 126; Share Passed: .8873239436619719
+Axiom: eharp; Efficiency: 0.940; Number Passed: 123; Share Passed: .8661971830985915
+Axiom: eharp; Efficiency: 0.945; Number Passed: 118; Share Passed: .8309859154929577
+Axiom: eharp; Efficiency: 0.950; Number Passed: 118; Share Passed: .8309859154929577
+Axiom: eharp; Efficiency: 0.955; Number Passed: 117; Share Passed: .823943661971831
+Axiom: eharp; Efficiency: 0.960; Number Passed: 110; Share Passed: .7746478873239436
+Axiom: eharp; Efficiency: 0.965; Number Passed: 109; Share Passed: .7676056338028169
+Axiom: eharp; Efficiency: 0.970; Number Passed: 105; Share Passed: .7394366197183099
+Axiom: eharp; Efficiency: 0.975; Number Passed: 104; Share Passed: .7323943661971831
+Axiom: eharp; Efficiency: 0.980; Number Passed: 102; Share Passed: .7183098591549296
+Axiom: eharp; Efficiency: 0.985; Number Passed: 102; Share Passed: .7183098591549296
+Axiom: eharp; Efficiency: 0.990; Number Passed: 96; Share Passed: .676056338028169
+Axiom: eharp; Efficiency: 0.995; Number Passed: 95; Share Passed: .6690140845070423
+Axiom: eharp; Efficiency: 1 ; Number Passed: 14; Share Passed: .0985915492957746
+Axiom: esld; Efficiency: 0.700; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.705; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.710; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.715; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.720; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.725; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.730; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.735; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.740; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.745; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.750; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.755; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.760; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.765; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.770; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.775; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.780; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.785; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.790; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.795; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.800; Number Passed: 142; Share Passed: 1
+Axiom: esld; Efficiency: 0.805; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: esld; Efficiency: 0.810; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: esld; Efficiency: 0.815; Number Passed: 140; Share Passed: .9859154929577465
+Axiom: esld; Efficiency: 0.820; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esld; Efficiency: 0.825; Number Passed: 139; Share Passed: .9788732394366197
+Axiom: esld; Efficiency: 0.830; Number Passed: 138; Share Passed: .971830985915493
+Axiom: esld; Efficiency: 0.835; Number Passed: 138; Share Passed: .971830985915493
+Axiom: esld; Efficiency: 0.840; Number Passed: 138; Share Passed: .971830985915493
+Axiom: esld; Efficiency: 0.845; Number Passed: 137; Share Passed: .9647887323943662
+Axiom: esld; Efficiency: 0.850; Number Passed: 137; Share Passed: .9647887323943662
+Axiom: esld; Efficiency: 0.855; Number Passed: 137; Share Passed: .9647887323943662
+Axiom: esld; Efficiency: 0.860; Number Passed: 137; Share Passed: .9647887323943662
+Axiom: esld; Efficiency: 0.865; Number Passed: 137; Share Passed: .9647887323943662
+Axiom: esld; Efficiency: 0.870; Number Passed: 136; Share Passed: .9577464788732394
+Axiom: esld; Efficiency: 0.875; Number Passed: 136; Share Passed: .9577464788732394
+Axiom: esld; Efficiency: 0.880; Number Passed: 136; Share Passed: .9577464788732394
+Axiom: esld; Efficiency: 0.885; Number Passed: 133; Share Passed: .9366197183098591
+Axiom: esld; Efficiency: 0.890; Number Passed: 132; Share Passed: .9295774647887324
+Axiom: esld; Efficiency: 0.895; Number Passed: 131; Share Passed: .9225352112676056
+Axiom: esld; Efficiency: 0.900; Number Passed: 129; Share Passed: .9084507042253521
+Axiom: esld; Efficiency: 0.905; Number Passed: 99; Share Passed: .6971830985915493
+Axiom: esld; Efficiency: 0.910; Number Passed: 98; Share Passed: .6901408450704225
+Axiom: esld; Efficiency: 0.915; Number Passed: 97; Share Passed: .6830985915492958
+Axiom: esld; Efficiency: 0.920; Number Passed: 95; Share Passed: .6690140845070423
+Axiom: esld; Efficiency: 0.925; Number Passed: 94; Share Passed: .6619718309859155
+Axiom: esld; Efficiency: 0.930; Number Passed: 91; Share Passed: .6408450704225352
+Axiom: esld; Efficiency: 0.935; Number Passed: 89; Share Passed: .6267605633802817
+Axiom: esld; Efficiency: 0.940; Number Passed: 87; Share Passed: .6126760563380281
+Axiom: esld; Efficiency: 0.945; Number Passed: 84; Share Passed: .5915492957746479
+Axiom: esld; Efficiency: 0.950; Number Passed: 82; Share Passed: .5774647887323944
+Axiom: esld; Efficiency: 0.955; Number Passed: 76; Share Passed: .5352112676056338
+Axiom: esld; Efficiency: 0.960; Number Passed: 13; Share Passed: .0915492957746479
+Axiom: esld; Efficiency: 0.965; Number Passed: 9; Share Passed: .0633802816901408
+Axiom: esld; Efficiency: 0.970; Number Passed: 9; Share Passed: .0633802816901408
+Axiom: esld; Efficiency: 0.975; Number Passed: 5; Share Passed: .0352112676056338
+Axiom: esld; Efficiency: 0.980; Number Passed: 5; Share Passed: .0352112676056338
+Axiom: esld; Efficiency: 0.985; Number Passed: 3; Share Passed: .0211267605633803
+Axiom: esld; Efficiency: 0.990; Number Passed: 1; Share Passed: .0070422535211268
+Axiom: esld; Efficiency: 0.995; Number Passed: 1; Share Passed: .0070422535211268
+Axiom: esld; Efficiency: 1 ; Number Passed: 1; Share Passed: .0070422535211268
+r; t=46.99 13:08:35
+
+. 
+. putexcel A1 = matrix(resultsmatrix), colnames
+file /Users/marcosdemetry/Dropbox/IFN/Per Hjertstrand///results_for_paper/output/tables/figure1_data.xlsx saved
+r; t=0.01 13:08:35
+
+. 
+. ****************
+. *** Figure 1 ***
+. ****************
+. 
+. import excel "${outputdir}/tables/figure1_data.xlsx", clear firstrow
+r; t=0.02 13:08:35
+
+. 
+. label define axiomLabels 1 "eWGARP" 2 "eWARP" 3 "eGARP" 4 "eSARP" 5 "eHARP" 6 "eSLD"
+r; t=0.00 13:08:35
+
+. label value axiom axiomLabels
+r; t=0.00 13:08:35
+
+. 
+. decode axiom, gen(axiom_str)
+r; t=0.00 13:08:35
+
+. drop axiom
+r; t=0.00 13:08:35
+
+. rename axiom_str axiom
+r; t=0.00 13:08:35
+
+. 
+. rename share_pass share_pass_
+r; t=0.00 13:08:35
+
+. 
+. replace efficiency = 1000 if efficiency == 1
+(6 real changes made)
+r; t=0.00 13:08:35
+
+. replace efficiency = efficiency/1000
+variable efficiency was int now float
+(366 real changes made)
+r; t=0.00 13:08:35
+
+. 
+. reshape wide number_pass share_pass_, i(efficiency) j(axiom) string
+(note: j = eGARP eHARP eSARP eSLD eWARP eWGARP)
+
+Data                               long   ->   wide
+-----------------------------------------------------------------------------
+Number of obs.                      366   ->      61
+Number of variables                   4   ->      13
+j variable (6 values)             axiom   ->   (dropped)
+xij variables:
+                            number_pass   ->   number_passeGARP number_passeHARP ... number_passeWGARP
+                            share_pass_   ->   share_pass_eGARP share_pass_eHARP ... share_pass_eWGARP
+-----------------------------------------------------------------------------
+r; t=0.02 13:08:35
+
+. 
+. * Stata journal scheme (manual colors) with legend
+. twoway  (line share_pass_eHARP e, lcolor(edkblue))      ///
+>                 (line share_pass_eSLD e, lcolor(orange_red))    ///
+>                 (line share_pass_eGARP e, lcolor(gray)) ///
+>                 (line share_pass_eWGARP e, lcolor(sand))        ///
+>                 (line share_pass_eSARP e, lcolor(blue)) ///
+>                 (line share_pass_eWARP e, lcolor(forest_green)  ///
+>                 ytitle("Fraction of subjects") xtitle("Efficiency (e)") ///
+>                 ylabel(0 "0%" 0.2 "20%" 0.4 "40%" 0.6 "60%" 0.8 "80%" 1 "100%", format(%3.2f) angle(horisontal)) ///
+>                 xlabel(0.7(0.01)1, format(%3.2f) angle(vertical)) ///
+>                 legend(order(1 "eHARP" 2 "eSLD" 3 "eGARP" 4 "eWGARP" 5 "eSARP" 6 "eWARP") rows(2)) ///
+>                 scheme(sj))
+(note:  named style horisontal not found in class anglestyle, default attributes used)
+r; t=2.84 13:08:38
+
+.                 
+. graph save "${outputdir}/figures/figure1_statajournal_color.gph", replace
+(file /Users/marcosdemetry/Dropbox/IFN/Per Hjertstrand///results_for_paper/output/figures/figure1_statajournal_color.gph saved
+> )
+r; t=0.06 13:08:38
+
+. graph export "${outputdir}/figures/figure1_statajournal_color.eps", replace
+(file /Users/marcosdemetry/Dropbox/IFN/Per Hjertstrand///results_for_paper/output/figures/figure1_statajournal_color.eps writt
+> en in EPS format)
+r; t=0.01 13:08:38
+
+. graph export "${outputdir}/figures/figure1_statajournal_color.png", replace
+(file /Users/marcosdemetry/Dropbox/IFN/Per Hjertstrand///results_for_paper/output/figures/figure1_statajournal_color.png writt
+> en in PNG format)
+r; t=0.24 13:08:38
+
+. 
+. 
+. 
+. log close
+      name:  <unnamed>
+       log:  /Users/marcosdemetry/Dropbox/IFN/Per Hjertstrand///results_for_paper/output/logs/figure1_data_ 2 Jan 2020.log
+  log type:  text
+ closed on:   2 Jan 2020, 13:08:38
+------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,16 @@
+. local axioms eGARP eWGARP eSARP eWARP
+{\smallskip}
+. 
+. forvalues subject = 1/142 {\lbr}
+  2.         
+.         foreach axiom of local axioms {\lbr}
+  3.         
+.                 checkax, price(P) quantity(Q`subject') axiom(`axiom')
+  4.                 
+.         {\rbr}
+  5. 
+.         aei, price(P) quantity(Q`subject') axiom(eGARP)
+  6. 
+. {\rbr}
+
+\oom
