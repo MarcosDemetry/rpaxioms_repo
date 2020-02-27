@@ -9,12 +9,12 @@ do "${codedir}/importing_andreoni_data.do"
 
 set rmsg on
 
-/// Running powerps with aei for 5 subjects; 10k & 50k simulations.
+/// Running powerps with aei for 5 subjects; 1k & 10k simulations.
 timer clear 1
 
 local timer_nr = 1
 
-foreach simulations in 1000 10000 50000 {
+foreach simulations in 1000 10000 {
 	
 	timer on `timer_nr'
 	
@@ -22,7 +22,7 @@ foreach simulations in 1000 10000 50000 {
 		
 		di "Simulations: `simulations'; Subject: `subject'"
 		
-		powerps, price(P) quantity(Q`subject') sim(`simulations') aei axiom(all) progress
+		powerps, price(P) quantity(Q`subject') sim(`simulations') aei axiom(egarp)
 
 	}
 	
@@ -33,5 +33,12 @@ foreach simulations in 1000 10000 50000 {
 }
 
 timer list
+
+
+** 1125 seconds for 1000 simulations, all subjects, all axioms
+** circa 225 seconds for 1000 simulations per subject, all axioms
+
+** 91 seconds for 1000 simulations, all subjects, one axiom
+** circa 18 seconds for 1000 simulations per subject, one axiom
 
 log close
