@@ -22,11 +22,9 @@ cd "${stem}"
 
 di "Current directory: `c(pwd)'"
 
-gl codedir "${stem}/results_for_paper/code"
-gl datadir "${stem}/results_for_paper/data"
-gl outputdir "${stem}/results_for_paper/output"
-
-gl paperdir	"../Paper"
+gl codedir "${stem}/reproducing_results/code"
+gl datadir "${stem}/reproducing_results/data"
+gl outputdir "${stem}/reproducing_results/output"
 
 adopath + "${codedir}"
 
