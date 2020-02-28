@@ -28,6 +28,8 @@ gl outputdir "${stem}/reproducing_results/output"
 
 adopath + "${codedir}"
 
+adopath + "${stem}/reproducing_results/help_files"
+
 set rmsg on
 
 *******************

@@ -26,7 +26,7 @@
 {synopt :{opth ax:iom(powerps##options:axiom)}} axiom for testing data; default is {bf: axiom(eGARP)}.
 In total, there are six axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM. To test all axioms at once, specify {bf: axiom(all)}.{p_end}
 
-{synopt :{opth eff:iciency(powerps##options:efficiency)}} efficiency level for testing data; default is {bf:efficiency(1)}.{p_end}
+{synopt :{opth eff:iciency(powerps##options:efficiency)}} efficiency level for testing data, where 0 < efficiency =< 1; default is {bf:efficiency(1)}.{p_end}
 
 {synopt :{opth sim:ulations(powerps##options:simulations)}} number of repititions of the simulated uniformly random data; default is {bf:simulations(1000)}.{p_end}
 
@@ -56,33 +56,34 @@ The other two commands are {cmd: checkax} (which tests whether consumer demand d
 {cmd: powerps} is dependent on {cmd: checkax} and {cmd: aei}.
 
 {pstd}
-For further details on the commands, please see Demetry, Hjertstrand and Polisson (2020) "Testing and Evaluating Axioms of Revealed Preference".
+For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) "Testing and Evaluating Axioms of Revealed Preference"}.
 
 {marker options}{...}
 {dlgtab: Options }
 
-{synopt :{opth ax:iom(powerps##options:axiom)}}  specifies which axiom the user would like to use in testing the data for consistency. The default is {bf: axiom(eGARP)}.
+{synopt :axiom}  specifies which axiom the user would like to use in testing the data for consistency. The default is {bf: axiom(eGARP)}.
 In total, there are six axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM. To test all axioms at once, specify {bf: axiom(all)}.{p_end}
 
-{synopt :{opth eff:iciency(powerps##options:efficiency)}} specifies the efficiency 
-level at which the user would like to test the data. The default efficiency level is 
-default is {bf:efficiency(1)}.{p_end}
+{synopt :efficiency} specifies the efficiency 
+level at which the user would like to test the data. The default efficiency level is {bf:efficiency(1)}.
+Efficiency must be greater than zero and less than or equal to one.{p_end}
 
-{synopt :{opth sim:ulations(powerps##options:simulations)}} specifies the number of repititions of the simulated uniformly random data; default is {bf:simulations(1000)}.{p_end}
+{synopt :simulations} specifies the number of repititions of the simulated uniformly random data; default is {bf:simulations(1000)}.{p_end}
 
-{synopt :{opth seed:(powerps##options:seed)}} specifies the random seed in generation of Dirichlet random numbers; default is {bf:seed(12345)}.{p_end}
+{synopt :seed} specifies the random seed in generation of Dirichlet random numbers; default is {bf:seed(12345)}.{p_end}
 
-{synopt :{opth aei:(powerps##options:aei)}} specifies whether the user wants to compute the AEI for each simulated uniformly random data set and every specified axiom;
-    default is {bf:aei} {it:not} specifiede.{p_end}
+{synopt :aei} specifies whether the user wants to compute the AEI for each simulated uniformly random data set and every specified axiom;
+    default is {bf:aei} {it:not} specified.{p_end}
 
-{synopt :{opth tol:erance(powerps##options:tolerance)}} sets the tolerance level in the termination criterion 10^-{it:n} by specifying the integer number {it: n}.
+{synopt :tolerance} sets the tolerance level in the termination criterion 10^-{it:n} by specifying the integer number {it: n}.
     For example, {bf: tolerance(6)} sets the tolerance level in the termination criterion to 10^-6. The default is 
     {bf: tolerance(12)}, which gives the default tolerance level 10^-12. The integer {it: n} in the termination criterion 10^-{it:n}
     cannot be smaller than 1 or larger than 18.{p_end}
 
-{synopt :{opth progress:bar(powerps##options:progress)}} displays number of repititions that have been executed. The default is {bf: progressbar} {it: not} specified.{p_end}
+{synopt :progressbar} displays number of repititions that have been executed. The default is {bf: progressbar} {it: not} specified.{p_end}
 
-{synopt :{opth suppress:(powerps##options:suppress)}} specifies that the user does not want the results displayed in a table. The default is that {bf: suppress} is {it: not} specified. Whether or not this option is specified, the command results are retrievable from {bf: return list}.{p_end}
+{synopt :suppress} specifies that the user does not want the results displayed in a table. The default is that {bf: suppress} is {it: not} specified.
+Whether or not this option is specified, the command results are retrievable from {bf: return list}.{p_end}
 
 {marker results}{...}
 {title:Stored results}
@@ -114,3 +115,4 @@ default is {bf:efficiency(1)}.{p_end}
 - Per Hjertstrand, Associate Professor and Research Fellow at the Research Institute 
 of Industrial Economics, Sweden.
 - Matthew Polisson, Senior Lecturer and Researcher at University of Bristol, UK.
+

@@ -24,9 +24,9 @@
 {synoptline}
 
 {synopt :{opth ax:iom(checkax##options:axiom)}} axiom for testing data; default is {bf: axiom(eGARP)}.
-In total, there are six axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
+Axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
 
-{synopt :{opth eff:iciency(checkax##options:efficiency)}} efficiency level for testing data; default is {bf:efficiency(1)}.{p_end}
+{synopt :{opth eff:iciency(checkax##options:efficiency)}} efficiency level for testing data, where 0 < efficiency =< 1; default is {bf:efficiency(1)}.{p_end}
 
 {synopt :{opth suppress:(checkax##options:suppress)}} suppress output table; default is {bf: suppress} {it: not} specified.{p_end}
 
@@ -43,18 +43,20 @@ The other two commands are {opt aei} (which calculates measures of goodness-of-f
 calculates the power against uniform random behavior and predictive success for the axioms at any given efficienecy level).
 
 {pstd}
-For further details on the commands, please see Demetry, Hjertstrand and Polisson (2020) "Testing and Evaluating Axioms of Revealed Preference"
+For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) "Testing and Evaluating Axioms of Revealed Preference"}.
 
 {marker options}{...}
 {dlgtab: Options }
 
-{synopt :{opth ax:iom(checkax##options:axiom)}}  specifies which axiom the user would like to use in testing the data for consistency. The default is {bf: axiom(eGARP)}. In total, there are six axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
+{synopt :axiom}  specifies which axiom the user would like to use in testing the data for consistency.
+The default is {bf: axiom(eGARP)}. In total, there are six axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
 
-{synopt :{opth eff:iciency(checkax##options:efficiency)}} specifies the efficiency 
-level at which the user would like to test the data. The default efficiency level is 
-default is {bf:efficiency(1)}.{p_end}
+{synopt :efficiency} specifies the efficiency 
+level at which the user would like to test the data. The default efficiency level is {bf:efficiency(1)}.
+Efficiency must be greater than zero and less than or equal to one.{p_end}
 
-{synopt :{opth suppress:(checkax##options:suppress)}} specifies that the user does not want the results displayed in a table. The default is that {bf: suppress} is {it: not} specified. Whether or not this option is specified, the command results are retrievable from {bf: return list}.{p_end}
+{synopt :suppress} specifies that the user does not want the results displayed in a table. The default is that {bf: suppress} is {it: not} specified.
+Whether or not this option is specified, the command results are retrievable from {bf: return list}.{p_end}
 
 {marker results}{...}
 {title:Stored results}
@@ -81,3 +83,4 @@ default is {bf:efficiency(1)}.{p_end}
 - Per Hjertstrand, Associate Professor and Research Fellow at the Research Institute 
 of Industrial Economics, Sweden.
 - Matthew Polisson, Senior Lecturer and Researcher at University of Bristol, UK.
+
