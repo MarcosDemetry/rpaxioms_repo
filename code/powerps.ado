@@ -230,7 +230,7 @@ program powerps, rclass sortpreserve
 	}
 
 	local first_ax = 1
-		
+
 	tempname rawResults sumStatsTable
 	
 	local goods `=colsof(`price')'
