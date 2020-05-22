@@ -97,7 +97,6 @@ program powerps, rclass sortpreserve
 		
 	}
 
-
 	* Which axiom(s) does the user want to check?
 	* And creating necessary scalars, vectors and tempnames accordingly.
 	local tempname_prefix sim P PS Num_vio Frac_vio AEI rawResults
@@ -141,6 +140,13 @@ program powerps, rclass sortpreserve
 					***************		
 					*** PowerPS ***
 					***************
+	tempname gmat te
+	mata: newGMAT("`price'","`quantity'", `seed', `simulations')
+
+	matrix `gmat' = gamma_matrix
+	matrix `te' = total_expenditure
+	local rK = r(K)
+	local rT = r(T)
 
 	* With progress bar
 	if ("`progressbar'"!="") {
@@ -150,8 +156,8 @@ program powerps, rclass sortpreserve
 		forvalues i = 1(1)`simulations' {
 			
 			 _dots `i' 0 
-			mata: powerCalc("`price'","`quantity'", `seed', `simulations', `i')
-			 
+			mata: genXS("`gmat'", `rT', `rK', "`te'", "`price'", `i')
+			 	 
 			foreach ax of local axioms {
 	
 				** Checkax results
@@ -189,9 +195,9 @@ program powerps, rclass sortpreserve
 	else if ("`progressbar'"=="") {
 	
 		forvalues i = 1(1)`simulations' {
-			
-			mata: powerCalc("`price'","`quantity'", `seed', `simulations', `i')
-
+		
+			mata: genXS("`gmat'", `rT', `rK', "`te'", "`price'", `i')
+			 	
 			foreach ax of local axioms {
 	
 				** Checkax results
@@ -206,7 +212,7 @@ program powerps, rclass sortpreserve
 				local Num_Vio = r(NUM_VIO)
 				* Fraction of violations per axiom and subject
 				local Frac_Vio = r(FRAC_VIO)
-							
+
 				matrix `sim_`ax''[`i',1] = `Num_Vio'
 				matrix `sim_`ax''[`i',2] = `Frac_Vio'
 
@@ -230,7 +236,7 @@ program powerps, rclass sortpreserve
 	}
 
 	local first_ax = 1
-
+		
 	tempname rawResults sumStatsTable
 	
 	local goods `=colsof(`price')'
@@ -395,9 +401,8 @@ void checkdimension(string P_temp, string X_temp)
 /* ================================================================== */
 					/* powerCalc */
 					
-function powerCalc(string P_temp, string X_temp, scalar seed, scalar S, scalar s)
+function newGMAT(string P_temp, string X_temp, scalar seed, scalar S)					
 {
-
 	p = st_matrix(P_temp)
 	x = st_matrix(X_temp)
 
@@ -410,11 +415,21 @@ function powerCalc(string P_temp, string X_temp, scalar seed, scalar S, scalar s
 
 	GMAT = rgamma(T*K,S,1,1)			// (T*K)xS matrix of Gamma(1,1) random numbers
 	
+	st_matrix("gamma_matrix", GMAT)
+	st_numscalar("r(T)", T)
+	st_numscalar("r(K)", K)
+	st_matrix("total_expenditure", TE)
+
+}
+	
+function genXS(matrix GMAT, scalar T, scalar K, matrix TE, matrix p, scalar s)
+{
+	GMAT = st_matrix(GMAT)
+	TE = st_matrix(TE)
+	p = st_matrix(p)
+	
 	G = rowshape(GMAT[.,s],T);          // making a TxK matrix 
-/*	
-	generating Dirichlet random numbers,
-	i.e., uniform random numbers of the unit simplex
-*/
+
 	D = G:/J(1, K, G*J(K,1,1))
 	
 	x_S = D:*(J(1, K, TE):/p)           // simulated quantities
