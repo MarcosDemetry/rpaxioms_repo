@@ -14,8 +14,8 @@
 {title:Syntax}
 
 {p 8 15 2}
-{cmd:powerps}
-{it: price(mname) quantity(mname)} [{cmd:,} {it: options}]
+{cmd:powerps}{cmd:,}
+{it: price(mname) quantity(mname)} [{it: options}]
 {p_end}
 
 

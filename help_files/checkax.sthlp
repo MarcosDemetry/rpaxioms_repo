@@ -14,8 +14,8 @@
 {title:Syntax}
 
 {p 8 15 2}
-{cmd:checkax}
-{it: price(mname) quantity(mname)} [{cmd:,} {it: options}]
+{cmd:checkax}{cmd:,}
+{it: price(mname) quantity(mname)} [{it: options}]
 {p_end}
 
 
@@ -39,7 +39,7 @@ Axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
 
 {pstd}
 {opt checkax} is the first in a series of three commands for testing axioms of revealed preference.
-The other two commands are {opt aei} (which calculates measures of goodness-of-fit wheen the data violates the axioms) and {opt powerps} (which 
+The other two commands are {opt aei} (which calculates measures of goodness-of-fit when the data violates the axioms) and {opt powerps} (which 
 calculates the power against uniform random behavior and predictive success for the axioms at any given efficienecy level).
 
 {pstd}
