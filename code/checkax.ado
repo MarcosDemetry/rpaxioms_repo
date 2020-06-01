@@ -51,7 +51,7 @@ program displayResults, rclass
 		tempname outputTable
 
 		matrix `outputTable' = J(1, 6, .)
-		matrix colname `outputTable' =	Pass Num_vio Frac_vio ///
+		matrix colname `outputTable' =	Pass #vio %vio ///
 										Goods Obs Eff
 
 		matrix rowname `outputTable' =	"`axiomDisplay'"

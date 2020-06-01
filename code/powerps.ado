@@ -136,7 +136,11 @@ program powerps, rclass sortpreserve
 		}
 	}
 	
+			****************************
+			*** Checkax on real data ***
+			****************************
 
+			
 					***************		
 					*** PowerPS ***
 					***************
@@ -240,7 +244,7 @@ program powerps, rclass sortpreserve
 	tempname rawResults sumStatsTable
 	
 	local goods `=colsof(`price')'
-	local obs 	`= rowsof(`price')'
+	local obs 	`=rowsof(`price')'
 			
 	foreach ax of local axioms {
 
@@ -254,11 +258,17 @@ program powerps, rclass sortpreserve
 		local PASS_`ax' = r(PASS)
 		local PS_`ax'	= `PASS_`ax'' - (1 - `P_`ax'')
 		
+		aei, price("`price'") quantity("`quantity'") ///
+			axiom("`ax'") suppress
+		
+		local AEI_`ax' = r(AEI)
+				
+		
 		** Creating output & return list tables
 		local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
 
 		* Raw output table
-		matrix `rawResults_`ax'' = `P_`ax'',  `PS_`ax'', `simulations', `efficiency', `goods', `obs'
+		matrix `rawResults_`ax'' = `P_`ax'',  `PS_`ax'', `PASS_`ax'', `AEI_`ax'', `simulations', `efficiency', `goods', `obs'
 		matrix rowname `rawResults_`ax'' = "`axiomDisplay'"
 
 		if 		`first_ax' == 1		matrix `rawResults' = `rawResults_`ax''
@@ -271,7 +281,7 @@ program powerps, rclass sortpreserve
 	* Combined main results table
 	if ("`suppress'"=="") {
 		
-		matrix colnames `rawResults' = Power PS Sim Eff Goods Obs
+		matrix colnames `rawResults' = Power PS Pass AEI Sim Eff Goods Obs
 		matlist `rawResults', border(top bottom) rowtitle("Axioms")
 			
 		di " "
@@ -298,7 +308,7 @@ program powerps, rclass sortpreserve
 			quietly return list 
 				
 			matrix `sumStatsTable' = r(StatTotal)
-			matrix colnames `sumStatsTable' =	Num_Vio Frac_Vio AEI
+			matrix colnames `sumStatsTable' =	"#vio" "%vio" AEI
 			matrix rownames `sumStatsTable' =	Mean "Std. Dev." Min ///
 												Q1 Median Q3 Max
 												
@@ -321,7 +331,7 @@ program powerps, rclass sortpreserve
 			quietly return list 
 				
 			matrix `sumStatsTable' = r(StatTotal)
-			matrix colnames `sumStatsTable' =	Num_Vio Frac_Vio
+			matrix colnames `sumStatsTable' =	"#vio" "%vio"
 			matrix rownames `sumStatsTable' =	Mean "Std. Dev." Min ///
 													Q1 Median Q3 Max
 		}
