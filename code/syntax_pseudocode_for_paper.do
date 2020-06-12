@@ -51,7 +51,7 @@ sjlog using "${outputdir}/syntax_pseudocode/syntax_powerps", replace
 
 powerps, price(P) quantity(X) axiom(eGARP eHARP)
 
-powerps, price(P) quantity(X) axiom(eGARP eHARP) aei
+powerps, price(P) quantity(X) axiom(eGARP eHARP) aei	// Takes approx. 4 minutes
 
 return list
 
@@ -156,8 +156,7 @@ sjlog close, replace
 *** Pseudocode AEI for eWGARP and GARP ***
 ******************************************
 
-** Note: Showing how real data is loaded,
-** but running example on fake data for time.
+** Note: This takes approx 4.2 hours to run
 
 sjlog using "${outputdir}/syntax_pseudocode/pseudocode_aei_ewgarp_egarp", replace 
 
@@ -179,10 +178,10 @@ aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
 
 sjlog close, replace
 
-sjlog using "${outputdir}/syntax_pseudocode/pseudocode_powerps_aei_ewgarp_egarp", replace 
+sjlog using "${outputdir}/syntax_pseudocode/pseudocode_powerps_aei_ewgarp_egarp_2", replace 
 
 aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
-quietly return list
+return list
 
 powerps, price(P) quantity(X) axiom(eWGARP) efficiency(`r(AEI)')
 

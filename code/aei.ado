@@ -1,4 +1,4 @@
-*! Version 1.0.0 18february2019
+*! Version 1.0.0 12june2020
 
 /*
 	Syntax:
@@ -19,7 +19,6 @@
 
 /* ================================================================== */
 					/* Main ado file */
-*capture program drop aei
 
 program aei, rclass sortpreserve
 	version 15.1

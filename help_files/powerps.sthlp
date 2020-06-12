@@ -56,7 +56,7 @@ The other two commands are {cmd: checkax} (which tests whether consumer demand d
 {cmd: powerps} is dependent on {cmd: checkax} and {cmd: aei}.
 
 {pstd}
-For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) "Testing and Evaluating Axioms of Revealed Preference"}.
+For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) "Testing Axioms of Revealed Preference". IFN Working Paper No. 1342}.
 
 {marker options}{...}
 {dlgtab: Options }
@@ -95,6 +95,8 @@ Whether or not this option is specified, the command results are retrievable fro
 {p2col 5 20 19 2: Scalars}{p_end}
 {synopt:{cmd:r(POWER_{it:axiom})}}computed power for each axiom{p_end}
 {synopt:{cmd:r(PS_{it:axiom})}}computed predictive success for each axiom{p_end}
+{synopt:{cmd:r(PASS_{it:axiom})}}indicator for whether data pass the axiom or not{p_end}
+{synopt:{cmd:r(AEI_{it:axiom})}}AEI for the axiom being tested{p_end}
 {synopt:{cmd:r(SIM_{it:axiom})}}number of repeitions in the simulatede uniformly random data{p_end}
 {synopt:{cmd:r(TOL_{it:axiom})}}tolerance level for termination criterion, if option {opt aei} is specified{p_end}
 {synopt:{cmd:r(EFF_{it:axiom})}}efficiency level at which the axiom is tested{p_end}

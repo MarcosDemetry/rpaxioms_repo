@@ -1,4 +1,4 @@
-*! Version 1.0.0 20december2019
+*! Version 1.0.0 12june2020
 
 /*
 	Syntax:
@@ -16,8 +16,8 @@
 		<op3> := SUPPRESS
 
 CAUTION: The option NOCHECK is not recommended if you are not a Stata programmer.
-		NOCHECK is used in user-written Stata commands [p] aei and [p] powerps
-		that depend on the [p] checkax command. This option disallows checkax
+		NOCHECK is used in user-written Stata commands aei and powerps
+		that depend on the checkax command. This option disallows checkax
 		from controlling efficiency levels, matrix dimensions and values.
 		This option was created solely for use in aei and powerps so as to
 		speed up calculation and avoid checking the same things several times
@@ -25,8 +25,6 @@ CAUTION: The option NOCHECK is not recommended if you are not a Stata programmer
 */
 
 /* ================================================================== */
-
-*capture program drop checkax displayResults
 
 * Program for displaying results
 program displayResults, rclass

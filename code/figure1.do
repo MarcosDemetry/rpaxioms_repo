@@ -37,7 +37,7 @@ local rownumber = 1
 foreach axiom of local axioms {
 
 		*display "`axiom'"
-	forvalues eff = 700(5)995 {
+	forvalues eff = 850(5)995 {
 
 		local nr_pass = 0
 		local share_pass = 0
@@ -117,6 +117,8 @@ rename share_pass share_pass_
 replace efficiency = 1000 if efficiency == 1
 replace efficiency = efficiency/1000
 
+drop if axiom == ""
+
 reshape wide number_pass share_pass_, i(efficiency) j(axiom) string
 
 * Stata journal scheme (manual colors) with legend
@@ -128,7 +130,7 @@ twoway	(line share_pass_eHARP e, lcolor(edkblue))	///
 		(line share_pass_eWARP e, lcolor(forest_green) 	///
 		ytitle("Fraction of subjects") xtitle("Efficiency (e)") ///
 		ylabel(0(0.1)1, format(%3.1f) angle(horisontal)) ///
-		xlabel(0.7(0.01)1, format(%3.2f) angle(vertical)) ///
+		xlabel(0.85(0.01)1, format(%3.2f) angle(vertical)) ///
 		legend(order(1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eWGARP" 5 "eSARP" 6 "eWARP") rows(2)) ///
 		scheme(sj))
 

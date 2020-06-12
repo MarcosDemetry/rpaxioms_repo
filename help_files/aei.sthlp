@@ -43,10 +43,10 @@ The other two commands are {cmd: checkax} (which tests whether consumer demand d
 calculates the power against uniform random behavior and predictive success for the axioms at any given efficienecy level).
 
 {pstd}
-{cmd: aei} is dependent on {cmd: aei}.
+{cmd: aei} is dependent on {cmd: checkax}.
 
 {pstd}
-For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) "Testing and Evaluating Axioms of Revealed Preference"}.
+For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) "Testing Axioms of Revealed Preference". IFN Working Paper No. 1342}.
 
 {marker options}{...}
 {dlgtab: Options }

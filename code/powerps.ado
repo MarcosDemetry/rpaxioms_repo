@@ -1,4 +1,4 @@
-*! Version 1.0.0 10february2020
+*! Version 1.0.0 12june2020
 
 /*
 	Syntax:
@@ -23,7 +23,6 @@
 
 /* ================================================================== */
 					/* Main ado file */
-*capture program drop powerps
 
 program powerps, rclass sortpreserve
 	version 15.1
@@ -351,6 +350,8 @@ program powerps, rclass sortpreserve
 		return scalar GOODS_`ax'			= `goods'
 		return scalar EFF_`ax'				= `efficiency'
 		return scalar SIM_`ax'				= `simulations'
+		return scalar AEI_`ax'				= `AEI_`ax''
+		return scalar PASS_`ax'				= `PASS_`ax''
 		return scalar PS_`ax'				= `PS_`ax''
 		return scalar POWER_`ax'			= `P_`ax''
 		return local  AXIOM_`ax'			"`axiomDisplay'"
