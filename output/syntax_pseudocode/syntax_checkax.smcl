@@ -18,7 +18,7 @@
 
 
 {txt}{space 0}{hline 13}{c  TT}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
-{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 4:Pass}{space 1}{space 1}{ralign 10:Num_vio}{space 1}{space 1}{ralign 10:Frac_vio}{space 1}{space 1}{ralign 10:Goods}{space 1}{space 1}{ralign 10:Obs}{space 1}{space 1}{ralign 10:Eff}{space 2}
+{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 4:Pass}{space 1}{space 1}{ralign 10:#vio}{space 1}{space 1}{ralign 10:%vio}{space 1}{space 1}{ralign 10:Goods}{space 1}{space 1}{ralign 10:Obs}{space 1}{space 1}{ralign 10:Eff}{space 2}
 {space 0}{hline 13}{c   +}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
 {space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 4:{res:{sf:   0}}}{space 1}{space 1}{ralign 10:{res:{sf:       136}}}{space 1}{space 1}{ralign 10:{res:{sf:     35.79}}}{space 1}{space 1}{ralign 10:{res:{sf:         5}}}{space 1}{space 1}{ralign 10:{res:{sf:        20}}}{space 1}{space 1}{ralign 10:{res:{sf:      1.00}}}{space 2}
 {space 0}{hline 13}{c  BT}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
@@ -29,7 +29,7 @@
 
 
 {txt}{space 0}{hline 13}{c  TT}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
-{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 4:Pass}{space 1}{space 1}{ralign 10:Num_vio}{space 1}{space 1}{ralign 10:Frac_vio}{space 1}{space 1}{ralign 10:Goods}{space 1}{space 1}{ralign 10:Obs}{space 1}{space 1}{ralign 10:Eff}{space 2}
+{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 4:Pass}{space 1}{space 1}{ralign 10:#vio}{space 1}{space 1}{ralign 10:%vio}{space 1}{space 1}{ralign 10:Goods}{space 1}{space 1}{ralign 10:Obs}{space 1}{space 1}{ralign 10:Eff}{space 2}
 {space 0}{hline 13}{c   +}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
 {space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 4:{res:{sf:   0}}}{space 1}{space 1}{ralign 10:{res:{sf:        20}}}{space 1}{space 1}{ralign 10:{res:{sf:    100.00}}}{space 1}{space 1}{ralign 10:{res:{sf:         5}}}{space 1}{space 1}{ralign 10:{res:{sf:        20}}}{space 1}{space 1}{ralign 10:{res:{sf:      0.95}}}{space 2}
 {space 0}{hline 13}{c  BT}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}

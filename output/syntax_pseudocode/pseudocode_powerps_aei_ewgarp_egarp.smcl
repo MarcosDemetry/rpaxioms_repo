@@ -1,36 +1,35 @@
-{com}. 
-. aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
-{res}
-{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:AEI}{space 1}{space 1}{ralign 9:Tol}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
-{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eWGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    .9056}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.00e-06}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
-{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
+{com}{sf}{ul off}{txt}r; t=0.02 12:51:47
 
-{com}. quietly return list
-{txt}
 {com}. 
-. powerps, price(P) quantity(X) axiom(eWGARP) efficiency(`r(AEI)')
+. *aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
+. *quietly return list
+. 
+. local AEI = .4598209857940674
+{txt}r; t=0.00 12:51:47
+
+{com}. 
+. powerps, price(P) quantity(X) axiom(eWGARP) efficiency(`AEI')
 {res}
-{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Sim}{space 1}{space 1}{ralign 9:Eff}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
-{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eWGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .748}}}{space 1}{space 1}{ralign 9:{res:{sf:     .748}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf: .9055848}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
-{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:AEI}{space 1}{space 1}{ralign 9:Sim}{space 1}{space 1}{ralign 9:Eff}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eWGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .423}}}{space 1}{space 1}{ralign 9:{res:{sf:     .423}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .4598211}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:  .459821}}}{space 1}{space 1}{ralign 9:{res:{sf:        4}}}{space 1}{space 1}{ralign 9:{res:{sf:     4048}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
  
 Summary statistics for simulations:
 {res}
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eWGARP}{space 1}{c |}{space 1}{ralign 9:Num_Vio}{space 1}{space 1}{ralign 9:Frac_Vio}{space 1}
+{space 0}{space 0}{ralign 12:eWGARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:    2.086}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.09874}}}{space 1}
-{space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 2.120165}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.115758}}}{space 1}
+{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .832}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1.790246}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
 {space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
 {space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
-{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        2}}}{space 1}{space 1}{ralign 9:{res:{sf:     1.05}}}{space 1}
-{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        3}}}{space 1}{space 1}{ralign 9:{res:{sf:     1.58}}}{space 1}
-{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       13}}}{space 1}{space 1}{ralign 9:{res:{sf:     6.84}}}{space 1}
+{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
+{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       39}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}
 
+r; t=15274.30 17:06:21
 
 {com}. 

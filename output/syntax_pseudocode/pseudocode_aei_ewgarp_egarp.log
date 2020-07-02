@@ -1,43 +1,28 @@
+r; t=0.01 12:45:21
+
 . 
 . use http://www.stata-press.com/data/r16/food.dta, clear
+r; t=1.85 12:45:23
 
 . 
 . mkmat p1 p2 p3 p4, matrix(P)
+r; t=0.12 12:45:23
 
 . 
-. mkmat w1 w2 w3 w4, matrix(X)
+. forvalues i = 1(1)4 {
+  2.         
+.         gen x`i' = w`i'* expfd/p`i'
+  3. 
+. }
+r; t=0.00 12:45:23
 
 . 
-. *********
-. import excel using "${datadir}/prices.xls", clear
-(5 vars, 20 obs)
+. mkmat x1 x2 x3 x4, matrix(X)
+r; t=0.11 12:45:23
 
 . 
-. mkmat A B C D E, matrix(P)
+end of do-file
 
-. 
-. import excel using "${datadir}/quantities.xls", clear
-(5 vars, 20 obs)
+r; t=2.11 12:45:23
+. do "C:\Users\MARCOS~1.DEM\AppData\Local\Temp\STD3254_000000.tmp"
 
-. 
-. mkmat A B C D E, matrix(X)
-
-. ***********
-. aei, price(P) quantity(X) tolerance(6)
-
-----------------------------------------------------------
-       Axiom |       AEI        Tol      Goods        Obs 
--------------+--------------------------------------------
-       eGARP |     .9056   1.00e-06          5         20 
-----------------------------------------------------------
-
-. 
-. aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
-
-----------------------------------------------------------
-       Axiom |       AEI        Tol      Goods        Obs 
--------------+--------------------------------------------
-      eWGARP |     .9056   1.00e-06          5         20 
-----------------------------------------------------------
-
-. 

@@ -1,17 +1,17 @@
 {com}. 
 . powerps, price(P) quantity(X) axiom(eGARP eHARP)
 {res}
-{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Sim}{space 1}{space 1}{ralign 9:Eff}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
-{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .995}}}{space 1}{space 1}{ralign 9:{res:{sf:    -.005}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
-{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
-{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:AEI}{space 1}{space 1}{ralign 9:Sim}{space 1}{space 1}{ralign 9:Eff}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .995}}}{space 1}{space 1}{ralign 9:{res:{sf:    -.005}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .9055851}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
+{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .8449687}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
  
 Summary statistics for simulations:
 {res}
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:Num_Vio}{space 1}{space 1}{ralign 9:Frac_Vio}{space 1}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   39.497}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.39415}}}{space 1}
 {space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 25.68762}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.759885}}}{space 1}
@@ -24,7 +24,7 @@ Summary statistics for simulations:
 
 {res}
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:Num_Vio}{space 1}{space 1}{ralign 9:Frac_Vio}{space 1}
+{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
 {space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
@@ -39,17 +39,17 @@ Summary statistics for simulations:
 {com}. 
 . powerps, price(P) quantity(X) axiom(eGARP eHARP) aei
 {res}
-{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Sim}{space 1}{space 1}{ralign 9:Eff}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
-{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .995}}}{space 1}{space 1}{ralign 9:{res:{sf:    -.005}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
-{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
-{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:AEI}{space 1}{space 1}{ralign 9:Sim}{space 1}{space 1}{ralign 9:Eff}{space 1}{space 1}{ralign 9:Goods}{space 1}{space 1}{ralign 9:Obs}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .995}}}{space 1}{space 1}{ralign 9:{res:{sf:    -.005}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .9055851}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
+{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .8449687}}}{space 1}{space 1}{ralign 9:{res:{sf:     1000}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        5}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
  
 Summary statistics for simulations:
 {res}
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:Num_Vio}{space 1}{space 1}{ralign 9:Frac_Vio}{space 1}{space 1}{ralign 9:AEI}{space 1}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}{space 1}{ralign 9:AEI}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   39.497}}}{space 1}{space 1}{ralign 9:{res:{sf: 10.39415}}}{space 1}{space 1}{ralign 9:{res:{sf:  .842074}}}{space 1}
 {space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 25.68762}}}{space 1}{space 1}{ralign 9:{res:{sf: 6.759885}}}{space 1}{space 1}{ralign 9:{res:{sf: .0814885}}}{space 1}
@@ -62,7 +62,7 @@ Summary statistics for simulations:
 
 {res}
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:Num_Vio}{space 1}{space 1}{ralign 9:Frac_Vio}{space 1}{space 1}{ralign 9:AEI}{space 1}
+{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}{space 1}{ralign 9:AEI}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: .7268926}}}{space 1}
 {space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .0760639}}}{space 1}
