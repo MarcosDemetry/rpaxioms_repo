@@ -22,13 +22,13 @@ cd "${stem}"
 
 di "Current directory: `c(pwd)'"
 
-gl codedir "${stem}/reproducing_results/code"
-gl datadir "${stem}/reproducing_results/data"
-gl outputdir "${stem}/reproducing_results/output"
+gl codedir "${stem}/rpaxioms_repo/code"
+gl datadir "${stem}/rpaxioms_repo/data"
+gl outputdir "${stem}/rpaxioms_repo/output"
 
 adopath + "${codedir}"
 
-adopath + "${stem}/reproducing_results/help_files"
+adopath + "${stem}/rpaxioms_repo/help_files"
 
 set rmsg on
 
@@ -52,5 +52,5 @@ do "${codedir}/figure2_and_3.do"
 do "${codedir}/syntax_pseudocode_for_paper.do"
 
 
-* Note: data for figures 2 & 3 come from overnight simulations and therefore
+* Note: data for figures 2 & 3 come from simulations that take time and therefore
 *		not created in this do-file in the interest of time.
