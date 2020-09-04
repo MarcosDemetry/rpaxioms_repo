@@ -293,11 +293,14 @@ program powerps, rclass sortpreserve
 		di as text "Summary statistics for simulations:"	
 		
 	}
-
+	
+	local allAxiomsDisplay ""
 	foreach ax of local axioms {
 		
 		local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
-			
+		
+		local allAxiomsDisplay "`allAxiomsDisplay' `axiomDisplay'"
+		
 		if ("`aei'" != "") {
 						
 		* Summary stats table
@@ -352,17 +355,17 @@ program powerps, rclass sortpreserve
 		else if ("`suppress'" != "") di ""
 
 		* Return list for several axioms
-		return scalar OBS_`ax'				= `obs'
-		return scalar GOODS_`ax'			= `goods'
-		return scalar EFF_`ax'				= `efficiency'
-		return scalar SIM_`ax'				= `simulations'
-		return scalar AEI_`ax'				= `AEI_`ax''
-		return scalar PASS_`ax'				= `PASS_`ax''
-		return scalar PS_`ax'				= `PS_`ax''
-		return scalar POWER_`ax'			= `P_`ax''
-		return local  AXIOM_`ax'			"`axiomDisplay'"
-		return matrix SIMRESULTS_`ax'		= `sim_`ax''
-		return matrix SUMSTATS_`ax'			= `sumStatsTable'
+		return scalar OBS						= `obs'
+		return scalar GOODS						= `goods'
+		return scalar EFF						= `efficiency'
+		return scalar SIM						= `simulations'
+		return scalar AEI_`axiomDisplay'		= `AEI_`ax''
+		return scalar PASS_`axiomDisplay'		= `PASS_`ax''
+		return scalar PS_`axiomDisplay'			= `PS_`ax''
+		return scalar POWER_`axiomDisplay'		= `P_`ax''
+		return local  AXIOM						"`allAxiomsDisplay'"
+		return matrix SIMRESULTS_`axiomDisplay'	= `sim_`ax''
+		return matrix SUMSTATS_`axiomDisplay'	= `sumStatsTable'
 
 	}
 
