@@ -240,7 +240,7 @@ program powerps, rclass sortpreserve
 
 	local first_ax = 1
 		
-	tempname rawResults sumStatsTable
+	tempname rawResults generalInfoTable sumStatsTable
 	
 	local goods `=colsof(`price')'
 	local obs 	`=rowsof(`price')'
@@ -267,7 +267,7 @@ program powerps, rclass sortpreserve
 		local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
 
 		* Raw output table
-		matrix `rawResults_`ax'' = `P_`ax'',  `PS_`ax'', `PASS_`ax'', `AEI_`ax'', `simulations', `efficiency', `goods', `obs'
+		matrix `rawResults_`ax'' = `P_`ax'',  `PS_`ax'', `PASS_`ax'', `AEI_`ax''
 		matrix rowname `rawResults_`ax'' = "`axiomDisplay'"
 
 		if 		`first_ax' == 1		matrix `rawResults' = `rawResults_`ax''
@@ -280,9 +280,15 @@ program powerps, rclass sortpreserve
 	* Combined main results table
 	if ("`suppress'"=="") {
 		
-		matrix colnames `rawResults' = Power PS Pass AEI Sim Eff Goods Obs
+		matrix colnames `rawResults' = Power PS Pass AEI
 		matlist `rawResults', border(top bottom) rowtitle("Axioms")
-			
+
+		matrix `generalInfoTable' = `obs', `goods', `simulations', `efficiency'
+		matrix `generalInfoTable' = `generalInfoTable''
+		matrix rowname `generalInfoTable' = "Observations" "Goods" "Simulations" "Efficiency" 
+		matrix colname `generalInfoTable' = "#"
+		matlist `generalInfoTable', border(top bottom) rowtitle("")
+
 		di " "
 		di as text "Summary statistics for simulations:"	
 		
