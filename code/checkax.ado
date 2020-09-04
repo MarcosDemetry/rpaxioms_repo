@@ -511,13 +511,7 @@ void esarp(pointer scalar FF, matrix P_temp, matrix X_temp, scalar eff)
 					
 						NUM_VIO++
 					}
-					
-					else if (RP[j,i] == 1 && DRP[i,j] == 1)  {
-					
-						NUM_VIO++
-					
-					}		/* Ends [i,j] & [j,i] */
-				
+									
 				}		/* Ends [j,i] & [i,j] */
 					
 			}		/* Ends if */
@@ -527,10 +521,6 @@ void esarp(pointer scalar FF, matrix P_temp, matrix X_temp, scalar eff)
 		
 		/* Ends for i */
 
-
-	// Adjust NUM_VIO
-	NUM_VIO = NUM_VIO/2
-		
 	// What is the fraction of violations?
 		// Total violations
 	TOT_VIO = T*(T-1)
@@ -617,12 +607,6 @@ void egarp(pointer scalar FF, matrix P_temp, matrix X_temp, scalar eff)
 					
 						NUM_VIO++
 					}
-					
-					else if (RP[j,i] == 1 && SDRP[i,j] == 1)  {
-					
-						NUM_VIO++
-					
-					}		/* Ends [i,j] & [j,i] */
 				
 				}		/* Ends [j,i] & [i,j] */
 					
@@ -632,10 +616,6 @@ void egarp(pointer scalar FF, matrix P_temp, matrix X_temp, scalar eff)
 	}		/* Ends for j */
 		
 		/* Ends for i */
-
-
-	// Adjust NUM_VIO
-	NUM_VIO = NUM_VIO/2
 
 	// What is the fraction of violations?
 		// Total violations
