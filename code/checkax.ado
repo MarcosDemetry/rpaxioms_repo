@@ -13,7 +13,6 @@
 			eHARP
 			eCM
 		<op2> := EFFiciency[(real 1)]
-		<op3> := SUPPRESS
 
 CAUTION: The option NOCHECK is not recommended if you are not a Stata programmer.
 		NOCHECK is used in user-written Stata commands aei and powerps
@@ -26,62 +25,13 @@ CAUTION: The option NOCHECK is not recommended if you are not a Stata programmer
 
 /* ================================================================== */
 
-* Program for displaying results
-program displayResults, rclass
-	
-	syntax, axiom(string) [SUPPRESS]
-	
-	local axiomDisplay = "e" + upper(substr("`axiom'", 2, strlen("`axiom'") - 1))
-		
-	* Return list results
-	local FC : di %3.2f scalar(r(FRAC_VIO))
-	return scalar 	EFF = r(EFF)
-	return scalar 	OBS = r(OBS)
-	return scalar 	GOODS = r(GOODS)
-	return scalar 	FRAC_VIO = `FC'
-	return scalar 	NUM_VIO = r(NUM_VIO)
-	return scalar 	PASS = r(PASS)
-	return local	AXIOM = "`axiomDisplay'"
-
-	if ("`suppress'"=="") {
-
-		* Output table
-		tempname outputTable
-
-		matrix `outputTable' = J(1, 6, .)
-		matrix colname `outputTable' =	Pass #vio %vio ///
-										Goods Obs Eff
-
-		matrix rowname `outputTable' =	"`axiomDisplay'"
-
-		matrix `outputTable'[1,1] = `r(PASS)'
-		matrix `outputTable'[1,2] = `r(NUM_VIO)'
-		matrix `outputTable'[1,3] = `r(FRAC_VIO)'
-		matrix `outputTable'[1,4] = `r(GOODS)'
-		matrix `outputTable'[1,5] = `r(OBS)'
-		matrix `outputTable'[1,6] = `r(EFF)'	
-
-		display ""
-		display "" 
-		matlist `outputTable', rowtitle("Axiom") ///
-			cspec(& %12s | %4.0g & %10.0g & %10.2f& %10.0f & %10.0f & %10.2f o2&) ///
-			rspec(---)
-	}
-
-	if ("`suppress'" != "") {
-
-	}
-
-
-end
-
 * Main program
-program checkax, sortpreserve
+program checkax, rclass sortpreserve
 	version 15.1
 
 	*User input
 	syntax, Price(string) Quantity(string) ///
-			[EFFiciency(real 1) AXiom(string) SUPPRESS NOCHECK]
+			[EFFiciency(real 1) AXiom(string) NOCHECK]
 
 					*******************************
 					*** Checking data structure ***
@@ -129,43 +79,117 @@ program checkax, sortpreserve
 	}
 
 	** Option nr 2:
-	* Which axiom does the user want to check?
+	* Which axiom(s) does the user want to check?
+	* And creating necessary scalars, vectors and tempnames accordingly.
+	local tempname_prefix Pass Num_vio Frac_vio rawResults
+
 	local axiom = lower("`axiom'")
 	
-	if ("`axiom'"=="") local axiom egarp	/* eGARP set to default */
-	else if !inlist("`axiom'", "egarp", "ewgarp", "esarp", "ewarp", "eharp", "ecm") {
-		display as error 	" Axiom() must be either eGARP, eWGARP, eSARP, " ///
-							"eWARP, eHARP or eCM; case-insensitive."
-		display as error 	" If not specified, the default setting for " ///
-							" Axiom() is eGARP"
-		exit 198 /* "Invalid syntax --> range invalid" error */
+	if ("`axiom'"=="")		local axiom egarp	/* eGARP set to default */
+	
+	if ("`axiom'"=="all")	local axiom egarp ewgarp esarp ewarp eharp ecm
+
+
+	tokenize `axiom'
+	local axioms "`1' `2' `3' `4' `5' `6'"
+
+	foreach ax of local axioms {
+
+		if !inlist("`ax'", "egarp", "ewgarp", "esarp", "ewarp", "eharp", "ecm") {
+			display as error 	" Axiom() must be either eGARP, eWGARP, eSARP, " ///
+								"eWARP, eHARP or eCM; case-insensitive."
+			display as error 	" If not specified, the default setting for " ///
+								" Axiom() is eGARP"
+			exit 198 /* "Invalid syntax --> range invalid" error */
+		}
+		
+		else {
+			
+			foreach temp of local tempname_prefix {
+			
+				tempname `temp'_`ax'
+			
+			}
+		
+		}
+		
+	
 	}
 
-	** Option nr 3:
-	* Does the user want to display output?
-	if ("`suppress'"=="") local suppress ""		/* Full table set to default */
-	else if ("`suppress'"!="") local suppress "suppress"
-						
 						**************
 						*** AXIOMS ***
 						**************
 
-	** AXIOM 1 & 2
-	if inlist("`axiom'", "ewgarp", "ewarp") {
+	local goods `=colsof(`price')'
+	local obs 	`=rowsof(`price')'
+		
+	local first_ax = 1
 	
-		mata: `axiom'("`price'", "`quantity'", `efficiency')
-		displayResults, axiom("`axiom'") `suppress'
+	local allAxiomsDisplay ""
+	
+	tempname rawResults generalInfoTable
+	
+	foreach ax of local axioms {
+		
+		** AXIOM 1 & 2
+		if inlist("`ax'", "ewgarp", "ewarp") {
+		
+			mata: `ax'("`price'", "`quantity'", `efficiency')
+			local PASS_`ax' = r(PASS)
+			local NUM_VIO_`ax' = r(NUM_VIO)
+			local FC_`ax': di %3.2f scalar(r(FRAC_VIO))
+			local FRAC_VIO_`ax' = `FC_`ax''
+			
+		}
+
+		** AXIOM 3, 4, 5 & 6
+		else if inlist("`ax'", "esarp", "egarp", "eharp", "ecm") {
+		
+			mata: `ax'(&FastFloyd5(), "`price'", "`quantity'", `efficiency')
+			local PASS_`ax' = r(PASS)
+			local NUM_VIO_`ax' = r(NUM_VIO)
+			local FC_`ax': di %3.2f scalar(r(FRAC_VIO))
+			local FRAC_VIO_`ax' = `FC_`ax''
+			
+		}
+	
+	** Creating output & return list tables
+	local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
+	
+	local allAxiomsDisplay "`allAxiomsDisplay' `axiomDisplay'"
+		
+	* Creating output table
+	matrix `rawResults_`ax'' = `PASS_`ax'', `NUM_VIO_`ax'', `FRAC_VIO_`ax''
+	matrix rowname `rawResults_`ax'' = "`axiomDisplay'"
+
+	if 		`first_ax' == 1		matrix `rawResults' = `rawResults_`ax''
+	else if `first_ax'  > 1		matrix `rawResults' = `rawResults' \ `rawResults_`ax''
+		
+	local first_ax = `first_ax' + 1
+	
+	
+	* Return list for several axioms
+	return scalar OBS						= `obs'
+	return scalar GOODS						= `goods'
+	return scalar EFF						= `efficiency'
+	return scalar PASS_`axiomDisplay'		= `PASS_`ax''
+	return scalar NUM_VIO_`axiomDisplay'	= `NUM_VIO_`ax''
+	return scalar FRAC_VIO_`axiomDisplay'	= `FRAC_VIO_`ax''
 	
 	}
-
-	** AXIOM 3, 4, 5 & 6
-	else if inlist("`axiom'", "esarp", "egarp", "eharp", "ecm") {
 	
-		mata: `axiom'(&FastFloyd5(), "`price'", "`quantity'", `efficiency')
-		displayResults, axiom("`axiom'") `suppress'
-
-	}
-
+	return local  AXIOM						"`allAxiomsDisplay'"
+		
+	* Displaying output table
+	matrix `generalInfoTable' = `obs', `goods', `efficiency'
+	matrix `generalInfoTable' = `generalInfoTable''
+	matrix rowname `generalInfoTable' = "Observations" "Goods" "Efficiency"
+	matrix colname `generalInfoTable' = "#"
+	matlist `generalInfoTable', border(top bottom) rowtitle("")
+	
+	
+	matrix colnames `rawResults' = Pass #vio %vio
+	matlist `rawResults', border(top bottom) rowtitle("Axiom")
 
 end
 

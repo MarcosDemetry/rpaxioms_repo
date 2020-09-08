@@ -35,7 +35,6 @@ program powerps, rclass sortpreserve
 				PROGRESSbar					///
 				SEED(real 12345)			///
 				SIMulations(real 1000)		///
-				SUPPRESS					///
 				TOLerance(real 12)]
 
 					*******************************
@@ -162,18 +161,19 @@ program powerps, rclass sortpreserve
 			mata: genXS("`gmat'", `rT', `rK', "`te'", "`price'", `i')
 			 	 
 			foreach ax of local axioms {
+				local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
 	
 				** Checkax results
-				checkax, price("`price'") quantity("simulated_quantities") ///
-						efficiency(`efficiency') axiom("`ax'") suppress nocheck
+				quietly checkax, price("`price'") quantity("simulated_quantities") ///
+						efficiency(`efficiency') axiom("`ax'") nocheck
 				quietly return list
 
-				local P_`ax' = `P_`ax'' + (1 - r(PASS))
+				local P_`ax' = `P_`ax'' + (1 - r(PASS_`axiomDisplay'))
 
 				* Number of violations per axiom and subject
-				local Num_Vio	= r(NUM_VIO)
+				local Num_Vio	= r(NUM_VIO_`axiomDisplay')
 				* Fraction of violations per axiom and subject
-				local Frac_Vio	= r(FRAC_VIO)
+				local Frac_Vio	= r(FRAC_VIO_`axiomDisplay')
 
 				matrix `sim_`ax''[`i',1] = `Num_Vio'
 				matrix `sim_`ax''[`i',2] = `Frac_Vio'
@@ -181,11 +181,11 @@ program powerps, rclass sortpreserve
 				if ("`aei'" != "") {
 								 
 					** AEI results
-					aei, price("`price'") quantity("simulated_quantities") ///
-						axiom("`ax'") suppress tolerance(`tolerance')
+					quietly aei, price("`price'") quantity("simulated_quantities") ///
+						axiom("`ax'") tolerance(`tolerance')
 					quietly return list
 								
-					local aei_efficiency = r(AEI)
+					local aei_efficiency = r(AEI_`axiomDisplay')
 								
 					matrix `sim_`ax''[`i',3] = `aei_efficiency'
 
@@ -202,19 +202,20 @@ program powerps, rclass sortpreserve
 			mata: genXS("`gmat'", `rT', `rK', "`te'", "`price'", `i')
 			 	
 			foreach ax of local axioms {
+				local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
 	
 				** Checkax results
 				
-				checkax, price("`price'") quantity("simulated_quantities") ///
-						efficiency(`efficiency') axiom("`ax'") suppress nocheck
+				quietly checkax, price("`price'") quantity("simulated_quantities") ///
+						efficiency(`efficiency') axiom("`ax'") nocheck
 				quietly return list
 
-				local P_`ax' = `P_`ax'' + (1 - r(PASS))
+				local P_`ax' = `P_`ax'' + (1 - r(PASS_`axiomDisplay'))
 
 				* Number of violations per axiom and subject
-				local Num_Vio = r(NUM_VIO)
+				local Num_Vio = r(NUM_VIO_`axiomDisplay')
 				* Fraction of violations per axiom and subject
-				local Frac_Vio = r(FRAC_VIO)
+				local Frac_Vio = r(FRAC_VIO_`axiomDisplay')
 
 				matrix `sim_`ax''[`i',1] = `Num_Vio'
 				matrix `sim_`ax''[`i',2] = `Frac_Vio'
@@ -222,11 +223,11 @@ program powerps, rclass sortpreserve
 				if ("`aei'" != "") {
 
 					** AEI results
-					aei, price("`price'") quantity("simulated_quantities") ///
-						axiom("`ax'") suppress  tolerance(`tolerance')
+					quietly aei, price("`price'") quantity("simulated_quantities") ///
+						axiom("`ax'") tolerance(`tolerance')
 					quietly return list
 								
-					local aei_efficiency = r(AEI)
+					local aei_efficiency = r(AEI_`axiomDisplay')
 								
 					matrix `sim_`ax''[`i',3] = `aei_efficiency'
 
@@ -246,21 +247,22 @@ program powerps, rclass sortpreserve
 	local obs 	`=rowsof(`price')'
 			
 	foreach ax of local axioms {
-
+		local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
+	
 		local P_`ax' = `P_`ax''/`simulations'
 
-		checkax, price("`price'") quantity("`quantity'") ///
-			efficiency(`efficiency') axiom("`ax'") suppress nocheck
+		quietly checkax, price("`price'") quantity("`quantity'") ///
+			efficiency(`efficiency') axiom("`ax'") nocheck
 				
 		quietly return list
 			
-		local PASS_`ax' = r(PASS)
+		local PASS_`ax' = r(PASS_`axiomDisplay')
 		local PS_`ax'	= `PASS_`ax'' - (1 - `P_`ax'')
 		
-		aei, price("`price'") quantity("`quantity'") ///
-			axiom("`ax'") suppress
+		quietly aei, price("`price'") quantity("`quantity'") ///
+			axiom("`ax'")
 		
-		local AEI_`ax' = r(AEI)
+		local AEI_`ax' = r(AEI_`axiomDisplay')
 				
 		
 		** Creating output & return list tables

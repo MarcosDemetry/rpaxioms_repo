@@ -12,8 +12,7 @@
 			eSARP
 			eHARP
 			eCM
-		<op2> := SUPPRESS
-		<op3> := TOLerance[(real 1*10^-12)]
+		<op2> := TOLerance[(real 1*10^-12)]
 
 */
 
@@ -25,7 +24,7 @@ program aei, rclass sortpreserve
 
 	*User input
 	syntax, Price(string) Quantity(string) /// 
-			[TOLerance(real 12) AXiom(string) SUPPRESS]
+			[TOLerance(real 12) AXiom(string)]
 	
 					*******************************
 					*** Checking data structure ***
@@ -90,33 +89,61 @@ program aei, rclass sortpreserve
 
 
 	** Option nr 2:
-	* Which axiom does the user want to check?
+	* Which axiom(s) does the user want to check?
+	* And creating necessary scalars, vectors and tempnames accordingly.
+
 	local axiom = lower("`axiom'")
 	
-	if ("`axiom'"=="") local axiom egarp	/* eGARP set to default */
-	else if !inlist("`axiom'", "egarp", "ewgarp", "esarp", "ewarp", "eharp", "ecm") {
-		display as error 	" Axiom() must be either eGARP, eWGARP, eSARP," ///
-							" eWARP, eHARP or eCM; case-insensitive."
-		display as error 	" If not specified, the default setting for Axiom() is eGARP"
-		exit 198 /* "Invalid syntax --> range invalid" error */
-	}
+	if ("`axiom'"=="")		local axiom egarp	/* eGARP set to default */
+	
+	if ("`axiom'"=="all")	local axiom egarp ewgarp esarp ewarp eharp ecm
 
+
+	tokenize `axiom'
+	local axioms "`1' `2' `3' `4' `5' `6'"
+
+	foreach ax of local axioms {
+
+		if !inlist("`ax'", "egarp", "ewgarp", "esarp", "ewarp", "eharp", "ecm") {
+			display as error 	" Axiom() must be either eGARP, eWGARP, eSARP, " ///
+								"eWARP, eHARP or eCM; case-insensitive."
+			display as error 	" If not specified, the default setting for " ///
+								" Axiom() is eGARP"
+			exit 198 /* "Invalid syntax --> range invalid" error */
+		}
+		
+		else {
+			
+			tempname AEI_`ax'
+			tempname rawResults_`ax'
+			
+		}
+	
+	}
+	
 				************************************		
 				*** Estimating Afriat Efficiency ***
 				************************************
 
+local goods `=colsof(`price')'
+local obs 	`=rowsof(`price')'
 	
-	checkax, price("`price'") quantity("`quantity'") efficiency(1) ///
-			axiom("`axiom'") suppress nocheck
+local first_ax = 1				
+	
+tempname rawResults generalInfoTable
+
+foreach ax of local axioms {
+		
+	local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
+
+	quietly checkax, price("`price'") quantity("`quantity'") efficiency(1) ///
+			axiom("`ax'") nocheck
 	quietly return list
 
 	
-	if `r(PASS)' == 1 {
-		
-		return scalar	OBS			= r(OBS)
-		return scalar	GOODS		= r(GOODS)
-		return scalar	TOL		 	= `tolerance'
-		return scalar 	AEI 		= r(EFF)	
+	if `r(PASS_`axiomDisplay')' == 1 {
+		return scalar AEI_`axiomDisplay'	= `r(EFF)'
+		local AEI_`ax' = `r(EFF)'
 	}
 
 	else {
@@ -135,11 +162,11 @@ program aei, rclass sortpreserve
 
 			local eev = `eevaluate'
 			
-			checkax, price("`price'") quantity("`quantity'") efficiency(`eev') ///
-					axiom("`axiom'") suppress nocheck
+			quietly checkax, price("`price'") quantity("`quantity'") efficiency(`eev') ///
+					axiom("`ax'") nocheck
 			quietly return list
 			
-			if `r(PASS)' == 1 {
+			if `r(PASS_`axiomDisplay')' == 1 {
 				
 				quietly replace `elower' = `eevaluate'
 
@@ -153,41 +180,44 @@ program aei, rclass sortpreserve
 					
 		}
 			
-
-		return scalar	OBS			= r(OBS)
-		return scalar	GOODS		= r(GOODS)
-		return scalar	TOL 		= `tolerance'
-		return scalar 	AEI 		= r(EFF)	
+		return scalar AEI_`axiomDisplay'	= `r(EFF)'
+		local AEI_`ax' = `r(EFF)'
+		
 	}
 	
+	local allAxiomsDisplay "`allAxiomsDisplay' `axiomDisplay'"
 	
-	** Display Output **
-	local axiomDisplay = "e" + upper(substr("`axiom'", 2, strlen("`axiom'") - 1))
+	** Creating output table
+	matrix `rawResults_`ax'' = `AEI_`ax''
+	matrix rowname `rawResults_`ax'' = "`axiomDisplay'"
 
-	return local AXIOM "`axiomDisplay'"
+	if 		`first_ax' == 1		matrix `rawResults' = `rawResults_`ax''
+	else if `first_ax'  > 1		matrix `rawResults' = `rawResults' \ `rawResults_`ax''
+	
+	
+	local first_ax = `first_ax' + 1
+	
 
-	if ("`suppress'" == "") {
-		local aeiDisplay : di %6.4f scalar(r(EFF))
-		
-		tempname outputTable
-		
-		matrix `outputTable' = J(1, 4, .)
-		matrix colname `outputTable' = AEI Tol Goods Obs
-		matrix rowname `outputTable' = "`axiomDisplay'"
-		
-		matrix `outputTable'[1,1] = `aeiDisplay'
-		matrix `outputTable'[1,2] = `tolerance'
-		matrix `outputTable'[1,3] = `r(GOODS)'
-		matrix `outputTable'[1,4] = `r(OBS)'
+}
 
-		matlist `outputTable', rowtitle("Axiom") border(top bottom)
-				
-	}
+	** General return list
+	return local AXIOM "`allAxiomsDisplay'"
+
+	return scalar OBS					= `obs'
+	return scalar GOODS					= `goods'
+	return scalar TOL	 				= `tolerance'
 	
-	if ("`suppress'" != "") {
+	* Displaying output table
+	matrix `generalInfoTable' = `obs', `goods', `tolerance'
+	matrix `generalInfoTable' = `generalInfoTable''
+	matrix rowname `generalInfoTable' = "Observations" "Goods" "Tolerance"
+	matrix colname `generalInfoTable' = "#"
+	matlist `generalInfoTable', border(top bottom) rowtitle("")
 	
-	}
 	
+	matrix colnames `rawResults' = AEI
+	matlist `rawResults', border(top bottom) rowtitle("Axiom")
+
 end
 
 mata
