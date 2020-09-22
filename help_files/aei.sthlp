@@ -28,8 +28,6 @@ In total, there are six axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, 
 
 {synopt :{opth tol:erance(aei##options:tolerance)}} tolerance level in termination criterion 10^-2{it:n}}; default is {bf:tolerance(12)}.{p_end}
 
-{synopt :{opth suppress:(aei##options:suppress)}} suppress output table; default is {bf: suppress} {it: not} specified.{p_end}
-
 
 {marker description}{...}
 {title:Description}
@@ -46,7 +44,7 @@ calculates the power against uniform random behavior and predictive success for 
 {cmd: aei} is dependent on {cmd: checkax}.
 
 {pstd}
-For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) "Testing Axioms of Revealed Preference". IFN Working Paper No. 1342}.
+For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) {browse "https://www.ifn.se/publikationer/working_papers/2020/1342" :"Testing Axioms of Revealed Preference in Stata"}. IFN Working Paper No. 1342}.
 
 {marker options}{...}
 {dlgtab: Options }
@@ -59,24 +57,21 @@ For example, {bf: tolerance(6)} sets the tolerance level in the termination crit
 {bf: tolerance(12)}, which gives the default tolerance level 10^-12. The integer {it: n} in the termination criterion 10^-{it:n}
 cannot be smaller than 1 or larger than 18.{p_end}
 
-{synopt :suppress} specifies that the user does not want the results displayed in a table.
-The default is that {bf: suppress} is {it: not} specified. Whether or not this option is specified, the command results are retrievable from {bf: return list}.{p_end}
-
 {marker results}{...}
 {title:Stored results}
 
 {pstd}
-{cmd:aei} stores the following in {cmd:r()}:
+{cmd:aei} stores the following in {cmd:r()}. Notice that results are suffixed by the {it:axiom} being tested except for results that apply to all axioms, i.e. number of goods and observations, and tolerance level.
 
 {synoptset 15 tabbed}{...}
 {p2col 5 15 19 2: Scalars}{p_end}
-{synopt:{cmd:r(AEI)}}AEI for the axiom being tested{p_end}
+{synopt:{cmd:r(AEI_{it:axiom})}}AEI for the axiom being tested{p_end}
 {synopt:{cmd:r(TOL)}}tolerance level for termination criterion{p_end}
 {synopt:{cmd:r(GOODS)}}number of goods in the data{p_end}
 {synopt:{cmd:r(OBS)}}number of observations in the data{p_end}
 
 {p2col 5 15 19 2: Macros}{p_end}
-{synopt:{cmd:r(AXIOM)}}axiom being tested{p_end}
+{synopt:{cmd:r(AXIOM)}}axiom(s) being tested{p_end}
 
 {marker authors}{...}
 {title:Authors}
