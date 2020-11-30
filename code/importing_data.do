@@ -100,7 +100,11 @@ matrix X_NOTOK[1,3] = 0
 matrix X_NOTOK[1,4] = 0
 matrix X_NOTOK[1,5] = 0
 
-	
+
+
+*matrix P = P[1..4,1..5]
+*matrix X = X[1..4,1..5]
+
 }
 
 

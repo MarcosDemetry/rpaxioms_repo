@@ -1,25 +1,35 @@
+r; t=0.00 13:15:43
+
 . 
 . aei, price(P) quantity(X)
 
-----------------------------------------------------------
-       Axiom |       AEI        Tol      Goods        Obs 
--------------+--------------------------------------------
-       eGARP |     .9056   1.00e-12          5         20 
-----------------------------------------------------------
+    Number of obs           =         20 
+    Number of goods         =          5 
+    Tolerance level         =    1.0e-12 
+
+-------------------------
+       Axiom |       AEI 
+-------------+-----------
+       eGARP |  .9055851 
+-------------------------
+r; t=0.21 13:15:43
 
 . 
-. aei, price(P) quantity(X) axiom(eGARP) tolerance(6) suppress
+. quietly aei, price(P) quantity(X) axiom(eGARP eHARP) tolerance(6)
+r; t=0.25 13:15:44
 
 . 
 . return list
 
 scalars:
-                r(AEI) =  .9055848121643066
                 r(TOL) =  1.00000000000e-06
               r(GOODS) =  5
                 r(OBS) =  20
+          r(AEI_eHARP) =  .844968318939209
+          r(AEI_eGARP) =  .9055848121643066
 
 macros:
-              r(AXIOM) : "eGARP"
+              r(AXIOM) : " eGARP eHARP"
+r; t=0.00 13:15:44
 
 . 

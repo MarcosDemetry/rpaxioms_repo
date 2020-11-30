@@ -45,12 +45,18 @@ do "${codedir}/table1_and_2.do"
 * Results; Figure 1
 do "${codedir}/figure1.do"
 
+* Results; Table 3
+do "${codedir}/table3.do"
+
+* Data for figure 2 & 3
+*do "${codedir}/figure2_and_3_data.do"						// Apprx. 102 hours 
+
 * Results; Figure 2 & 3
 do "${codedir}/figure2_and_3.do"
 
 * Syntax & Pseudocode for paper
-do "${codedir}/syntax_pseudocode_for_paper.do"
+do "${codedir}/syntax_pseudocode_for_paper.do"	
 
+* Results; Aggregated household consumption (Poi data)
+*do "${codedir}/aggregated_household_consumption.do"		// Apprx. 16.3 hours
 
-* Note: data for figures 2 & 3 come from simulations that take time and therefore
-*		not created in this do-file in the interest of time.

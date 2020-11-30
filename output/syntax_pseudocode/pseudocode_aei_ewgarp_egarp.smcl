@@ -1,12 +1,12 @@
-{com}{sf}{ul off}{txt}r; t=0.01 12:45:21
+{com}{sf}{ul off}{txt}r; t=0.01 8:45:27
 
 {com}. 
 . use http://www.stata-press.com/data/r16/food.dta, clear
-{txt}r; t=1.85 12:45:23
+{txt}r; t=1.87 8:45:28
 
 {com}. 
 . mkmat p1 p2 p3 p4, matrix(P)
-{res}{txt}r; t=0.12 12:45:23
+{res}{txt}r; t=0.14 8:45:29
 
 {com}. 
 . forvalues i = 1(1)4 {c -(}
@@ -14,15 +14,26 @@
 .         gen x`i' = w`i'* expfd/p`i'
 {txt}  3{com}. 
 . {c )-}
-{txt}r; t=0.00 12:45:23
+{txt}r; t=0.00 8:45:29
 
 {com}. 
 . mkmat x1 x2 x3 x4, matrix(X)
-{res}{txt}r; t=0.11 12:45:23
+{res}{txt}r; t=1.48 8:45:30
 
 {com}. 
-{txt}end of do-file
+. aei, price(P) quantity(X) tolerance(6)
+{res}
+{txt}{space 0}{space 0}{ralign 30:Number of obs           = }{space 1}{space 1}{ralign 8:{res:{sf:    4048}}}{space 1}
+{space 0}{space 0}{ralign 30:Number of goods         = }{space 1}{space 1}{ralign 8:{res:{sf:       4}}}{space 1}
+{space 0}{space 0}{ralign 30:Tolerance level         = }{space 1}{space 1}{ralign 8:{res:{sf: 1.0e-06}}}{space 1}
+{res}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}
+{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:AEI}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .459821}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}
+r; t=43248.81 20:46:20
 
-r; t=2.11 12:45:23
-{com}. do "C:\Users\MARCOS~1.DEM\AppData\Local\Temp\STD3254_000000.tmp"
-{txt}
+{com}. 
+. *aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
+. 

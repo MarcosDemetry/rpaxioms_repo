@@ -1,12 +1,12 @@
-r; t=0.01 12:45:21
+r; t=0.01 8:45:27
 
 . 
 . use http://www.stata-press.com/data/r16/food.dta, clear
-r; t=1.85 12:45:23
+r; t=1.87 8:45:28
 
 . 
 . mkmat p1 p2 p3 p4, matrix(P)
-r; t=0.12 12:45:23
+r; t=0.14 8:45:29
 
 . 
 . forvalues i = 1(1)4 {
@@ -14,15 +14,26 @@ r; t=0.12 12:45:23
 .         gen x`i' = w`i'* expfd/p`i'
   3. 
 . }
-r; t=0.00 12:45:23
+r; t=0.00 8:45:29
 
 . 
 . mkmat x1 x2 x3 x4, matrix(X)
-r; t=0.11 12:45:23
+r; t=1.48 8:45:30
 
 . 
-end of do-file
+. aei, price(P) quantity(X) tolerance(6)
 
-r; t=2.11 12:45:23
-. do "C:\Users\MARCOS~1.DEM\AppData\Local\Temp\STD3254_000000.tmp"
+    Number of obs           =       4048 
+    Number of goods         =          4 
+    Tolerance level         =    1.0e-06 
 
+-------------------------
+       Axiom |       AEI 
+-------------+-----------
+       eGARP |   .459821 
+-------------------------
+r; t=43248.81 20:46:20
+
+. 
+. *aei, price(P) quantity(X) axiom(eWGARP) tolerance(6)
+. 

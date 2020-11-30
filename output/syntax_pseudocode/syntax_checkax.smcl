@@ -1,51 +1,66 @@
+{com}{sf}{ul off}{txt}r; t=0.00 13:15:33
+
 {com}. 
 . import excel using "${c -(}datadir{c )-}/prices.xls", clear
-{res}{text}(5 vars, 20 obs)
+{res}{txt}r; t=0.10 13:15:33
 
 {com}. 
 . mkmat A B C D E, matrix(P)
-{res}{txt}
+{res}{txt}r; t=0.00 13:15:33
+
 {com}. 
 . import excel using "${c -(}datadir{c )-}/quantities.xls", clear
-{res}{text}(5 vars, 20 obs)
+{res}{txt}r; t=0.00 13:15:33
 
 {com}. 
 . mkmat A B C D E, matrix(X)
-{res}{txt}
+{res}{txt}r; t=0.00 13:15:33
+
 {com}. 
 . checkax, price(P) quantity(X)
 {res}
-
-
-{txt}{space 0}{hline 13}{c  TT}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
-{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 4:Pass}{space 1}{space 1}{ralign 10:#vio}{space 1}{space 1}{ralign 10:%vio}{space 1}{space 1}{ralign 10:Goods}{space 1}{space 1}{ralign 10:Obs}{space 1}{space 1}{ralign 10:Eff}{space 2}
-{space 0}{hline 13}{c   +}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 4:{res:{sf:   0}}}{space 1}{space 1}{ralign 10:{res:{sf:       136}}}{space 1}{space 1}{ralign 10:{res:{sf:     35.79}}}{space 1}{space 1}{ralign 10:{res:{sf:         5}}}{space 1}{space 1}{ralign 10:{res:{sf:        20}}}{space 1}{space 1}{ralign 10:{res:{sf:      1.00}}}{space 2}
-{space 0}{hline 13}{c  BT}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
+{txt}{space 10}{space 0}{ralign 30:Number of obs           = }{space 1}{space 1}{ralign 5:{res:{sf:   20}}}{space 1}
+{space 10}{space 0}{ralign 30:Number of goods         = }{space 1}{space 1}{ralign 5:{res:{sf:    5}}}{space 1}
+{space 10}{space 0}{ralign 30:Efficiency level        = }{space 1}{space 1}{ralign 5:{res:{sf:    1}}}{space 1}
+{res}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      161}}}{space 1}{space 1}{ralign 9:{res:{sf:    42.37}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}
+r; t=0.00 13:15:33
 
 {com}. 
-. checkax, price(P) quantity(X) axiom(eHARP) efficiency(0.95)
+. checkax, price(P) quantity(X) axiom(eGARP eHARP) efficiency(0.95)
 {res}
-
-
-{txt}{space 0}{hline 13}{c  TT}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
-{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 4:Pass}{space 1}{space 1}{ralign 10:#vio}{space 1}{space 1}{ralign 10:%vio}{space 1}{space 1}{ralign 10:Goods}{space 1}{space 1}{ralign 10:Obs}{space 1}{space 1}{ralign 10:Eff}{space 2}
-{space 0}{hline 13}{c   +}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
-{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 4:{res:{sf:   0}}}{space 1}{space 1}{ralign 10:{res:{sf:        20}}}{space 1}{space 1}{ralign 10:{res:{sf:    100.00}}}{space 1}{space 1}{ralign 10:{res:{sf:         5}}}{space 1}{space 1}{ralign 10:{res:{sf:        20}}}{space 1}{space 1}{ralign 10:{res:{sf:      0.95}}}{space 2}
-{space 0}{hline 13}{c  BT}{hline 6}{hline 12}{hline 12}{hline 12}{hline 12}{hline 13}
+{txt}{space 10}{space 0}{ralign 30:Number of obs           = }{space 1}{space 1}{ralign 5:{res:{sf:   20}}}{space 1}
+{space 10}{space 0}{ralign 30:Number of goods         = }{space 1}{space 1}{ralign 5:{res:{sf:    5}}}{space 1}
+{space 10}{space 0}{ralign 30:Efficiency level        = }{space 1}{space 1}{ralign 5:{res:{sf:  .95}}}{space 1}
+{res}
+{txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      104}}}{space 1}{space 1}{ralign 9:{res:{sf:    27.37}}}{space 1}
+{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}
+r; t=0.00 13:15:33
 
 {com}. 
 . return list
 
 {txt}scalars:
-               r(PASS) =  {res}0
-            {txt}r(NUM_VIO) =  {res}20
-           {txt}r(FRAC_VIO) =  {res}100
+     r(FRAC_VIO_eHARP) =  {res}100
+      {txt}r(NUM_VIO_eHARP) =  {res}20
+         {txt}r(PASS_eHARP) =  {res}0
+                {txt}r(EFF) =  {res}.95
               {txt}r(GOODS) =  {res}5
                 {txt}r(OBS) =  {res}20
-                {txt}r(EFF) =  {res}.95
+     {txt}r(FRAC_VIO_eGARP) =  {res}27.37
+      {txt}r(NUM_VIO_eGARP) =  {res}104
+         {txt}r(PASS_eGARP) =  {res}0
 
 {txt}macros:
-              r(AXIOM) : "{res}eHARP{txt}"
+              r(AXIOM) : "{res} eGARP eHARP{txt}"
+r; t=0.00 13:15:33
 
 {com}. 

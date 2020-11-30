@@ -96,19 +96,19 @@ program aei, rclass sortpreserve
 	
 	if ("`axiom'"=="")		local axiom egarp	/* eGARP set to default */
 	
-	if ("`axiom'"=="all")	local axiom egarp ewgarp esarp ewarp eharp ecm
+	if ("`axiom'"=="all")	local axiom egarp esgarp ewgarp esarp ewarp eharp ecm
 
 
 	tokenize `axiom'
-	local axioms "`1' `2' `3' `4' `5' `6'"
+	local axioms "`1' `2' `3' `4' `5' `6' `7'"
 
 	foreach ax of local axioms {
 
-		if !inlist("`ax'", "egarp", "ewgarp", "esarp", "ewarp", "eharp", "ecm") {
-			display as error 	" Axiom() must be either eGARP, eWGARP, eSARP, " ///
+		if !inlist("`ax'", "egarp", "ewgarp", "esgarp", "esarp", "ewarp", "eharp", "ecm") {
+			display as error 	" Axiom() must be either eGARP, eWGARP, eSGARP, eSARP, " ///
 								"eWARP, eHARP or eCM; case-insensitive."
 			display as error 	" If not specified, the default setting for " ///
-								" Axiom() is eGARP"
+								" Axiom() is eGARP."
 			exit 198 /* "Invalid syntax --> range invalid" error */
 		}
 		
@@ -210,10 +210,13 @@ foreach ax of local axioms {
 	* Displaying output table
 	matrix `generalInfoTable' = `obs', `goods', `tolerance'
 	matrix `generalInfoTable' = `generalInfoTable''
-	matrix rowname `generalInfoTable' = "Observations" "Goods" "Tolerance"
-	matrix colname `generalInfoTable' = "#"
-	matlist `generalInfoTable', border(top bottom) rowtitle("")
+	matrix rowname `generalInfoTable' = "	Number of obs		= " ///
+										"	Number of goods		= " ///
+										"	Tolerance level		= "
 	
+	matrix colname `generalInfoTable' = "#"
+	matlist `generalInfoTable', border(none) lines(none) ///
+		format(%8.2g) names(rows) left(0) twidth(30)
 	
 	matrix colnames `rawResults' = AEI
 	matlist `rawResults', border(top bottom) rowtitle("Axiom")

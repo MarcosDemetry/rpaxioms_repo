@@ -1,27 +1,31 @@
 . 
 . powerps, price(P) quantity(X) axiom(eGARP eHARP)
 
-------------------------------------------------------------------------------------------------------
-      Axioms |     Power         PS       Pass        AEI        Sim        Eff      Goods        Obs 
--------------+----------------------------------------------------------------------------------------
-       eGARP |      .995      -.005          0   .9055851       1000          1          5         20 
-       eHARP |         1          0          0   .8449687       1000          1          5         20 
-------------------------------------------------------------------------------------------------------
+                       Number of obs           =        20 
+                       Number of goods         =         5 
+                       Simulations             =      1000 
+                       Efficiency level        =         1 
+
+----------------------------------------------------------
+      Axioms |     Power         PS       Pass        AEI 
+-------------+--------------------------------------------
+       eGARP |      .995      -.005          0   .9055851 
+       eHARP |         1          0          0   .8449687 
+----------------------------------------------------------
  
 Summary statistics for simulations:
 
 ------------------------------------
        eGARP |      #vio       %vio 
 -------------+----------------------
-        Mean |    39.497   10.39415 
-   Std. Dev. |  25.68762   6.759885 
+        Mean |    47.339   12.45762 
+   Std. Dev. |  29.45589   7.751351 
          Min |         0          0 
-          Q1 |        18       4.74 
-      Median |        37       9.74 
-          Q3 |        59      15.53 
-         Max |       120      31.58 
+          Q1 |        24       6.32 
+      Median |        45      11.84 
+          Q3 |      68.5     18.025 
+         Max |       143      37.63 
 ------------------------------------
-
 
 ------------------------------------
        eHARP |      #vio       %vio 
@@ -35,31 +39,34 @@ Summary statistics for simulations:
          Max |        20        100 
 ------------------------------------
 
-
 . 
-. powerps, price(P) quantity(X) axiom(eGARP eHARP) aei
+. powerps, price(P) quantity(X) axiom(eGARP eHARP) aei    // Takes a few minutes
 
-------------------------------------------------------------------------------------------------------
-      Axioms |     Power         PS       Pass        AEI        Sim        Eff      Goods        Obs 
--------------+----------------------------------------------------------------------------------------
-       eGARP |      .995      -.005          0   .9055851       1000          1          5         20 
-       eHARP |         1          0          0   .8449687       1000          1          5         20 
-------------------------------------------------------------------------------------------------------
+                       Number of obs           =        20 
+                       Number of goods         =         5 
+                       Simulations             =      1000 
+                       Efficiency level        =         1 
+
+----------------------------------------------------------
+      Axioms |     Power         PS       Pass        AEI 
+-------------+--------------------------------------------
+       eGARP |      .995      -.005          0   .9055851 
+       eHARP |         1          0          0   .8449687 
+----------------------------------------------------------
  
 Summary statistics for simulations:
 
 -----------------------------------------------
        eGARP |      #vio       %vio        AEI 
 -------------+---------------------------------
-        Mean |    39.497   10.39415    .842074 
-   Std. Dev. |  25.68762   6.759885   .0814885 
+        Mean |    47.339   12.45762    .842074 
+   Std. Dev. |  29.45589   7.751351   .0814885 
          Min |         0          0   .5616643 
-          Q1 |        18       4.74   .7924721 
-      Median |        37       9.74   .8516639 
-          Q3 |        59      15.53   .9015748 
-         Max |       120      31.58          1 
+          Q1 |        24       6.32   .7924721 
+      Median |        45      11.84   .8516639 
+          Q3 |      68.5     18.025   .9015748 
+         Max |       143      37.63          1 
 -----------------------------------------------
-
 
 -----------------------------------------------
        eHARP |      #vio       %vio        AEI 
@@ -73,34 +80,32 @@ Summary statistics for simulations:
          Max |        20        100   .8955996 
 -----------------------------------------------
 
-
 . 
 . return list
 
 scalars:
-        r(POWER_eharp) =  1
-           r(PS_eharp) =  0
-          r(SIM_eharp) =  1000
-          r(EFF_eharp) =  1
-        r(GOODS_eharp) =  5
-          r(OBS_eharp) =  20
+        r(POWER_eHARP) =  1
+           r(PS_eHARP) =  0
+         r(PASS_eHARP) =  0
+          r(AEI_eHARP) =  .844968688899371
+                r(SIM) =  1000
           r(TOL_eharp) =  12
-        r(POWER_egarp) =  .995
-           r(PS_egarp) =  -.005
-          r(SIM_egarp) =  1000
-          r(EFF_egarp) =  1
-        r(GOODS_egarp) =  5
-          r(OBS_egarp) =  20
+        r(POWER_eGARP) =  .995
+           r(PS_eGARP) =  -.005
+         r(PASS_eGARP) =  0
+          r(AEI_eGARP) =  .9055851063826594
           r(TOL_egarp) =  12
+                r(EFF) =  1
+              r(GOODS) =  5
+                r(OBS) =  20
 
 macros:
-        r(AXIOM_eharp) : "eHARP"
-        r(AXIOM_egarp) : "eGARP"
+              r(AXIOM) : " eGARP eHARP"
 
 matrices:
-     r(SUMSTATS_eharp) :  7 x 3
-   r(SIMRESULTS_eharp) :  1000 x 3
-     r(SUMSTATS_egarp) :  7 x 3
-   r(SIMRESULTS_egarp) :  1000 x 3
+     r(SUMSTATS_eHARP) :  7 x 3
+   r(SIMRESULTS_eHARP) :  1000 x 3
+     r(SUMSTATS_eGARP) :  7 x 3
+   r(SIMRESULTS_eGARP) :  1000 x 3
 
 . 

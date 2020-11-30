@@ -17,7 +17,6 @@
 		<op4> := PROGRESSbar
 		<op5> := SEED[(real 12345)]
 		<op6> := SIMulations[(real 1000)]
-		<op7> := SUPPRESS
 
 */
 
@@ -103,18 +102,18 @@ program powerps, rclass sortpreserve
 	
 	if ("`axiom'"=="")		local axiom egarp	/* eGARP set to default */
 	
-	if ("`axiom'"=="all")	local axiom egarp ewgarp esarp ewarp eharp ecm
+	if ("`axiom'"=="all")	local axiom egarp esgarp ewgarp esarp ewarp eharp ecm
 
 	tokenize `axiom'
-	local axioms "`1' `2' `3' `4' `5' `6'"
+	local axioms "`1' `2' `3' `4' `5' `6' `7'"
 
 	foreach ax of local axioms	{
 	
-		if !inlist("`ax'", "egarp", "ewgarp", "esarp", "ewarp", "eharp", "ecm") {
-			display as error 	" Axiom() must be either eGARP, eWGARP, " ///
+		if !inlist("`ax'", "egarp", "ewgarp", "esgarp", "esarp", "ewarp", "eharp", "ecm") {
+			display as error 	" Axiom() must be either eGARP, eWGARP, eSGARP, " ///
 								"eSARP, eWARP, eHARP or eCM; case-insensitive."
-			display as error 	" If not specified, the default setting for" ////
-								"Axiom() is eGARP"
+			display as error 	" If not specified, the default setting for " ////
+								"Axiom() is eGARP."
 			exit 198 /* "Invalid syntax --> range invalid" error */
 			
 		}
@@ -161,6 +160,7 @@ program powerps, rclass sortpreserve
 			mata: genXS("`gmat'", `rT', `rK', "`te'", "`price'", `i')
 			 	 
 			foreach ax of local axioms {
+				
 				local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
 	
 				** Checkax results
@@ -202,6 +202,7 @@ program powerps, rclass sortpreserve
 			mata: genXS("`gmat'", `rT', `rK', "`te'", "`price'", `i')
 			 	
 			foreach ax of local axioms {
+				
 				local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
 	
 				** Checkax results
@@ -280,22 +281,25 @@ program powerps, rclass sortpreserve
 	}
 
 	* Combined main results table
-	if ("`suppress'"=="") {
-		
-		matrix colnames `rawResults' = Power PS Pass AEI
-		matlist `rawResults', border(top bottom) rowtitle("Axioms")
+	matrix `generalInfoTable' = `obs', `goods', `simulations', `efficiency'
+	matrix `generalInfoTable' = `generalInfoTable''
+	matrix rowname `generalInfoTable' = "	Number of obs		= " ///
+										"	Number of goods		= " ///
+										"	Simulations 		= " ///
+										"	Efficiency level	= "
+	matrix colname `generalInfoTable' = "#"
+	matlist `generalInfoTable', border(none) lines(none) format(%7.2g) names(rows) left(9) twidth(40)
 
-		matrix `generalInfoTable' = `obs', `goods', `simulations', `efficiency'
-		matrix `generalInfoTable' = `generalInfoTable''
-		matrix rowname `generalInfoTable' = "Observations" "Goods" "Simulations" "Efficiency" 
-		matrix colname `generalInfoTable' = "#"
-		matlist `generalInfoTable', border(top bottom) rowtitle("")
-
-		di " "
-		di as text "Summary statistics for simulations:"	
+	return scalar OBS						= `obs'
+	return scalar GOODS						= `goods'
+	return scalar EFF						= `efficiency'
 		
-	}
-	
+	matrix colnames `rawResults' = Power PS Pass AEI
+	matlist `rawResults', border(top bottom) rowtitle("Axioms")
+
+	di " "
+	di as text "Summary statistics for simulations:"	
+
 	local allAxiomsDisplay ""
 	foreach ax of local axioms {
 		
@@ -304,12 +308,12 @@ program powerps, rclass sortpreserve
 		local allAxiomsDisplay "`allAxiomsDisplay' `axiomDisplay'"
 		
 		if ("`aei'" != "") {
-						
-		* Summary stats table
-		tempvar Num Frac AEI
-				
-		mata: A = st_matrix("`sim_`ax''")
-				
+							
+			* Summary stats table
+			tempvar Num Frac AEI
+					
+			mata: A = st_matrix("`sim_`ax''")
+					
 			getmata (`Num' `Frac' `AEI') = A, force
 				
 			quietly tabstat `Num' `Frac' `AEI', stat(mean sd min ///
@@ -322,7 +326,7 @@ program powerps, rclass sortpreserve
 			matrix rownames `sumStatsTable' =	Mean "Std. Dev." Min ///
 												Q1 Median Q3 Max
 												
-			return scalar TOL_`ax'			= `tolerance'
+			return scalar TOL_`axiomDisplay'= `tolerance'
 			
 		}
 			
@@ -346,20 +350,11 @@ program powerps, rclass sortpreserve
 													Q1 Median Q3 Max
 		}
 
-		if ("`suppress'" == "") {
-			
-			matlist `sumStatsTable',	border(top bottom) ///
-										rowtitle("`axiomDisplay'")
-			di ""
-				
-		}
 
-		else if ("`suppress'" != "") di ""
+		matlist `sumStatsTable',	border(top bottom) ///
+										rowtitle("`axiomDisplay'")
 
 		* Return list for several axioms
-		return scalar OBS						= `obs'
-		return scalar GOODS						= `goods'
-		return scalar EFF						= `efficiency'
 		return scalar SIM						= `simulations'
 		return scalar AEI_`axiomDisplay'		= `AEI_`ax''
 		return scalar PASS_`axiomDisplay'		= `PASS_`ax''

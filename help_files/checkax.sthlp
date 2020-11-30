@@ -24,7 +24,7 @@
 {synoptline}
 
 {synopt :{opth ax:iom(checkax##options:axiom)}} axiom for testing data; default is {bf: axiom(eGARP)}.
-Axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
+Axioms that can be tested: eGARP, eSGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
 
 {synopt :{opth eff:iciency(checkax##options:efficiency)}} efficiency level for testing data, where 0 < efficiency <= 1; default is {bf:efficiency(1)}.{p_end}
 

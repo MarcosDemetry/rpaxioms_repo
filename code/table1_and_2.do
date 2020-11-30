@@ -45,7 +45,7 @@ end
 putexcel set "${outputdir}/tables/table1_and_2_data.xlsx", sheet("checkaxiom") replace 
 
 * List of axioms to be tested
-local axioms ewgarp ewarp egarp esarp eharp ecm
+local axioms eWGARP eWARP eGARP eSARP eHARP eCM eSGARP
 
 * Value of starting column (1 = A)
 local excel_column_local = 1
@@ -62,22 +62,22 @@ foreach axiom of local axioms {
 	forvalues subject = 1(1)142 {
 
 		* Calculating Pass, Number and Frequency of Violations
-		checkax, price(P) quantity(Q`subject') axiom(`axiom') suppress
+		quietly checkax, price(P) quantity(Q`subject') axiom(`axiom')
 		quietly return list
 		
 		* Pass indicator
-		local pass = r(PASS)
+		local pass = r(PASS_`axiom')
 		* Number of violations per axiom and subject *
-		local violations_number = r(NUM_VIO)
+		local violations_number = r(NUM_VIO_`axiom')
 		* Fraction of violations per axiom and subject *
-		local violations_fraction = r(FRAC_VIO)
+		local violations_fraction = r(FRAC_VIO_`axiom')
 		
 		matrix resultsmatrix_`axiom'[`subject',1] = `pass'
 		matrix resultsmatrix_`axiom'[`subject',2] = `violations_number'
 		matrix resultsmatrix_`axiom'[`subject',3] = `violations_fraction'
 
 	}
-			
+
 	local col: word `excel_column_local' of `c(ALPHA)'
 	putexcel `col'1 = matrix(column_names_matrix_`axiom'), colnames
 	putexcel `col'2 = matrix(resultsmatrix_`axiom'), colnames
@@ -105,10 +105,10 @@ foreach axiom of local axioms {
 	forvalues subject = 1(1)142 {
 		
 		* Calculating Affriat Efficiency Index
-		aei, price(P) quantity(Q`subject') axiom("`axiom'")
+		quietly aei, price(P) quantity(Q`subject') axiom(`axiom')
 		quietly return list
 		
-		local aei = r(AEI)
+		local aei = r(AEI_`axiom')
 		
 		matrix resultsmatrix_`axiom'[`subject',1] = `aei'
 	
@@ -147,15 +147,17 @@ gen andreoniMillerSubjects = (subject == 3 |  subject == 38 | subject == 40 | //
 
 order subject andreoniMillerSubjects
 
-list subject Violations_egarp Violations_frac_egarp ///
-	Violations_ewgarp Violations_frac_ewgarp ///
-	Violations_esarp Violations_frac_esarp ///
-	Violations_ewarp Violations_frac_ewarp if andreoniMillerSubjects == 1
+list subject Violations_eGARP Violations_frac_eGARP ///
+	Violations_eWGARP Violations_frac_eWGARP ///
+	Violations_eSARP Violations_frac_eSARP ///
+	Violations_eWARP Violations_frac_eWARP ///
+	Violations_eSGARP Violations_frac_eSGARP if andreoniMillerSubjects == 1
 
-putdocx table Table1 = data(Violations_egarp Violations_frac_egarp ///
-	Violations_ewgarp Violations_frac_ewgarp ///
-	Violations_esarp Violations_frac_esarp ///
-	Violations_ewarp Violations_frac_ewarp) if andreoniMillerSubjects == 1, varnames obsno 
+putdocx table Table1 = data(Violations_eGARP Violations_frac_eGARP ///
+	Violations_eWGARP Violations_frac_eWGARP ///
+	Violations_eSARP Violations_frac_eSARP ///
+	Violations_eWARP Violations_frac_eWARP ///
+	Violations_eSGARP Violations_frac_eSGARP) if andreoniMillerSubjects == 1, varnames obsno 
 	
 putdocx table Table1(2/14,2/8), nformat(%12.2f)
 
@@ -167,8 +169,11 @@ putdocx begin
 putdocx paragraph, style(Title) 
 putdocx text ("Table 2")
 
-tabstat Violations_eharp Violations_frac_eharp Violations_ecm Violations_frac_ecm, ///
-	stat(mean sd min p25 p50 p75 max) save
+tabstat Violations_eGARP Violations_frac_eGARP ///
+		Violations_eHARP Violations_frac_eHARP ///
+		Violations_eCM Violations_frac_eCM ///
+		Violations_eSGARP Violations_frac_eSGARP, ///
+		stat(mean sd min p25 p50 p75 max) save
 	
 return list
 
@@ -197,7 +202,7 @@ gen andreoniMillerSubjects = (subject == 3 |  subject == 38 | subject == 40 | //
 
 order subject andreoniMillerSubjects
 
-putdocx table Table1 = data(AEI_egarp) if andreoniMillerSubjects == 1, varnames obsno
+putdocx table Table1 = data(AEI_eGARP) if andreoniMillerSubjects == 1, varnames obsno
 
 putdocx table Table1(.,2), nformat(%12.3f)
 
@@ -206,7 +211,7 @@ putdocx save "${outputdir}/tables/Table1", append
 * Table 2 Last Column *
 putdocx begin
 
-tabstat AEI_eharp AEI_ecm, stat(mean sd min p25 p50 p75 max) save
+tabstat AEI_eGARP AEI_eHARP AEI_eCM AEI_eSGARP, stat(mean sd min p25 p50 p75 max) save
 
 matrix results = r(StatTotal)
 

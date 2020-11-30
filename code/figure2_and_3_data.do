@@ -6,7 +6,7 @@ capture log close
 
 cls
 
-log using "${outputdir}/logs/figure2_3_4_data_stationary3c_`c(current_date)'.log", replace
+log using "${outputdir}/logs/data_for_figure_2_and_3_`c(current_date)'.log", replace
 
 
 gen axiom = ""
@@ -17,8 +17,8 @@ gen ps = .
 
 * Number of rows in Stata file
 local nr_sub = 142
-local nr_ax  = 6
-local nr_eff = 1
+local nr_ax  = 7
+local nr_eff = 60
 local nr_obs = `nr_sub'*`nr_ax'*`nr_eff'
 di `nr_obs'
 
@@ -26,55 +26,38 @@ set obs `nr_obs'
 
 gen id = _n
 
+display "Approximate running time: " as res ((`nr_obs'*6.5)/60)/60 " hours"
+
+
 * Using POI food data
-local axioms eGARP eWGARP eSARP eWARP eHARP eSLD
+local axioms eGARP eWGARP eSARP eWARP eHARP eCM eSGARP
 
 local id = 1
-forvalues subject = 1(1)142 {
-		foreach axiom of local axioms {
+foreach axiom of local axioms  {
+	
+	forvalues eff = 1(-0.01)0.4 {
+	
+		forvalues subject = 1(1)142 {
 			
+			display "Now subject nr `subject'; efficiency: " %4.3f `eff' "; axiom `axiom'" as res " (" %5.2f (`id'/`nr_obs')*100 "% )"		
 			
-			display "Now subject nr `subject'; efficiency: `eff'; axiom `axiom'"		
-			di `eff'
-
-			powerps, price(P) quantity(Q`subject') sim(1000) axiom(`axiom') eff(1) suppress
+			quietly powerps, price(P) quantity(Q`subject') sim(1000) axiom(`axiom') eff(`eff')
 			quietly return list
 			
 			* filling in variables
-			replace subject = `subject'	if id == `id'
-			replace efficiency = 1		if id == `id'
-			replace axiom = "`axiom'"	if id == `id'
-			replace p = `r(POWER)'		if id == `id'
-			replace ps = `r(PS)'		if id == `id'
+			replace subject = `subject'			if id == `id'
+			replace efficiency = `eff'			if id == `id'
+			replace axiom = "`axiom'"			if id == `id'
+			replace p = `r(POWER_`axiom')'		if id == `id'
+			replace ps = `r(PS_`axiom')'		if id == `id'
 			
 			local id = `id' + 1
-}
-	
-	
-	save "${outputdir}/tables/figure2_3_4_data_stationary3a.dta", replace
+
+		}
+	}
+
+	save "${outputdir}/tables/data_for_figure_2_and_3.dta", replace
 
 }
 
 log close
-
-exit
-
-
-
-************
-
-local tempaxs eHARP eSLD
-
-foreach axiom of local tempaxs {
-	forvalues eff = 70(-1)50 {
-		
-		powerps, price(P) quantity(Q1) sim(100) axiom(`axiom') eff(0.`eff') suppress
-		
-		di "Axiom: `axiom'; Efficiency: `eff'; Power: `r(POWER)'"
-		
-		if `r(POWER)' == 0 {
-			exit
-		}
-		
-	}
-}

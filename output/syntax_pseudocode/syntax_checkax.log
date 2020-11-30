@@ -1,51 +1,66 @@
+r; t=0.00 13:15:33
+
 . 
 . import excel using "${datadir}/prices.xls", clear
-(5 vars, 20 obs)
+r; t=0.10 13:15:33
 
 . 
 . mkmat A B C D E, matrix(P)
+r; t=0.00 13:15:33
 
 . 
 . import excel using "${datadir}/quantities.xls", clear
-(5 vars, 20 obs)
+r; t=0.00 13:15:33
 
 . 
 . mkmat A B C D E, matrix(X)
+r; t=0.00 13:15:33
 
 . 
 . checkax, price(P) quantity(X)
 
+              Number of obs           =      20 
+              Number of goods         =       5 
+              Efficiency level        =       1 
 
-
----------------------------------------------------------------------------------
-       Axiom | Pass        #vio        %vio       Goods         Obs         Eff  
--------------+-------------------------------------------------------------------
-       eGARP |    0         136       35.79           5          20        1.00  
----------------------------------------------------------------------------------
+-----------------------------------------------
+       Axiom |      Pass       #vio       %vio 
+-------------+---------------------------------
+       eGARP |         0        161      42.37 
+-----------------------------------------------
+r; t=0.00 13:15:33
 
 . 
-. checkax, price(P) quantity(X) axiom(eHARP) efficiency(0.95)
+. checkax, price(P) quantity(X) axiom(eGARP eHARP) efficiency(0.95)
 
+              Number of obs           =      20 
+              Number of goods         =       5 
+              Efficiency level        =     .95 
 
-
----------------------------------------------------------------------------------
-       Axiom | Pass        #vio        %vio       Goods         Obs         Eff  
--------------+-------------------------------------------------------------------
-       eHARP |    0          20      100.00           5          20        0.95  
----------------------------------------------------------------------------------
+-----------------------------------------------
+       Axiom |      Pass       #vio       %vio 
+-------------+---------------------------------
+       eGARP |         0        104      27.37 
+       eHARP |         0         20        100 
+-----------------------------------------------
+r; t=0.00 13:15:33
 
 . 
 . return list
 
 scalars:
-               r(PASS) =  0
-            r(NUM_VIO) =  20
-           r(FRAC_VIO) =  100
+     r(FRAC_VIO_eHARP) =  100
+      r(NUM_VIO_eHARP) =  20
+         r(PASS_eHARP) =  0
+                r(EFF) =  .95
               r(GOODS) =  5
                 r(OBS) =  20
-                r(EFF) =  .95
+     r(FRAC_VIO_eGARP) =  27.37
+      r(NUM_VIO_eGARP) =  104
+         r(PASS_eGARP) =  0
 
 macros:
-              r(AXIOM) : "eHARP"
+              r(AXIOM) : " eGARP eHARP"
+r; t=0.00 13:15:33
 
 . 

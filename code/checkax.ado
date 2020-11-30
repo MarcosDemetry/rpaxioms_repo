@@ -74,6 +74,7 @@ program checkax, rclass sortpreserve
 			exit 411 /* "Nonpositive values encountered" error */
 		}
 	}
+	
 	else if ("`nocheck'"!="") {
 		/* No checks, move directly to calculations */
 	}
@@ -84,22 +85,22 @@ program checkax, rclass sortpreserve
 	local tempname_prefix Pass Num_vio Frac_vio rawResults
 
 	local axiom = lower("`axiom'")
-	
+
 	if ("`axiom'"=="")		local axiom egarp	/* eGARP set to default */
 	
-	if ("`axiom'"=="all")	local axiom egarp ewgarp esarp ewarp eharp ecm
+	if ("`axiom'"=="all")	local axiom egarp esgarp ewgarp esarp ewarp eharp ecm
 
 
 	tokenize `axiom'
-	local axioms "`1' `2' `3' `4' `5' `6'"
+	local axioms "`1' `2' `3' `4' `5' `6' `7'"
 
 	foreach ax of local axioms {
 
-		if !inlist("`ax'", "egarp", "ewgarp", "esarp", "ewarp", "eharp", "ecm") {
-			display as error 	" Axiom() must be either eGARP, eWGARP, eSARP, " ///
+		if !inlist("`ax'", "egarp", "ewgarp", "esgarp", "esarp", "ewarp", "eharp", "ecm") {
+			display as error 	" Axiom() must be either eGARP, eSGARP, eWGARP, eSARP, " ///
 								"eWARP, eHARP or eCM; case-insensitive."
 			display as error 	" If not specified, the default setting for " ///
-								" Axiom() is eGARP"
+								" Axiom() is eGARP."
 			exit 198 /* "Invalid syntax --> range invalid" error */
 		}
 		
@@ -131,7 +132,7 @@ program checkax, rclass sortpreserve
 	
 	foreach ax of local axioms {
 		
-		** AXIOM 1 & 2
+		** Axioms that do not require FastFloyd
 		if inlist("`ax'", "ewgarp", "ewarp") {
 		
 			mata: `ax'("`price'", "`quantity'", `efficiency')
@@ -142,8 +143,8 @@ program checkax, rclass sortpreserve
 			
 		}
 
-		** AXIOM 3, 4, 5 & 6
-		else if inlist("`ax'", "esarp", "egarp", "eharp", "ecm") {
+		** Axioms that do require FastFloyd
+		else if inlist("`ax'", "esarp", "egarp", "esgarp", "eharp", "ecm") {
 		
 			mata: `ax'(&FastFloyd5(), "`price'", "`quantity'", `efficiency')
 			local PASS_`ax' = r(PASS)
@@ -153,40 +154,43 @@ program checkax, rclass sortpreserve
 			
 		}
 	
-	** Creating output & return list tables
-	local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
-	
-	local allAxiomsDisplay "`allAxiomsDisplay' `axiomDisplay'"
+		** Creating output & return list tables
+		local axiomDisplay = "e" + upper(substr("`ax'", 2, strlen("`ax'") - 1))
 		
-	* Creating output table
-	matrix `rawResults_`ax'' = `PASS_`ax'', `NUM_VIO_`ax'', `FRAC_VIO_`ax''
-	matrix rowname `rawResults_`ax'' = "`axiomDisplay'"
+		local allAxiomsDisplay "`allAxiomsDisplay' `axiomDisplay'"
+			
+		* Creating output table
+		matrix `rawResults_`ax'' = `PASS_`ax'', `NUM_VIO_`ax'', `FRAC_VIO_`ax''
+		matrix rowname `rawResults_`ax'' = "`axiomDisplay'"
 
-	if 		`first_ax' == 1		matrix `rawResults' = `rawResults_`ax''
-	else if `first_ax'  > 1		matrix `rawResults' = `rawResults' \ `rawResults_`ax''
+		if 		`first_ax' == 1		matrix `rawResults' = `rawResults_`ax''
+		else if `first_ax'  > 1		matrix `rawResults' = `rawResults' \ `rawResults_`ax''
+			
+		local first_ax = `first_ax' + 1
 		
-	local first_ax = `first_ax' + 1
-	
-	
-	* Return list for several axioms
-	return scalar OBS						= `obs'
-	return scalar GOODS						= `goods'
-	return scalar EFF						= `efficiency'
-	return scalar PASS_`axiomDisplay'		= `PASS_`ax''
-	return scalar NUM_VIO_`axiomDisplay'	= `NUM_VIO_`ax''
-	return scalar FRAC_VIO_`axiomDisplay'	= `FRAC_VIO_`ax''
-	
+		
+		* Return list for several axioms
+		return scalar OBS						= `obs'
+		return scalar GOODS						= `goods'
+		return scalar EFF						= `efficiency'
+		return scalar PASS_`axiomDisplay'		= `PASS_`ax''
+		return scalar NUM_VIO_`axiomDisplay'	= `NUM_VIO_`ax''
+		return scalar FRAC_VIO_`axiomDisplay'	= `FRAC_VIO_`ax''
+		
 	}
 	
 	return local  AXIOM						"`allAxiomsDisplay'"
 		
 	* Displaying output table
+	
 	matrix `generalInfoTable' = `obs', `goods', `efficiency'
 	matrix `generalInfoTable' = `generalInfoTable''
-	matrix rowname `generalInfoTable' = "Observations" "Goods" "Efficiency"
-	matrix colname `generalInfoTable' = "#"
-	matlist `generalInfoTable', border(top bottom) rowtitle("")
-	
+	matrix rowname `generalInfoTable' = "	Number of obs		= " ///
+										"	Number of goods		= " ///
+										"	Efficiency level	= "
+	matrix colname `generalInfoTable' = " "
+	matlist `generalInfoTable', border(none) lines(none) ///
+			format(%5.2g) names(rows) left(10) twidth(30)
 	
 	matrix colnames `rawResults' = Pass #vio %vio
 	matlist `rawResults', border(top bottom) rowtitle("Axiom")
@@ -289,6 +293,7 @@ function FastFloyd5(matrix A)
 }
 					/* FastFloyd */
 /* ================================================================== */
+
 
 /* ================================================================== */
 					/* AXIOM 1: eWGARP */
@@ -872,5 +877,117 @@ function ecm(pointer scalar ff, matrix P_temp, matrix X_temp, scalar eff)
 }		
 					/* AXIOM 6: eCM */ 
 /* ================================================================== */
+
+
+/* ================================================================== */
+					/* AXIOM 7: eSGARP */ 
+void esgarp(pointer scalar FF, matrix P_temp, matrix X_temp, scalar eff)
+{
+			matrix	RP, DRP, SDRP
+	real 	scalar 	NUM_VIO
+	real 	scalar 	PASS
+	
+	p = st_matrix(P_temp)
+	x = st_matrix(X_temp)
+	
+	T = rows(p)
+	K = cols(p)
+	Q = factorial(K)
+	
+	seq = J(1, 1, 1::K)
+	
+	pu = J(0,K,.)
+	
+	info = cvpermutesetup(seq)
+	while ((p0=cvpermute(info)) != J(0,1,.)) {
+		pu = pu\p0'
+	}
+	
+
+	// Create empty matrices DRP and SDRP of size T x T
+	DRP = J(T, T, 0)		/* J(rows, columns, values) */
+	SDRP = J(T, T, 0)
+
+	// Looping over i and j
+	for (i=1; i<= T; i++) {
+
+		for (j=1; j<= T; j++) {
+
+			for (q=1; q<= Q; q++) {
+				
+				if (eff*p[i,.] * (x[i,.])' >= p[i,.] * (x[j,pu[q,.]])') {
+					
+					DRP[i,j] = 1
+									
+					if (eff*p[i,.] * (x[i,.])' > p[i,.] * (x[j,pu[q,.]])') {
+						
+						SDRP[i,j] = 1
+
+					}		/* Ends if > */
+					
+				} 	/* Ends if >= */
+				
+				if (SDRP[i,j] == 1) 	break 	/* Breaks q loop */
+				
+			} 	/* Ends for q */
+			
+		}	/* Ends for j */
+		
+	}	/* Ends for i */
+	
+	// Making RP-Matrix (Transitive Closure of DRP-Matrix)
+	RP = (*FF)(DRP)
+
+	// Search for WARP violations
+	NUM_VIO = 0
+
+	for (i=1; i<= T; i++) {
+
+		for (j=1; j<= T; j++) {
+		
+			if (RP[i,j] == 1 && SDRP[j,i] == 1) {
+					
+				NUM_VIO++
+					
+			}		/* Ends if */
+			
+		}	/* Ends for j */
+	
+	}	/* Ends for i */
+		
+		
+
+	
+	// What is the fraction of violations?
+		// Total violations
+	TOT_VIO = T*T
+	FRAC_VIO = NUM_VIO/TOT_VIO
+	FRAC_VIO = FRAC_VIO*100
+
+	
+	// Has the data passed?
+	PASS = 1
+
+	if (NUM_VIO > 0) {
+		PASS = 0
+	}
+
+	N = T * cols(P_mat)
+	GOODS = cols(P_mat)
+	
+	// Returning results
+	st_numscalar("r(PASS)", PASS)
+	st_numscalar("r(NUM_VIO)", NUM_VIO)
+	st_numscalar("r(FRAC_VIO)", FRAC_VIO)
+	st_numscalar("r(GOODS)", cols(P_mat))
+	st_numscalar("r(OBS)", T)
+	st_numscalar("r(EFF)", eff)
+
+}	
+				
+					/* AXIOM 7: eSGARP */ 
+/* ================================================================== */
+
+
 
 end 

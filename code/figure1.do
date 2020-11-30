@@ -30,7 +30,7 @@ putexcel set "${outputdir}/tables/figure1_data.xlsx", sheet("checkaxiom") replac
 matrix resultsmatrix = J(366,4,.)
 matrix colname resultsmatrix = axiom efficiency number_pass share_pass
 
-local axioms ewgarp ewarp egarp esarp eharp ecm
+local axioms eHARP eCM eGARP eSGARP
 
 local axiomnumber = 1
 local rownumber = 1
@@ -45,10 +45,10 @@ foreach axiom of local axioms {
 		forvalues subject = 1(1)142 {
 			*display "`subject'"
 			
-			checkax, price(P) quantity(Q`subject') axiom(`axiom') suppress efficiency(0.`eff')
+			quietly checkax, price(P) quantity(Q`subject') axiom(`axiom') efficiency(0.`eff')
 			quietly return list
 			
-			local nr_pass = `nr_pass' + `r(PASS)'
+			local nr_pass = `nr_pass' + `r(PASS_`axiom')'
 			local share_pass = `nr_pass'/142
 
 		}
@@ -72,10 +72,10 @@ foreach axiom of local axioms {
 			forvalues subject = 1(1)142 {
 				*display "`subject'"
 				
-				checkax, price(P) quantity(Q`subject') axiom(`axiom') suppress efficiency(1)
+				quietly checkax, price(P) quantity(Q`subject') axiom(`axiom') efficiency(1)
 				quietly return list
 				
-				local nr_pass = `nr_pass' + `r(PASS)'
+				local nr_pass = `nr_pass' + `r(PASS_`axiom')'
 				local share_pass = `nr_pass'/142
 
 			}
@@ -105,7 +105,7 @@ putexcel A1 = matrix(resultsmatrix), colnames
 
 import excel "${outputdir}/tables/figure1_data.xlsx", clear firstrow
 
-label define axiomLabels 1 "eWGARP" 2 "eWARP" 3 "eGARP" 4 "eSARP" 5 "eHARP" 6 "eCM"
+label define axiomLabels 1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eSGARP"
 label value axiom axiomLabels
 
 decode axiom, gen(axiom_str)
@@ -125,13 +125,11 @@ reshape wide number_pass share_pass_, i(efficiency) j(axiom) string
 twoway	(line share_pass_eHARP e, lcolor(edkblue))	///
 		(line share_pass_eCM e, lcolor(orange_red))	///
 		(line share_pass_eGARP e, lcolor(gray))	///
-		(line share_pass_eWGARP e, lcolor(sand))	///
-		(line share_pass_eSARP e, lcolor(blue))	///
-		(line share_pass_eWARP e, lcolor(forest_green) 	///
+		(line share_pass_eSGARP e, lcolor(sand) 	///
 		ytitle("Fraction of subjects") xtitle("Efficiency (e)") ///
 		ylabel(0(0.1)1, format(%3.1f) angle(horisontal)) ///
 		xlabel(0.85(0.01)1, format(%3.2f) angle(vertical)) ///
-		legend(order(1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eWGARP" 5 "eSARP" 6 "eWARP") rows(2)) ///
+		legend(order(1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eSGARP")) ///
 		scheme(sj))
 
 customSaveImage fig1

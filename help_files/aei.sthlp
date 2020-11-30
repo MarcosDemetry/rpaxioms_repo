@@ -24,7 +24,7 @@
 {synoptline}
 
 {synopt :{opth ax:iom(aei##options:axiom)}} axiom for testing data; default is {bf: axiom(eGARP)}.
-In total, there are six axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
+In total, there are six axioms that can be tested: eGARP, eSGARP, eWARP, eWGARP, eSARP, eHARP and eCM.{p_end}
 
 {synopt :{opth tol:erance(aei##options:tolerance)}} tolerance level in termination criterion 10^-2{it:n}}; default is {bf:tolerance(12)}.{p_end}
 

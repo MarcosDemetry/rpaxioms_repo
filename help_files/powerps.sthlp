@@ -23,7 +23,9 @@
 {synopthdr:options}
 {synoptline}
 
-{synopt :{opth ax:iom(powerps##options:axiom)}} axiom for testing data; default is {bf: axiom(eGARP)}. In total, there are six axioms that can be tested: eGARP, eWARP, eWGARP, eSARP, eHARP and eCM. To test all axioms at once, specify {bf: axiom(all)}.{p_end}
+{synopt :{opth ax:iom(powerps##options:axiom)}} axiom for testing data; default is {bf: axiom(eGARP)}.
+In total, there are six axioms that can be tested: eGARP, eSGARP, eWARP, eWGARP, eSARP, eHARP and eCM.
+To test all axioms at once, specify {bf: axiom(all)}.{p_end}
 
 {synopt :{opth eff:iciency(powerps##options:efficiency)}} efficiency level for testing data, where 0 < efficiency =< 1; default is {bf:efficiency(1)}.{p_end}
 
