@@ -1,9 +1,9 @@
-*! Version 1.0.0 12june2020
+*! Version 1.1.0 23november2020
 
 /*
 	Syntax:
 
-	powerps, <Price> <Quantity> [<op1>] [<op2>] [<op3>] [<op4>] [<op5>] [<op6>] [<op7>]
+	powerps, <Price> <Quantity> [<op1>] [<op2>] [<op3>] [<op4>] [<op5>] [<op6>]
 		
 		<op1> := AEI
 		<op2> := AXiom[(string)]

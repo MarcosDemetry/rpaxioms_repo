@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.00 27february2020}{...}
+{* *! version 1.00 23november2020}{...}
 {viewerjumpto "Syntax" "powerps##syntax"}{...}
 {viewerjumpto ”Description” ”powerps##description”}{...}
 {viewerjumpto ”Options” ”powerps##options”}{...}

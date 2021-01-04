@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.00 21february2020}{...}
+{* *! version 1.00 23november2020}{...}
 {viewerjumpto ”Syntax” ”checkax##syntax”}{...}
 {viewerjumpto ”Description” ”checkax##description”}{...}
 {viewerjumpto ”Options” ”checkax##options”}{...}

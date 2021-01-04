@@ -1,9 +1,9 @@
-*! Version 1.0.0 12june2020
+*! Version 1.1.0 23november2020
 
 /*
 	Syntax:
 
-	aei, <Price> <Quantity> [<op1>] [<op2>] [<op3>]
+	aei, <Price> <Quantity> [<op1>] [<op2>]
 		
 		<op1> := AXiom[(string)]
 			eWGARP
