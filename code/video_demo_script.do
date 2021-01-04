@@ -18,7 +18,7 @@ checkax, price(P) quantity(X) axiom(eGARP)
 checkax, price(P) quantity(X)
 
 * Not default example
-checkax, price(P) quantity(X) axiom(eWARP) efficiency(0.92)
+checkax, price(P) quantity(X) axiom(eGARP eWARP) efficiency(0.92)
 
 * First error
 checkax, price(P)
@@ -52,14 +52,9 @@ matlist X_NOTOK
 checkax, price(P) quantity(X_OK)
 checkax, price(P) quantity(X_NOTOK)
 
-* Return list & suppress output
+* Return list
 checkax, price(P) quantity(X) axiom(eGARP) efficiency(1) 
 return list
-
-checkax, price(P) quantity(X) axiom(eGARP) efficiency(1) suppress
-return list
-
-di "`r(FRAC_VIO)'"
 
 * Example: Loop through efficiency and plot
 clear
@@ -73,31 +68,34 @@ set obs `nrObs'
 
 gen ID = _n + `start_value' - 1
 
-gen eff = .
+foreach axiom in eGARP eHARP eWARP {
+	
+	gen eff_`axiom' = .
+	gen num_vio_`axiom' = .
+	gen frac_vio_`axiom' = .
 
-gen num_vio = .
+	forvalues eff = `start_value'(1)99 {
 
-gen frac_vio = .
+		quietly checkax, price(P) quantity(X) efficiency(0.`eff') axiom(`axiom')
 
-forvalues eff = `start_value'(1)99 {
+		replace eff_`axiom' = r(EFF)					if ID == `eff'
+		replace num_vio_`axiom' = r(NUM_VIO_`axiom')	if ID == `eff'
+		replace frac_vio_`axiom' = r(FRAC_VIO_`axiom')	if ID == `eff'
 
-	checkax, price(P) quantity(X) efficiency(0.`eff') axiom(egarp) suppress
+	}
 
-	replace eff = r(EFFICIENCY)		if ID == `eff'
-	replace num_vio = r(NUM_VIO)	if ID == `eff'
-	replace frac_vio = r(FRAC_VIO)	if ID == `eff'
+	quietly checkax, price(P) quantity(X) efficiency(1) axiom(`axiom')
+	quietly return list
 
+	replace eff_`axiom' = r(EFF)						if ID == 100
+	replace num_vio_`axiom' = r(NUM_VIO_`axiom')	    if ID == 100
+	replace frac_vio_`axiom' = r(FRAC_VIO_`axiom')		if ID == 100
 }
 
-checkax, price(P) quantity(X) efficiency(1) suppress
-quietly return list
-
-replace eff = r(EFFICIENCY)		if ID == 100
-replace num_vio = r(NUM_VIO)	if ID == 100
-replace frac_vio = r(FRAC_VIO)	if ID == 100
-
-line frac_vio eff, title("Checkax: `r(AXIOM)'") 	///
-	ytitle("Violations (%)") xtitle("Efficiency")
+twoway (line frac_vio_eGARP eff_eGARP) ///
+	   (line frac_vio_eWARP eff_eWARP) ///
+	   (line frac_vio_eHARP eff_eHARP, title("Checkax results") 	///
+	ytitle("Violations (%)") xtitle("Efficiency"))
 
 ***********
 *** AEI ***
@@ -107,13 +105,11 @@ cls
 matlist P
 matlist X
 
-aei, price(P) quantity(X) axiom(eGARP) tolerance(0.000000000001)
+aei, price(P) quantity(X) axiom(eGARP) tolerance(12)
 aei, price(P) quantity(X) axiom(eGARP) 
 aei, price(P) quantity(X)
 
-aei, p(P) q(X) ax(eGARP) tol(0.000000000001)
-
-aei, price(P) quantity(X)
+aei, p(P) q(X) ax(eGARP) tol(6)
 return list
 
 
@@ -125,17 +121,17 @@ cls
 matlist P
 matlist X
 
-powerps, price(P) quantity(X) axiom(eGARP) efficiency(1) simulations(10) seed(12345)
-powerps, price(P) quantity(X) axiom(eGARP) efficiency(1) simulations(10) 
-powerps, price(P) quantity(X) axiom(eGARP) simulations(10)
-powerps, price(P) quantity(X) simulations(10)
+powerps, price(P) quantity(X) axiom(eGARP) efficiency(1) simulations(100) seed(12345)
+powerps, price(P) quantity(X) axiom(eGARP) efficiency(1) simulations(100) 
+powerps, price(P) quantity(X) axiom(eGARP) simulations(100)
+powerps, price(P) quantity(X) simulations(100)
 
-powerps, p(P) q(X) ax(eGARP) eff(1) sim(10) seed(12345)
+powerps, p(P) q(X) ax(eGARP) eff(1) sim(100) seed(12345)
 
 * Retrieving raw simulation results
 powerps, price(P) quantity(X) sim(10)
 return list
-matlist r(SIMRESULTS)
+matlist r(SIMRESULTS_eGARP)
 
 * None-default examples
 powerps, price(P) quantity(X) simulations(10) aei
@@ -153,14 +149,7 @@ powerps, price(P) quantity(X) simulations(10) axiom(eWARP eCM)
 powerps, price(P) quantity(X) simulations(10) axiom(all)
 
 * Progress bar
-powerps, price(P) quantity(X) sim(1000) progress
-return list
-
-* Suppress output
-powerps, price(P) quantity(X) sim(100) progress suppress
-return list
-
-powerps, price(P) quantity(X) sim(100) suppress
+powerps, price(P) quantity(X) sim(200) progress
 return list
 
 
