@@ -20,7 +20,7 @@ To reproduce the results:
 We appreciate all suggestions! Raise an issue describing the problem or request a certain feature to be added or modified.
 
 # IFN Working Paper
-You can read more about the theoretical background and technical descriptions of the commands in Demetry, Hjertstrand and Polisson (2020) "[Testing Axioms of Revealed Preference in Stata.](https://www.ifn.se/publikationer/working_papers/2020/1342)" _IFN Working Paper No. 1342_.
+You can read more about the theoretical background and technical descriptions of the commands in Demetry, Hjertstrand and Polisson (2020) "[Testing Axioms of Revealed Preference in Stata.](https://www.ifn.se/media/xf4bpowg/wp1342.pdf)" _IFN Working Paper No. 1342_.
 
 ## Cite
 - To cite the WP:
