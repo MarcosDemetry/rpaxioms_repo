@@ -67,13 +67,16 @@ clear all
 
 cd "${datadir}"
 
-import excel using "prices.xls", clear
+*import excel using "prices.xls", clear
+*mkmat A B C D E, matrix(P)
+*import excel using "quantities.xls", clear
+*mkmat A B C D E, matrix(X)
 
-mkmat A B C D E, matrix(P)
+import excel using "example_Data.xlsx", clear firstrow
 
-import excel using "quantities.xls", clear
+mkmat p1-p5, matrix(P)		/* p{1, ..., 5} vars contain prices */
+mkmat x1-x5, matrix(X)		/* x{1, ..., 5} vars contain quantities */
 
-mkmat A B C D E, matrix(X)
 
 ** Creating matrices for exception-handling examples
 
