@@ -1,10 +1,11 @@
 {smcl}
-{* *! version 1.00 23november2020}{...}
-{viewerjumpto ”Syntax” ”checkax##syntax”}{...}
-{viewerjumpto ”Description” ”checkax##description”}{...}
-{viewerjumpto ”Options” ”checkax##options”}{...}
-{viewerjumpto ”Stored results” ”checkax##results”}{...}
-{viewerjumpto ”Authors” ”checkax##authors”}{...}
+{* *! version 2.00 29november2021}{...}
+{viewerjumpto ”Syntax” "checkax##syntax"}{...}
+{viewerjumpto ”Description” "checkax##description"}{...}
+{viewerjumpto ”Options” "checkax##options"}{...}
+{viewerjumpto ”Stored results” "checkax##results"}{...}
+{viewerjumpto "Examples" "regress##examples"}{...}
+{viewerjumpto ”Authors” "checkax##authors"}{...}
 {title:Title}
 
 {pstd}checkax{hline 2}Testing Axioms of Revealed Preference{p_end}
@@ -69,6 +70,50 @@ Efficiency must be greater than zero and less than or equal to one.{p_end}
 
 {p2col 5 15 19 2: Macros}{p_end}
 {synopt:{cmd:r(AXIOM)}}axiom(s) being tested{p_end}
+
+{marker examples}{...}
+{title:Examples: Loading data and running the command}
+
+{pstd}Load example data{p_end}
+{phang2}{cmd:. use example_data.dta, clear}{p_end}
+
+In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
+These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.
+
+In order to use the command, we need to create a matrix for prices
+(where each column is a good and each row is an observation).
+Likewise, we need to create a matrix for quantities.
+
+{pstd}Make matrices P and X from variables{p_end}
+{phang2}{cmd:. mkmat p1-p5, matrix(P)}{p_end}
+{phang2}{cmd:. mkmat x1-x5, matrix(X)}{p_end}
+
+{pstd}Run command with default settings{p_end}
+{phang2}{cmd:. checkax, price(P) quantity(x)}{p_end}
+
+{pstd}Run command for eGarp and eHARP, at efficiency level 0.95{p_end}
+{phang2}{cmd:. checkax, price(P) quantity(X) ax(eGARP eHARP) eff(0.95)}{p_end}
+
+{title:Examples: Looping over efficiency levels and storing output}
+
+Let's say you want to plot the fraction of violations of eGARP over different efficiency levels - specifically,
+between efficiency(0.9) and efficiency(1) at increments of 0.001. Using the same data as in the first example,
+we could do the following:
+
+	{hline}
+{phang2}{cmd:. matrix results = J(101, 2, .)}{p_end}
+{phang2}{cmd:. local row_nr = 1}{p_end}
+
+{phang2}{cmd:. forvalues i = 0.90(0.001)1.00 {c -(} }{p_end}
+{phang2}{cmd:. 			quietly checkax, price(P) quantity(X) axiom(eGARP) efficiency(`i')}{p_end}
+{phang2}{cmd:. 			matrix results[`row_nr', 1] = `r(EFF)'}{p_end}
+{phang2}{cmd:. 			matrix results[`row_nr', 2] = `r(FRAC_VIO_eGARP)'}{p_end}
+{phang2}{cmd:. 			local row_nr = `row_nr' + 1}{p_end}
+{phang2}{cmd:. {c )-} }{p_end}
+{phang2}{cmd:. matlist results}{p_end}
+	{hline}
+
+
 
 {marker authors}{...}
 {title:Authors}
