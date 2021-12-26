@@ -13,13 +13,10 @@ set more off
 
 sjlog using "${outputdir}/syntax_pseudocode/syntax_checkax", replace 
 
-import excel using "${datadir}/prices.xls", clear
+sysuse rpaxioms_example_data.dta, clear
 
-mkmat A B C D E, matrix(P)
-
-import excel using "${datadir}/quantities.xls", clear
-
-mkmat A B C D E, matrix(X)
+mkmat p1-p5, matrix(P)
+mkmat x1-x5, matrix(X)
 
 checkax, price(P) quantity(X)
 

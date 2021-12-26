@@ -72,10 +72,12 @@ cd "${datadir}"
 *import excel using "quantities.xls", clear
 *mkmat A B C D E, matrix(X)
 
-import excel using "example_Data.xlsx", clear firstrow
+sysuse rpaxioms_example_data.dta, clear
 
 mkmat p1-p5, matrix(P)		/* p{1, ..., 5} vars contain prices */
 mkmat x1-x5, matrix(X)		/* x{1, ..., 5} vars contain quantities */
+
+checkax, price(P) quantity(X) ax(eGARP eHARP) eff(0.95)
 
 
 ** Creating matrices for exception-handling examples
