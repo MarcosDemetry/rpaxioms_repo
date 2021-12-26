@@ -74,8 +74,11 @@ Efficiency must be greater than zero and less than or equal to one.{p_end}
 {marker examples}{...}
 {title:Examples: Loading data and running the command}
 
+{pstd}Install package{p_end}
+{phang2}. {stata ssc install rpaxioms}{p_end}
+
 {pstd}Load example data{p_end}
-{phang2}{cmd:. use example_data.dta, clear}{p_end}
+{phang2}. {stata sysuse rpaxioms_example_data.dta, clear}{p_end}
 
 In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
 These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.
@@ -85,14 +88,43 @@ In order to use the command, we need to create a matrix for prices
 Likewise, we need to create a matrix for quantities.
 
 {pstd}Make matrices P and X from variables{p_end}
-{phang2}{cmd:. mkmat p1-p5, matrix(P)}{p_end}
-{phang2}{cmd:. mkmat x1-x5, matrix(X)}{p_end}
+{phang2}. {stata mkmat p1-p5, matrix(P)}{p_end}
+{phang2}. {stata mkmat x1-x5, matrix(X)}{p_end}
+
+{pstd}We now have two 20x5 matrices; one for prices and one for quantities.{p_end}
+{phang2}. {stata matlist P}{p_end}
+{phang2}. {stata matlist X}{p_end}
 
 {pstd}Run command with default settings{p_end}
-{phang2}{cmd:. checkax, price(P) quantity(x)}{p_end}
+{phang2}. {stata checkax, price(P) quantity(X)}{p_end}
 
-{pstd}Run command for eGarp and eHARP, at efficiency level 0.95{p_end}
-{phang2}{cmd:. checkax, price(P) quantity(X) ax(eGARP eHARP) eff(0.95)}{p_end}
+{pstd}Run command with eGarp and eHARP, at efficiency level 0.95{p_end}
+{phang2}. {stata checkax, price(P) quantity(X) ax(eGARP eHARP) eff(0.95)}{p_end}
+
+
+{title:Examples: Interpreting the results}
+Running the last line above produces the following results:
+
+              Number of obs           =      20 
+              Number of goods         =       5 
+              Efficiency level        =     .95 
+
+-----------------------------------------------
+       Axiom |      Pass       #vio       %vio 
+-------------+---------------------------------
+       eGARP |         0        104      27.37 
+       eHARP |         0         20        100 
+-----------------------------------------------
+
+
+Regardless of which (or how many) {opt axiom}(s) are tested, in your results window you will always
+see the number of observations and goods as well as the efficiency level in the top-right corner.
+
+In the table, you will find four columns - {it: Axiom}, Pass, #vio and %vio.
+The column {it: Axiom} specifies which axioms are being tested. 
+The column {it: Pass} specifies whether the data satisfy respective axiom.
+The column {it: #vio} specifies the number of violations of respective axiom.
+The column {it: %vio} specifies the share of violations (as a share of the total possible number of violations).
 
 {title:Examples: Looping over efficiency levels and storing output}
 
