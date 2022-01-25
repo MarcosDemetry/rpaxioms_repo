@@ -1,4 +1,4 @@
-*! Version 1.1.0 23november2020
+*! Version 2.0.0 25january2022
 
 /*
 	Syntax:
@@ -12,7 +12,7 @@
 			eSARP
 			eHARP
 			eCM
-		<op2> := TOLerance[(real 1*10^-12)]
+		<op2> := TOLerance[(real 1*10^-6)]
 
 */
 
@@ -24,7 +24,7 @@ program aei, rclass sortpreserve
 
 	*User input
 	syntax, Price(string) Quantity(string) /// 
-			[TOLerance(real 12) AXiom(string)]
+			[TOLerance(real 6) AXiom(string)]
 	
 					*******************************
 					*** Checking data structure ***
@@ -66,7 +66,7 @@ program aei, rclass sortpreserve
 		display as error	"Tolerance() must be greater than or equal to 1" ///
 							"and less than or equal to 18."
 		display as error	"If not specified, the default setting for " ///
-							"tolerance() is 12."
+							"tolerance() is 6."
 		display as error	"Recall that the tolerance option specifies the number of " ///
 			"decimal places you would like in the tolerance level."
 		display as error	"E.g., tolerance(6) implies that the tolerance level " ///
