@@ -11,7 +11,7 @@ if `"`c(os)'"' == "Windows" & "`c(username)'" == "per.hjertstrand" global stem `
 
 * Matthew
 if `"`c(os)'"' == "MacOSX" & "`c(username)'" == "matthewpolisson" global stem `"/Users/matthewpolisson/Dropbox/[SET PATH HERE]/"'
-if `"`c(os)'"' == "Windows" & "`c(username)'" == "matthew.olisson" global stem `"C:/Users/matthew.polisson/Dropbox/[SET PATH HERE]/"'
+if `"`c(os)'"' == "Windows" & "`c(username)'" == "matthew.polisson" global stem `"C:/Users/matthew.polisson/Dropbox/[SET PATH HERE]/"'
 
 * Marcos
 if `"`c(os)'"' == "MacOSX" & "`c(username)'" == "marcosdemetry" global stem `"/Users/marcosdemetry/Dropbox/IFN/Per Hjertstrand/STATA/"'
@@ -36,7 +36,7 @@ set rmsg on
 *** Replication ***
 *******************
 
-* Importing Andreoni and Miller (2001) data
+* Importing Andreoni and Miller (2002) data
 do "${codedir}/importing_andreoni_data.do"
 
 * Results; Table 1 & Table 2

@@ -1,4 +1,4 @@
-*! Version 1.1.0 23november2020
+*! Version 2.0.0 25january2022
 
 /*
 	Syntax:
