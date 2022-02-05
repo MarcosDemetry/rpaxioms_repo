@@ -138,7 +138,7 @@ program checkax, rclass sortpreserve
 			mata: `ax'("`price'", "`quantity'", `efficiency')
 			local PASS_`ax' = r(PASS)
 			local NUM_VIO_`ax' = r(NUM_VIO)
-			local FC_`ax': di %3.2f scalar(r(FRAC_VIO))
+			local FC_`ax': di %5.4f scalar(r(FRAC_VIO))
 			local FRAC_VIO_`ax' = `FC_`ax''
 			
 		}
@@ -149,7 +149,7 @@ program checkax, rclass sortpreserve
 			mata: `ax'(&FastFloyd5(), "`price'", "`quantity'", `efficiency')
 			local PASS_`ax' = r(PASS)
 			local NUM_VIO_`ax' = r(NUM_VIO)
-			local FC_`ax': di %3.2f scalar(r(FRAC_VIO))
+			local FC_`ax': di %5.4f scalar(r(FRAC_VIO))
 			local FRAC_VIO_`ax' = `FC_`ax''
 			
 		}
@@ -368,7 +368,7 @@ void ewgarp(string P_temp, string X_temp, scalar eff)
 		// Total violations
 	TOT_VIO = T*(T-1)/2
 	FRAC_VIO = NUM_VIO/TOT_VIO
-	FRAC_VIO = FRAC_VIO*100
+	FRAC_VIO = FRAC_VIO
 	
 	// Has the data passed?
 	PASS = 1
@@ -457,7 +457,7 @@ void ewarp(matrix P_temp, matrix X_temp, scalar eff)
 		// Total violations
 	TOT_VIO = T*(T-1)/2
 	FRAC_VIO = NUM_VIO/TOT_VIO
-	FRAC_VIO = FRAC_VIO*100
+	FRAC_VIO = FRAC_VIO
 	
 	// Has the data passed?
 	PASS = 1
@@ -554,7 +554,7 @@ void esarp(pointer scalar FF, matrix P_temp, matrix X_temp, scalar eff)
 		// Total violations
 	TOT_VIO = T*(T-1)
 	FRAC_VIO = NUM_VIO/TOT_VIO
-	FRAC_VIO = FRAC_VIO*100
+	FRAC_VIO = FRAC_VIO
 	
 	// Has the data passed?
 	PASS = 1
@@ -650,7 +650,7 @@ void egarp(pointer scalar FF, matrix P_temp, matrix X_temp, scalar eff)
 		// Total violations
 	TOT_VIO = T*(T-1)
 	FRAC_VIO = NUM_VIO/TOT_VIO
-	FRAC_VIO = FRAC_VIO*100
+	FRAC_VIO = FRAC_VIO
 	
 	// Has the data passed?
 	PASS = 1
@@ -756,7 +756,7 @@ function eharp(pointer scalar ff, matrix P_temp, matrix X_temp, scalar eff)
 		// Total violations
 	TOT_VIO = T
 	FRAC_VIO = NUM_VIO/TOT_VIO
-	FRAC_VIO = FRAC_VIO*100
+	FRAC_VIO = FRAC_VIO
 	
 	// Has the data passed?
 	PASS = 1
@@ -854,7 +854,7 @@ function ecm(pointer scalar ff, matrix P_temp, matrix X_temp, scalar eff)
 		// Total violations
 	TOT_VIO = T
 	FRAC_VIO = NUM_VIO/TOT_VIO
-	FRAC_VIO = FRAC_VIO*100
+	FRAC_VIO = FRAC_VIO
 	
 	// Has the data passed?
 	PASS = 1
@@ -962,7 +962,7 @@ void esgarp(pointer scalar FF, matrix P_temp, matrix X_temp, scalar eff)
 		// Total violations
 	TOT_VIO = T*T
 	FRAC_VIO = NUM_VIO/TOT_VIO
-	FRAC_VIO = FRAC_VIO*100
+	FRAC_VIO = FRAC_VIO
 
 	
 	// Has the data passed?
