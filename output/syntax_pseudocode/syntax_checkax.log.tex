@@ -1,22 +1,8 @@
-r; t=0.00 13:15:33
+. sysuse rpaxioms_example_data.dta, clear
 {\smallskip}
-. 
-. import excel using "${\lbr}datadir{\rbr}/prices.xls", clear
-r; t=0.10 13:15:33
+. mkmat p1-p5, matrix(P)
 {\smallskip}
-. 
-. mkmat A B C D E, matrix(P)
-r; t=0.00 13:15:33
-{\smallskip}
-. 
-. import excel using "${\lbr}datadir{\rbr}/quantities.xls", clear
-r; t=0.00 13:15:33
-{\smallskip}
-. 
-. mkmat A B C D E, matrix(X)
-r; t=0.00 13:15:33
-{\smallskip}
-. 
+. mkmat x1-x5, matrix(X)
 . checkax, price(P) quantity(X)
 {\smallskip}
               Number of obs           =      20 
@@ -26,11 +12,10 @@ r; t=0.00 13:15:33
 \HLI{13}{\TOPT}\HLI{33}
        Axiom {\VBAR}      Pass       \#vio       \%vio 
 \HLI{13}{\PLUS}\HLI{33}
-       eGARP {\VBAR}         0        161      42.37 
+       eGARP {\VBAR}         0        161      .4237 
 \HLI{13}{\BOTT}\HLI{33}
-r; t=0.00 13:15:33
 {\smallskip}
-. 
+
 . checkax, price(P) quantity(X) axiom(eGARP eHARP) efficiency(0.95)
 {\smallskip}
               Number of obs           =      20 
@@ -40,27 +25,23 @@ r; t=0.00 13:15:33
 \HLI{13}{\TOPT}\HLI{33}
        Axiom {\VBAR}      Pass       \#vio       \%vio 
 \HLI{13}{\PLUS}\HLI{33}
-       eGARP {\VBAR}         0        104      27.37 
-       eHARP {\VBAR}         0         20        100 
+       eGARP {\VBAR}         0        104      .2737 
+       eHARP {\VBAR}         0         20          1 
 \HLI{13}{\BOTT}\HLI{33}
-r; t=0.00 13:15:33
 {\smallskip}
-. 
 . return list
 {\smallskip}
 scalars:
-     r(FRAC_VIO_eHARP) =  100
+     r(FRAC_VIO_eHARP) =  1
       r(NUM_VIO_eHARP) =  20
          r(PASS_eHARP) =  0
                 r(EFF) =  .95
               r(GOODS) =  5
                 r(OBS) =  20
-     r(FRAC_VIO_eGARP) =  27.37
+     r(FRAC_VIO_eGARP) =  .2737
       r(NUM_VIO_eGARP) =  104
          r(PASS_eGARP) =  0
 {\smallskip}
 macros:
               r(AXIOM) : " eGARP eHARP"
-r; t=0.00 13:15:33
-{\smallskip}
-. 
+

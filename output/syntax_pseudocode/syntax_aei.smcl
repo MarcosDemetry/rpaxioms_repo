@@ -1,35 +1,30 @@
-{com}{sf}{ul off}{txt}r; t=0.00 13:15:43
-
 {com}. 
-. aei, price(P) quantity(X)
+. aei, price(P) quantity(X) tol(6)
 {res}
 {txt}{space 0}{space 0}{ralign 30:Number of obs           = }{space 1}{space 1}{ralign 8:{res:{sf:      20}}}{space 1}
 {space 0}{space 0}{ralign 30:Number of goods         = }{space 1}{space 1}{ralign 8:{res:{sf:       5}}}{space 1}
-{space 0}{space 0}{ralign 30:Tolerance level         = }{space 1}{space 1}{ralign 8:{res:{sf: 1.0e-12}}}{space 1}
+{space 0}{space 0}{ralign 30:Tolerance level         = }{space 1}{space 1}{ralign 8:{res:{sf: 1.0e-06}}}{space 1}
 {res}
 {txt}{space 0}{hline 13}{c  TT}{hline 11}
 {space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:AEI}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9055851}}}{space 1}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .9055848}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}
-r; t=0.21 13:15:43
 
 {com}. 
-. quietly aei, price(P) quantity(X) axiom(eGARP eHARP) tolerance(6)
-{txt}r; t=0.25 13:15:44
-
+. quietly aei, price(P) quantity(X) axiom(eGARP eHARP) tolerance(10)
+{txt}
 {com}. 
 . return list
 
 {txt}scalars:
-                r(TOL) =  {res}1.00000000000e-06
+                r(TOL) =  {res}1.00000000000e-10
               {txt}r(GOODS) =  {res}5
                 {txt}r(OBS) =  {res}20
-          {txt}r(AEI_eHARP) =  {res}.844968318939209
-          {txt}r(AEI_eGARP) =  {res}.9055848121643066
+          {txt}r(AEI_eHARP) =  {res}.8449686888488941
+          {txt}r(AEI_eGARP) =  {res}.9055851064040326
 
 {txt}macros:
               r(AXIOM) : "{res} eGARP eHARP{txt}"
-r; t=0.00 13:15:44
 
 {com}. 

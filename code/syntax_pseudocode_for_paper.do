@@ -32,9 +32,9 @@ sjlog close, replace
 
 sjlog using "${outputdir}/syntax_pseudocode/syntax_aei", replace 
 
-aei, price(P) quantity(X)
+aei, price(P) quantity(X) tol(6)
 
-quietly aei, price(P) quantity(X) axiom(eGARP eHARP) tolerance(6)
+quietly aei, price(P) quantity(X) axiom(eGARP eHARP) tolerance(10)
 
 return list
 

@@ -1,21 +1,11 @@
-{com}{sf}{ul off}{txt}r; t=0.00 13:15:33
-
 {com}. 
-. import excel using "${c -(}datadir{c )-}/prices.xls", clear
-{res}{txt}r; t=0.10 13:15:33
-
+. sysuse rpaxioms_example_data.dta, clear
+{txt}
 {com}. 
-. mkmat A B C D E, matrix(P)
-{res}{txt}r; t=0.00 13:15:33
-
-{com}. 
-. import excel using "${c -(}datadir{c )-}/quantities.xls", clear
-{res}{txt}r; t=0.00 13:15:33
-
-{com}. 
-. mkmat A B C D E, matrix(X)
-{res}{txt}r; t=0.00 13:15:33
-
+. mkmat p1-p5, matrix(P)
+{res}{txt}
+{com}. mkmat x1-x5, matrix(X)
+{res}{txt}
 {com}. 
 . checkax, price(P) quantity(X)
 {res}
@@ -26,9 +16,8 @@
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      161}}}{space 1}{space 1}{ralign 9:{res:{sf:    42.37}}}{space 1}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      161}}}{space 1}{space 1}{ralign 9:{res:{sf:    .4237}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}
-r; t=0.00 13:15:33
 
 {com}. 
 . checkax, price(P) quantity(X) axiom(eGARP eHARP) efficiency(0.95)
@@ -40,27 +29,25 @@ r; t=0.00 13:15:33
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:Axiom}{space 1}{c |}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      104}}}{space 1}{space 1}{ralign 9:{res:{sf:    27.37}}}{space 1}
-{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      104}}}{space 1}{space 1}{ralign 9:{res:{sf:    .2737}}}{space 1}
+{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}
-r; t=0.00 13:15:33
 
 {com}. 
 . return list
 
 {txt}scalars:
-     r(FRAC_VIO_eHARP) =  {res}100
+     r(FRAC_VIO_eHARP) =  {res}1
       {txt}r(NUM_VIO_eHARP) =  {res}20
          {txt}r(PASS_eHARP) =  {res}0
                 {txt}r(EFF) =  {res}.95
               {txt}r(GOODS) =  {res}5
                 {txt}r(OBS) =  {res}20
-     {txt}r(FRAC_VIO_eGARP) =  {res}27.37
+     {txt}r(FRAC_VIO_eGARP) =  {res}.2737
       {txt}r(NUM_VIO_eGARP) =  {res}104
          {txt}r(PASS_eGARP) =  {res}0
 
 {txt}macros:
               r(AXIOM) : "{res} eGARP eHARP{txt}"
-r; t=0.00 13:15:33
 
 {com}. 

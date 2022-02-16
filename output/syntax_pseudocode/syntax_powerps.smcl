@@ -1,3 +1,5 @@
+{com}{sf}{ul off}{txt}r; t=2.13 12:22:02
+
 {com}. 
 . powerps, price(P) quantity(X) axiom(eGARP eHARP)
 {res}
@@ -9,8 +11,8 @@
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:AEI}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .995}}}{space 1}{space 1}{ralign 9:{res:{sf:    -.005}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .9055851}}}{space 1}
-{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .8449687}}}{space 1}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .995}}}{space 1}{space 1}{ralign 9:{res:{sf:    -.005}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .9055848}}}{space 1}
+{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .8449683}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
  
 Summary statistics for simulations:
@@ -18,29 +20,30 @@ Summary statistics for simulations:
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   47.339}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.45762}}}{space 1}
-{space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 29.45589}}}{space 1}{space 1}{ralign 9:{res:{sf: 7.751351}}}{space 1}
+{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   47.339}}}{space 1}{space 1}{ralign 9:{res:{sf: .1245762}}}{space 1}
+{space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 29.45589}}}{space 1}{space 1}{ralign 9:{res:{sf: .0775135}}}{space 1}
 {space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
-{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf:     6.32}}}{space 1}
-{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       45}}}{space 1}{space 1}{ralign 9:{res:{sf:    11.84}}}{space 1}
-{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     68.5}}}{space 1}{space 1}{ralign 9:{res:{sf:   18.025}}}{space 1}
-{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      143}}}{space 1}{space 1}{ralign 9:{res:{sf:    37.63}}}{space 1}
+{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0632}}}{space 1}
+{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       45}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1184}}}{space 1}
+{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     68.5}}}{space 1}{space 1}{ralign 9:{res:{sf:   .18025}}}{space 1}
+{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      143}}}{space 1}{space 1}{ralign 9:{res:{sf:    .3763}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}
 {res}
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
 {space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}
-{space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
-{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
-{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
-{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
-{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}
+{space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}
+r; t=9.26 12:22:11
 
 {com}. 
-. powerps, price(P) quantity(X) axiom(eGARP eHARP) aei    // Takes a few minutes
+. powerps, price(P) quantity(X) axiom(eGARP eHARP) aei
 {res}
 {txt}{space 9}{space 0}{ralign 40:Number of obs           = }{space 1}{space 1}{ralign 7:{res:{sf:     20}}}{space 1}
 {space 9}{space 0}{ralign 40:Number of goods         = }{space 1}{space 1}{ralign 7:{res:{sf:      5}}}{space 1}
@@ -50,8 +53,8 @@ Summary statistics for simulations:
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:Axioms}{space 1}{c |}{space 1}{ralign 9:Power}{space 1}{space 1}{ralign 9:PS}{space 1}{space 1}{ralign 9:Pass}{space 1}{space 1}{ralign 9:AEI}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .995}}}{space 1}{space 1}{ralign 9:{res:{sf:    -.005}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .9055851}}}{space 1}
-{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .8449687}}}{space 1}
+{space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     .995}}}{space 1}{space 1}{ralign 9:{res:{sf:    -.005}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .9055848}}}{space 1}
+{space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .8449683}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}{hline 11}
  
 Summary statistics for simulations:
@@ -59,26 +62,27 @@ Summary statistics for simulations:
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:eGARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}{space 1}{ralign 9:AEI}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   47.339}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.45762}}}{space 1}{space 1}{ralign 9:{res:{sf:  .842074}}}{space 1}
-{space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 29.45589}}}{space 1}{space 1}{ralign 9:{res:{sf: 7.751351}}}{space 1}{space 1}{ralign 9:{res:{sf: .0814885}}}{space 1}
-{space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .5616643}}}{space 1}
-{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf:     6.32}}}{space 1}{space 1}{ralign 9:{res:{sf: .7924721}}}{space 1}
-{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       45}}}{space 1}{space 1}{ralign 9:{res:{sf:    11.84}}}{space 1}{space 1}{ralign 9:{res:{sf: .8516639}}}{space 1}
-{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     68.5}}}{space 1}{space 1}{ralign 9:{res:{sf:   18.025}}}{space 1}{space 1}{ralign 9:{res:{sf: .9015748}}}{space 1}
-{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      143}}}{space 1}{space 1}{ralign 9:{res:{sf:    37.63}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
+{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   47.339}}}{space 1}{space 1}{ralign 9:{res:{sf: .1245762}}}{space 1}{space 1}{ralign 9:{res:{sf:  .842074}}}{space 1}
+{space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 29.45589}}}{space 1}{space 1}{ralign 9:{res:{sf: .0775135}}}{space 1}{space 1}{ralign 9:{res:{sf: .0814885}}}{space 1}
+{space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .5616641}}}{space 1}
+{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       24}}}{space 1}{space 1}{ralign 9:{res:{sf:    .0632}}}{space 1}{space 1}{ralign 9:{res:{sf: .7924724}}}{space 1}
+{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       45}}}{space 1}{space 1}{ralign 9:{res:{sf:    .1184}}}{space 1}{space 1}{ralign 9:{res:{sf: .8516641}}}{space 1}
+{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:     68.5}}}{space 1}{space 1}{ralign 9:{res:{sf:   .18025}}}{space 1}{space 1}{ralign 9:{res:{sf: .9015746}}}{space 1}
+{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      143}}}{space 1}{space 1}{ralign 9:{res:{sf:    .3763}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}
 {res}
 {txt}{space 0}{hline 13}{c  TT}{hline 11}{hline 11}{hline 11}
 {space 0}{space 0}{ralign 12:eHARP}{space 1}{c |}{space 1}{ralign 9:#vio}{space 1}{space 1}{ralign 9:%vio}{space 1}{space 1}{ralign 9:AEI}{space 1}
 {space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}
-{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: .7268926}}}{space 1}
+{space 0}{space 0}{ralign 12:Mean}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .7268926}}}{space 1}
 {space 0}{space 0}{ralign 12:Std. Dev.}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: .0760639}}}{space 1}
-{space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: .4819745}}}{space 1}
-{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: .6767944}}}{space 1}
-{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: .7307337}}}{space 1}
-{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: .7845822}}}{space 1}
-{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf: .8955996}}}{space 1}
+{space 0}{space 0}{ralign 12:Min}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .4819741}}}{space 1}
+{space 0}{space 0}{ralign 12:Q1}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .6767941}}}{space 1}
+{space 0}{space 0}{ralign 12:Median}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .7307339}}}{space 1}
+{space 0}{space 0}{ralign 12:Q3}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .7845821}}}{space 1}
+{space 0}{space 0}{ralign 12:Max}{space 1}{c |}{space 1}{ralign 9:{res:{sf:       20}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf: .8955998}}}{space 1}
 {space 0}{hline 13}{c  BT}{hline 11}{hline 11}{hline 11}
+r; t=194.60 12:25:26
 
 {com}. 
 . return list
@@ -87,14 +91,14 @@ Summary statistics for simulations:
         r(POWER_eHARP) =  {res}1
            {txt}r(PS_eHARP) =  {res}0
          {txt}r(PASS_eHARP) =  {res}0
-          {txt}r(AEI_eHARP) =  {res}.844968688899371
+          {txt}r(AEI_eHARP) =  {res}.844968318939209
                 {txt}r(SIM) =  {res}1000
-          {txt}r(TOL_eharp) =  {res}12
+          {txt}r(TOL_eHARP) =  {res}6
         {txt}r(POWER_eGARP) =  {res}.995
            {txt}r(PS_eGARP) =  {res}-.005
          {txt}r(PASS_eGARP) =  {res}0
-          {txt}r(AEI_eGARP) =  {res}.9055851063826594
-          {txt}r(TOL_egarp) =  {res}12
+          {txt}r(AEI_eGARP) =  {res}.9055848121643066
+          {txt}r(TOL_eGARP) =  {res}6
                 {txt}r(EFF) =  {res}1
               {txt}r(GOODS) =  {res}5
                 {txt}r(OBS) =  {res}20
@@ -107,5 +111,6 @@ matrices:
    {txt}r(SIMRESULTS_eHARP) : {res} 1000 x 3
      {txt}r(SUMSTATS_eGARP) : {res} 7 x 3
    {txt}r(SIMRESULTS_eGARP) : {res} 1000 x 3
-{txt}
+{txt}r; t=0.00 12:25:26
+
 {com}. 
