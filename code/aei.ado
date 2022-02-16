@@ -148,33 +148,33 @@ foreach ax of local axioms {
 
 	else {
 
-		tempvar eupper elower eevaluate
+		*tempvar eupper elower eevaluate
 		
-		quietly		gen `eupper'	= 1
-		quietly		gen `elower'	= 0
-		quietly		gen `eevaluate' = .
+		scalar eupper	= 1
+		scalar elower	= 0
+		scalar eevaluate = .
 		
-		while (`eupper' - `elower')/`elower'  >= `tolerance' {
+		while (`=eupper' - `=elower')/`=elower'  >= `tolerance' {
 			
-			* Default tolerance level is 10^(-12)
+			* Default tolerance level is 10^(-6)
 
-			quietly replace `eevaluate' = (`eupper' + `elower')/2
+			scalar eevaluate = (`=eupper' + `=elower')/2
 
-			local eev = `eevaluate'
+			scalar eev = `=eevaluate'
 			
-			quietly checkax, price("`price'") quantity("`quantity'") efficiency(`eev') ///
+			quietly checkax, price("`price'") quantity("`quantity'") efficiency(`=eev') ///
 					axiom("`ax'") nocheck
 			quietly return list
 			
 			if `r(PASS_`axiomDisplay')' == 1 {
 				
-				quietly replace `elower' = `eevaluate'
+				scalar elower = `=eevaluate'
 
 			}
 
 			else {
 				
-				quietly replace `eupper' = `eevaluate'
+				scalar eupper = `=eevaluate'
 				
 			}
 					
