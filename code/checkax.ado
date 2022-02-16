@@ -10,6 +10,7 @@
 			eWARP
 			eGARP	(Defualt)
 			eSARP
+			eSGARP
 			eHARP
 			eCM
 		<op2> := EFFiciency[(real 1)]
