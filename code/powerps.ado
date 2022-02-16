@@ -34,7 +34,7 @@ program powerps, rclass sortpreserve
 				PROGRESSbar					///
 				SEED(real 12345)			///
 				SIMulations(real 1000)		///
-				TOLerance(real 12)]
+				TOLerance(real 6)]
 
 					*******************************
 					*** Checking data structure ***
@@ -84,7 +84,7 @@ program powerps, rclass sortpreserve
 		local aei_column = 3
 		local aei_column_name "AEI"
 
-		if ("`tolerance'" == "")	local tolerance = 12
+		if ("`tolerance'" == "")	local tolerance = 6
 
 	}
 
