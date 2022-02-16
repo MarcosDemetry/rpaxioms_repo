@@ -1,4 +1,9 @@
-** Importing andreoni data **
+** Importing Andreoni and Miller data **
+
+/*
+Source: Andreoni, J., and J. Miller. 2002. Giving according to GARP: An experimental test of
+the consistency of preferences for altruism. Econometrica 70: 737{753.
+*/
 
 clear all
 
