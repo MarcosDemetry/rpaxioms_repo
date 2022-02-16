@@ -15,7 +15,7 @@ if `"`c(os)'"' == "Windows" & "`c(username)'" == "matthew.polisson" global stem 
 
 * Marcos
 if `"`c(os)'"' == "MacOSX" & "`c(username)'" == "marcosdemetry" global stem `"/Users/marcosdemetry/Dropbox/IFN/Per Hjertstrand/STATA/"'
-if `"`c(os)'"' == "Windows" & "`c(username)'" == "marcos.demetry" global stem `"C:/Users/marcos.demetry/Dropbox/IFN/Per Hjertstrand/STATA/"'
+if `"`c(os)'"' == "MacOSX" & "`c(username)'" == "madeaa" global stem `"/Users/madeaa/Dropbox/IFN/Per Hjertstrand/STATA/"'
 
 * Relative paths
 cd "${stem}"
