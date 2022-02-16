@@ -45,14 +45,14 @@ egen tag = tag(axiom efficiency)
 ****************
 
 * Stata journal scheme (manual colors) with legend
-twoway	(line p_avg efficiency if tag & axiom == "eHARP", lcolor(edkblue))	///
-		(line p_avg efficiency if tag & axiom == "eCM", lcolor(orange_red))	///
-		(line p_avg efficiency if tag & axiom == "eGARP", lcolor(gray))		///
-		(line p_avg efficiency if tag & axiom == "eSGARP", lcolor(sand)		///
+twoway	(line p_avg efficiency if tag & axiom == "eGARP", lcolor(gray))		///
+		(line p_avg efficiency if tag & axiom == "eSGARP", lcolor(sand))	///
+		(line p_avg efficiency if tag & axiom == "eHARP", lcolor(edkblue))	///
+		(line p_avg efficiency if tag & axiom == "eCM", lcolor(orange_red)	///
 		ytitle("Power") xtitle("Efficiency (e)")		///
 		ylabel(0(0.1)1, format(%3.1f) angle(horisontal)) ///
 		xlabel(0.4(0.05)1, format(%3.2f) angle(vertical)) ///
-		legend(order(1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eSGARP") rows(2)) ///
+		legend(order(1 "eGARP" 2 "eSGARP" 3 "eHARP" 4 "eCM") rows(2)) ///
 		scheme(sj))
 		
 customSaveImage fig2
@@ -62,14 +62,14 @@ customSaveImage fig2
 ***************************
 
  * Stata journal scheme (manual colors) with legend
-twoway	(line ps_avg efficiency if tag & axiom == "eHARP", lcolor(edkblue))		///
-		(line ps_avg efficiency if tag & axiom == "eCM", lcolor(orange_red))	///
-		(line ps_avg efficiency if tag & axiom == "eGARP", lcolor(gray))		///
-		(line ps_avg efficiency if tag & axiom == "eSGARP", lcolor(sand)		///
+twoway	(line ps_avg efficiency if tag & axiom == "eGARP", lcolor(gray))		///
+		(line ps_avg efficiency if tag & axiom == "eSGARP", lcolor(sand))		///
+		(line ps_avg efficiency if tag & axiom == "eHARP", lcolor(edkblue))		///
+		(line ps_avg efficiency if tag & axiom == "eCM", lcolor(orange_red)		///
 		title("(a)") ytitle("Mean Predictive Success") xtitle("Efficiency (e)")  ///
 		ylabel(-0.3(0.1)1, format(%3.1f) angle(horisontal))						///
 		xlabel(0.4(0.05)1, format(%3.2f) angle(vertical))						///
-		legend(order(1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eSGARP") rows(2)) ///
+		legend(order(1 "eGARP" 2 "eSGARP" 3 "eHARP" 4 "eCM") rows(2)) ///
 		scheme(sj) name(fig3_panel_a, replace))
 
 ***************************

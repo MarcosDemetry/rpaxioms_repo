@@ -122,14 +122,14 @@ drop if axiom == ""
 reshape wide number_pass share_pass_, i(efficiency) j(axiom) string
 
 * Stata journal scheme (manual colors) with legend
-twoway	(line share_pass_eHARP e, lcolor(edkblue))	///
-		(line share_pass_eCM e, lcolor(orange_red))	///
-		(line share_pass_eGARP e, lcolor(gray))	///
-		(line share_pass_eSGARP e, lcolor(sand) 	///
+twoway	(line share_pass_eGARP e, lcolor(gray))		///
+		(line share_pass_eSGARP e, lcolor(sand))	///
+		(line share_pass_eHARP e, lcolor(edkblue))	///
+		(line share_pass_eCM e, lcolor(orange_red)	///
 		ytitle("Fraction of subjects") xtitle("Efficiency (e)") ///
 		ylabel(0(0.1)1, format(%3.1f) angle(horisontal)) ///
 		xlabel(0.85(0.01)1, format(%3.2f) angle(vertical)) ///
-		legend(order(1 "eHARP" 2 "eCM" 3 "eGARP" 4 "eSGARP")) ///
+		legend(order(1 "eGARP" 2 "eSGARP" 3 "eHARP" 4 "eCM")) ///
 		scheme(sj))
 
 customSaveImage fig1
