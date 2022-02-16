@@ -60,7 +60,8 @@ foreach axiom of local axioms {
 	matrix colname resultsmatrix_`axiom' = Pass Violations Violations_frac
 
 	forvalues subject = 1(1)142 {
-
+		
+		display "Subject nr: `subject'"
 		* Calculating Pass, Number and Frequency of Violations
 		quietly checkax, price(P) quantity(Q`subject') axiom(`axiom')
 		quietly return list
@@ -104,6 +105,7 @@ foreach axiom of local axioms {
 	
 	forvalues subject = 1(1)142 {
 		
+		display "Subject nr: `subject'"
 		* Calculating Affriat Efficiency Index
 		quietly aei, price(P) quantity(Q`subject') axiom(`axiom')
 		quietly return list
@@ -159,7 +161,7 @@ putdocx table Table1 = data(Violations_eGARP Violations_frac_eGARP ///
 	Violations_eWARP Violations_frac_eWARP ///
 	Violations_eSGARP Violations_frac_eSGARP) if andreoniMillerSubjects == 1, varnames obsno 
 	
-putdocx table Table1(2/14,2/8), nformat(%12.2f)
+putdocx table Table1(2/14,2/8), nformat(%12.3f)
 
 putdocx save "${outputdir}/tables/Table1", replace
 
@@ -181,7 +183,7 @@ matrix results = r(StatTotal)
 
 putdocx table Table2 = matrix(results), rownames colnames
 
-putdocx table Table2(.,2/5), nformat(%12.2f)
+putdocx table Table2(.,2/5), nformat(%12.3f)
 
 putdocx save "${outputdir}/tables/Table2", replace
 
