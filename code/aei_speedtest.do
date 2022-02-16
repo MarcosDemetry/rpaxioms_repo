@@ -6,7 +6,7 @@ drop _all
 
 cd "${datadir}"
 
-import excel using "example_Data.xlsx", clear firstrow
+sysuse rpaxioms_example_data, clear
 
 mkmat p1-p5, matrix(P1)		/* p{1, ..., 5} vars contain prices */
 mkmat x1-x5, matrix(X1)		/* x{1, ..., 5} vars contain quantities */
@@ -14,7 +14,7 @@ mkmat x1-x5, matrix(X1)		/* x{1, ..., 5} vars contain quantities */
 tempfile repeated_data
 quietly save `repeated_data', emptyok
 forvalues i = 1/2 {
-    import excel using "example_Data.xlsx", clear firstrow
+	sysuse rpaxioms_example_data, clear
     append using `repeated_data'
     quietly save `repeated_data', replace
 }
@@ -30,8 +30,8 @@ local max_tolerance = 15		/* Set as value between 1–15 */
 local max_row_nr = `max_iteration'*`max_tolerance'*`total_axioms'*2
 display `max_row_nr'
 
-matrix outcome = J(`max_row_nr', 5, .)
-matrix colnames outcome  = "Iteration" "Tolerance" "Time" "AEI" "Axiom"
+matrix outcome = J(`max_row_nr', 6, .)
+matrix colnames outcome  = "Iteration" "Tolerance" "Time" "AEI" "Axiom" "Dataset"
 
 local row_nr = 1
 local axiom_nr = 1
@@ -52,6 +52,8 @@ foreach ax of local axioms {
 				matrix outcome[`row_nr', 3] = `r(t`tol')'
 				matrix outcome[`row_nr', 4] = `r(AEI_`ax')'
 				matrix outcome[`row_nr', 5] = `axiom_nr'
+				matrix outcome[`row_nr', 6] = `dataset_nr'
+
 				
 				local row_nr = `row_nr' + 1
 
@@ -63,32 +65,25 @@ foreach ax of local axioms {
 	local axiom_nr = `axiom_nr' + 1
 }
 
+* Loop total runtime apprx 9-10 minutes on MBP M1 Pro
+
 * Creating dataset out of matrix "outcome"
 svmat outcome, names(col)
 
 label def ax_label 1 "eGARP"
 label val Axiom ax_label 
 
-save "${datadir}/aei_speedtest_1", replace
+save "${datadir}/aei_speedtest_1_MBP_M1", replace
 
 * Graph: Average runtime by tolerance level
 binscatter Time Tolerance, by(Dataset) line(qfit) xq(Tol) ///
 	ytitle("Time (seconds)") legend(order(1 "20 Observations" 2 "60 Observations"))
 
-graph export "${outputdir}/figures/aei_speed_test_1.eps", replace
-graph export "${outputdir}/figures/aei_speed_test_1.pdf", replace
+*graph export "${outputdir}/figures/aei_speed_test_1_MBP_M1.eps", replace
+graph export "${outputdir}/figures/aei_speed_test_1_MBP_M1.pdf", replace
 
 * Summary statistics
 bysort Axiom: tabstat Time, stat(mean sd min max n) by(Tolerance)
-
-* Detailed graph:
-bysort Tolerance: egen max = max(Time)
-bysort Tolerance: egen min = min(Time)
-
-collapse (mean) Time (firstnm) min max, by(Tolerance)
-
-twoway (scatter Time Tolerance) ///
-	   (rarea min max Tolerance, color(gs15))
 
 ****************************************************
 *** Speed tests for AEI 2 (Changing matrix size) ***
@@ -101,7 +96,7 @@ clear all
 tempfile repeated_data
 quietly save `repeated_data', emptyok
 forvalues i = 1/25 {
-    import excel using "example_Data.xlsx", clear firstrow
+    sysuse rpaxioms_example_data, clear
     append using `repeated_data'
     quietly save `repeated_data', replace
 }
@@ -117,7 +112,6 @@ display `max_row_nr'
 
 matrix outcome = J(`max_row_nr', 5, .)
 matrix colnames outcome  = "Iteration" "Tolerance" "Time" "Size" "Axiom"
-
 local row_nr = 1
 local axiom_nr = 1
 
@@ -155,12 +149,12 @@ foreach ax of local axioms {
 	local axiom_nr = `axiom_nr' + 1
 }
 
-/* Loop total runtime per 1 iteration apprx 50 minutes */
+/* Loop total runtime apprx 4.6h on MBP M1 Pro */
 
 * Creating dataset out of matrix "outcome"
 svmat outcome, names(col)
 
-save "${datadir}/aei_speedtest_2", replace
+save "${datadir}/aei_speedtest_2_MBP_M1.dta", replace
 
 * Graph: Average runtime by matrix size (number of observations) and tolerance level
 binscatter Time Size, by(Tolerance) line(qfit)  ///
@@ -168,8 +162,6 @@ binscatter Time Size, by(Tolerance) line(qfit)  ///
 	xscale(range(20 500)) ///
 	legend(order(1 "Tolerance = 10^-6" 2 "Tolerance = 10^-12"))
 
-graph export "${outputdir}/figures/aei_speed_test_2.eps", replace
-graph export "${outputdir}/figures/aei_speed_test_2.pdf", replace
+*graph export "${outputdir}/figures/aei_speed_test_2_MBP_M1.eps", replace
+graph export "${outputdir}/figures/aei_speed_test_2_MBP_M1.pdf", replace
 
-twoway (scatter Time Size if Tolerance == 6) ///
-	   (scatter Time Size if Tolerance == 12)
