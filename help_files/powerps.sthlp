@@ -4,6 +4,7 @@
 {viewerjumpto ”Description” ”powerps##description”}{...}
 {viewerjumpto ”Options” ”powerps##options”}{...}
 {viewerjumpto ”Stored results” ”powerps##results”}{...}
+{viewerjumpto "Examples" "powerps##examples"}{...}
 {viewerjumpto ”Authors” ”powerps##authors”}{...}
 {title:Title}
 
@@ -35,7 +36,7 @@ To test all axioms at once, specify {bf: axiom(all)}.{p_end}
 
 {synopt :{opth aei:(powerps##options:aei)}} compute AEI for each simulated uniformly random data set and every specified axiom; default is {bf:aei} {it:not} specifiede.{p_end}
 
-{synopt :{opth tol:erance(powerps##options:tolerance)}} tolerance level in termination criterion 10^-{it:n}; default is {bf:tolerance(12)}.{p_end}
+{synopt :{opth tol:erance(powerps##options:tolerance)}} tolerance level in termination criterion 10^-{it:n}; default is {bf:tolerance(6)}.{p_end}
 
 {synopt :{opth progress:bar(powerps##options:progress)}} displays number of repititions that have been executed; default is {bf: progressbar} {it: not} specified.{p_end}
 
@@ -74,8 +75,8 @@ Efficiency must be greater than zero and less than or equal to one.{p_end}
     default is {bf:aei} {it:not} specified.{p_end}
 
 {synopt :tolerance} sets the tolerance level in the termination criterion 10^-{it:n} by specifying the integer number {it: n}.
-    For example, {bf: tolerance(6)} sets the tolerance level in the termination criterion to 10^-6. The default is 
-    {bf: tolerance(12)}, which gives the default tolerance level 10^-12. The integer {it: n} in the termination criterion 10^-{it:n}
+    For example, {bf: tolerance(10)} sets the tolerance level in the termination criterion to 10^-10. The default is 
+    {bf: tolerance(6)}, which gives the default tolerance level 10^-6. The integer {it: n} in the termination criterion 10^-{it:n}
     cannot be smaller than 1 or larger than 18.{p_end}
 
 {synopt :progressbar} displays number of repititions that have been executed. The default is {bf: progressbar} {it: not} specified.{p_end}
@@ -105,10 +106,97 @@ Efficiency must be greater than zero and less than or equal to one.{p_end}
 {synopt:{cmd:r(SUMSTATS_{it:axiom})}}summary statistics for random data: Num_vio, Frac_Vio (and {opt aei} if specified).{p_end}
 {synopt:{cmd:r(SIMRESULTS_{it:axiom})}}Num_vio, Frac_Vio (and {opt aei} if specified) for every simulated uniformly random data set.{p_end}
 
+
+{marker examples}{...}
+{title:Examples: Loading data and running the command}
+
+{pstd}Install package{p_end}
+{phang2}. {stata ssc install rpaxioms}{p_end}
+
+{pstd}Load example data{p_end}
+{phang2}. {stata sysuse rpaxioms_example_data.dta, clear}{p_end}
+
+In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
+These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.
+
+In order to use the command, we need to create a matrix for prices
+(where each column is a good and each row is an observation).
+Likewise, we need to create a matrix for quantities.
+
+{pstd}Make matrices P and X from variables{p_end}
+{phang2}. {stata mkmat p1-p5, matrix(P)}{p_end}
+{phang2}. {stata mkmat x1-x5, matrix(X)}{p_end}
+
+{pstd}We now have two 20x5 matrices; one for prices and one for quantities.{p_end}
+{phang2}. {stata matlist P}{p_end}
+{phang2}. {stata matlist X}{p_end}
+
+{pstd}Run command with default settings{p_end}
+{phang2}. {stata powerps, price(P) quantity(X)}{p_end}
+
+This has an approximate runtime of six seconds.
+
+{pstd}Run command with eGarp and eHARP{p_end}
+{phang2}. {stata powerps, price(P) quantity(X) ax(eGARP eHARP) aei tol(6)}{p_end}
+
+Note that running this command may take up to five minutes.
+This is mainly due to including the option aei.
+
+{title:Examples: Interpreting the results}
+
+                       Number of obs           =        20 
+                       Number of goods         =         5 
+                       Simulations             =      1000 
+                       Efficiency level        =         1 
+
+----------------------------------------------------------
+      Axioms |     Power         PS       Pass        AEI 
+-------------+--------------------------------------------
+       eGARP |      .995      -.005          0   .9055851 
+       eHARP |         1          0          0   .8449687 
+----------------------------------------------------------
+ 
+Summary statistics for simulations:
+
+-----------------------------------------------
+       eGARP |      #vio       %vio        AEI 
+-------------+---------------------------------
+        Mean |    47.339   12.45762    .842074 
+   Std. Dev. |  29.45589   7.751351   .0814885 
+         Min |         0          0   .5616641 
+          Q1 |        24       6.32   .7924724 
+      Median |        45      11.84   .8516641 
+          Q3 |      68.5     18.025   .9015746 
+         Max |       143      37.63          1 
+-----------------------------------------------
+
+-----------------------------------------------
+       eHARP |      #vio       %vio        AEI 
+-------------+---------------------------------
+        Mean |        20        100   .7268926 
+   Std. Dev. |         0          0   .0760639 
+         Min |        20        100   .4819741 
+          Q1 |        20        100   .6767941 
+      Median |        20        100   .7307339 
+          Q3 |        20        100   .7845821 
+         Max |        20        100   .8955998 
+-----------------------------------------------
+
+
+These results indicate that GARP at an efficiency level of 1 has power against uniformly random
+behavior equal to 99.5%. This means that the GARP test has enough empirical bite to reject the
+notion of uniformly random behavior would the ‘true’ consumer behavior be generated as such.
+Since GARP is necessary for HARP, the latter will always have higher power. The predictive
+success (PS) suggests that HARP marginally dominates GARP as a measure of model fit, i.e.,
+the homothetic utility maximization model weakly dominates the standard utility
+maximization model for these data.
+
+
 {marker authors}{...}
 {title:Authors}
 
-- Marcos Demetry, Research Assistant at the Research Institute of Industrial Economics, Sweden.
+- Marcos Demetry, PhD student at Linnaeus University, Sweden, and affiliated doctoral student at
+ the Research Institute of Industrial Economics, Sweden.
 - Per Hjertstrand, Associate Professor and Research Fellow at the Research Institute 
 of Industrial Economics, Sweden.
 - Matthew Polisson, Senior Lecturer and Researcher at University of Bristol, UK.

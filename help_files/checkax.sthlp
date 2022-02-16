@@ -1,10 +1,10 @@
 {smcl}
-{* *! version 2.00 29november2021}{...}
+{* *! version 2.00 31january2022}{...}
 {viewerjumpto ”Syntax” "checkax##syntax"}{...}
 {viewerjumpto ”Description” "checkax##description"}{...}
 {viewerjumpto ”Options” "checkax##options"}{...}
 {viewerjumpto ”Stored results” "checkax##results"}{...}
-{viewerjumpto "Examples" "regress##examples"}{...}
+{viewerjumpto "Examples" "checkax##examples"}{...}
 {viewerjumpto ”Authors” "checkax##authors"}{...}
 {title:Title}
 
@@ -126,6 +126,18 @@ The column {it: Pass} specifies whether the data satisfy respective axiom.
 The column {it: #vio} specifies the number of violations of respective axiom.
 The column {it: %vio} specifies the share of violations (as a share of the total possible number of violations).
 
+In this example, we allow a ‘margin of error’ of 5%, meaning that we will only count bundles whose
+cost is less than 95% of an observed choice as being revealed worse than that choice.
+
+When checking if GARP is satisfied at this efficiency level, we find that 27.37% of all comparisons
+indicate a violation of GARP. Hence, taking this number as fairly large, we may conclude that these
+data cannot be rationalized by a continuous, strictly increasing and concave utility function.
+Testing the data for HARP, which in addition to continuity, monotonicity and concavity also ensures
+that the rationalizing utility function is homothetic, we find that all comparisons (100%) indicate
+a violation of HARP. Thus, using the fraction of violations as a measure of the degree of
+violations, these results show compelling evidence against that the data can be rationalized by a
+well-behaved and homothetic utility function.
+
 {title:Examples: Looping over efficiency levels and storing output}
 
 Let's say you want to plot the fraction of violations of eGARP over different efficiency levels - specifically,
@@ -150,7 +162,8 @@ we could do the following:
 {marker authors}{...}
 {title:Authors}
 
-- Marcos Demetry, Research Assistant at the Research Institute of Industrial Economics, Sweden.
+- Marcos Demetry, PhD student at Linnaeus University, Sweden, and affiliated doctoral student at
+ the Research Institute of Industrial Economics, Sweden.
 - Per Hjertstrand, Associate Professor and Research Fellow at the Research Institute 
 of Industrial Economics, Sweden.
 - Matthew Polisson, Senior Lecturer and Researcher at University of Bristol, UK.
