@@ -17,11 +17,15 @@ This repo contains the code, data and output for the Stata module <b>rpaxioms</b
 ```
 
 ### Prepare example data
-> **_NOTE:_**  ```net get rpaxioms``` downloads the ancillary file __rpaxioms_example_data.dta__ to the user's current working directory. The ancillary file will be uploaded with the coming update to the package on SSC. For now, you can manually access the code in the [help_files folder](https://github.com/MarcosDemetry/rpaxioms_repo/tree/RR/help_files).
+> **_NOTE:_**  ```net get rpaxioms``` downloads the ancillary file __rpaxioms_example_data.dta__ to the user's current working directory. The ancillary file will be uploaded with the coming update to the package on SSC. For now, you can manually access the example dataset in the [help_files folder](https://github.com/MarcosDemetry/rpaxioms_repo/tree/RR/help_files).
 ```
+* Set current working directory where you would like example data to be saved
+cwd "/PATH/TO/SOME/FOLDER"
+
 * Download example data that comes with the package
 net get rpaxioms
 
+* Load data
 use rpaxioms_example_data, clear
 
 * Create price (P) and quantity (X) matrices
