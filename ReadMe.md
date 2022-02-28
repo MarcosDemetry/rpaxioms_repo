@@ -17,9 +17,12 @@ This repo contains the code, data and output for the Stata module <b>rpaxioms</b
 ```
 
 ### Prepare example data
+> **_NOTE:_**  ```net get rpaxioms``` downloads the ancillary file __rpaxioms_example_data.dta__ to the user's current working directory.
 ```
-* Load example data that comes with the package
-sysuse rpaxioms_example_data, clear
+* Download example data that comes with the package
+net get rpaxioms
+
+use rpaxioms_example_data, clear
 
 * Create price (P) and quantity (X) matrices
 mkmat p1-p5, matrix(P)
