@@ -46,7 +46,7 @@ calculates the power against uniform random behavior and predictive success for 
 {cmd: aei} is dependent on {cmd: checkax}.
 
 {pstd}
-For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) {browse "https://www.ifn.se/publikationer/working_papers/2020/1342" :"Testing Axioms of Revealed Preference in Stata"}. IFN Working Paper No. 1342}.
+For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) {browse "https://www.ifn.se/media/xf4bpowg/wp1342.pdf" :"Testing Axioms of Revealed Preference in Stata"}. IFN Working Paper No. 1342}.
 
 {marker options}{...}
 {dlgtab: Options }
@@ -82,16 +82,19 @@ cannot be smaller than 1 or larger than 18.{p_end}
 {pstd}Install package{p_end}
 {phang2}. {stata ssc install rpaxioms}{p_end}
 
-{pstd}Load example data{p_end}
-{phang2}. {stata sysuse rpaxioms_example_data.dta, clear}{p_end}
+{pstd}Download example data (from ancillary files){p_end}
+{pstd}Note: the downloaded file is in your current working directory{p_end}
+{phang2}. {stata net get rpaxioms}{p_end}
 
-In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
-These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.
+{pstd}Load example data {p_end}
+{phang2}. {stata use rpaxioms_example_data.dta, clear}{p_end}
 
-In order to use the command, we need to create a matrix for prices
+{pstd}In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
+These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.{p_end}
+
+{pstd}In order to use the command, we need to create a matrix for prices
 (where each column is a good and each row is an observation).
-Likewise, we need to create a matrix for quantities.
-
+Likewise, we need to create a matrix for quantities.{p_end}
 {pstd}Make matrices P and X from variables{p_end}
 {phang2}. {stata mkmat p1-p5, matrix(P)}{p_end}
 {phang2}. {stata mkmat x1-x5, matrix(X)}{p_end}

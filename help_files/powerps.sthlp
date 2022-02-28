@@ -55,7 +55,7 @@ The other two commands are {cmd: checkax} (which tests whether consumer demand d
 {cmd: powerps} is dependent on {cmd: checkax} and {cmd: aei}.
 
 {pstd}
-For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) {browse "https://www.ifn.se/publikationer/working_papers/2020/1342" :"Testing Axioms of Revealed Preference in Stata"}. IFN Working Paper No. 1342}.
+For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) {browse "https://www.ifn.se/media/xf4bpowg/wp1342.pdf" :"Testing Axioms of Revealed Preference in Stata"}. IFN Working Paper No. 1342}.
 
 {marker options}{...}
 {dlgtab: Options }
@@ -113,15 +113,19 @@ Efficiency must be greater than zero and less than or equal to one.{p_end}
 {pstd}Install package{p_end}
 {phang2}. {stata ssc install rpaxioms}{p_end}
 
-{pstd}Load example data{p_end}
-{phang2}. {stata sysuse rpaxioms_example_data.dta, clear}{p_end}
+{pstd}Download example data (from ancillary files){p_end}
+{pstd}Note: the downloaded file is in your current working directory{p_end}
+{phang2}. {stata net get rpaxioms}{p_end}
 
-In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
-These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.
+{pstd}Load example data {p_end}
+{phang2}. {stata use rpaxioms_example_data.dta, clear}{p_end}
 
-In order to use the command, we need to create a matrix for prices
+{pstd}In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
+These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.{p_end}
+
+{pstd}In order to use the command, we need to create a matrix for prices
 (where each column is a good and each row is an observation).
-Likewise, we need to create a matrix for quantities.
+Likewise, we need to create a matrix for quantities.{p_end}
 
 {pstd}Make matrices P and X from variables{p_end}
 {phang2}. {stata mkmat p1-p5, matrix(P)}{p_end}
@@ -136,7 +140,7 @@ Likewise, we need to create a matrix for quantities.
 
 This has an approximate runtime of six seconds.
 
-{pstd}Run command with eGarp and eHARP{p_end}
+{pstd}Run command with eGARP and eHARP{p_end}
 {phang2}. {stata powerps, price(P) quantity(X) ax(eGARP eHARP) aei tol(6)}{p_end}
 
 Note that running this command may take up to five minutes.
@@ -152,8 +156,8 @@ This is mainly due to including the option aei.
 ----------------------------------------------------------
       Axioms |     Power         PS       Pass        AEI 
 -------------+--------------------------------------------
-       eGARP |      .995      -.005          0   .9055851 
-       eHARP |         1          0          0   .8449687 
+       eGARP |      .995      -.005          0   .9055848 
+       eHARP |         1          0          0   .8449683 
 ----------------------------------------------------------
  
 Summary statistics for simulations:
@@ -161,25 +165,25 @@ Summary statistics for simulations:
 -----------------------------------------------
        eGARP |      #vio       %vio        AEI 
 -------------+---------------------------------
-        Mean |    47.339   12.45762    .842074 
-   Std. Dev. |  29.45589   7.751351   .0814885 
+        Mean |    47.339   .1245762    .842074 
+   Std. Dev. |  29.45589   .0775135   .0814885 
          Min |         0          0   .5616641 
-          Q1 |        24       6.32   .7924724 
-      Median |        45      11.84   .8516641 
-          Q3 |      68.5     18.025   .9015746 
-         Max |       143      37.63          1 
+          Q1 |        24      .0632   .7924724 
+      Median |        45      .1184   .8516641 
+          Q3 |      68.5     .18025   .9015746 
+         Max |       143      .3763          1 
 -----------------------------------------------
 
 -----------------------------------------------
        eHARP |      #vio       %vio        AEI 
 -------------+---------------------------------
-        Mean |        20        100   .7268926 
+        Mean |        20          1   .7268926 
    Std. Dev. |         0          0   .0760639 
-         Min |        20        100   .4819741 
-          Q1 |        20        100   .6767941 
-      Median |        20        100   .7307339 
-          Q3 |        20        100   .7845821 
-         Max |        20        100   .8955998 
+         Min |        20          1   .4819741 
+          Q1 |        20          1   .6767941 
+      Median |        20          1   .7307339 
+          Q3 |        20          1   .7845821 
+         Max |        20          1   .8955998 
 -----------------------------------------------
 
 

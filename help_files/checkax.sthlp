@@ -41,7 +41,7 @@ The other two commands are {opt aei} (which calculates measures of goodness-of-f
 calculates the power against uniform random behavior and predictive success for the axioms at any given efficienecy level).
 
 {pstd}
-For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) {browse "https://www.ifn.se/publikationer/working_papers/2020/1342" :"Testing Axioms of Revealed Preference in Stata"}. IFN Working Paper No. 1342}.
+For further details on the commands, please see {bf: Demetry, Hjertstrand and Polisson (2020) {browse "https://www.ifn.se/media/xf4bpowg/wp1342.pdf" :"Testing Axioms of Revealed Preference in Stata"}. IFN Working Paper No. 1342}.
 
 {marker options}{...}
 {dlgtab: Options }
@@ -77,15 +77,19 @@ Efficiency must be greater than zero and less than or equal to one.{p_end}
 {pstd}Install package{p_end}
 {phang2}. {stata ssc install rpaxioms}{p_end}
 
-{pstd}Load example data{p_end}
-{phang2}. {stata sysuse rpaxioms_example_data.dta, clear}{p_end}
+{pstd}Download example data (from ancillary files){p_end}
+{pstd}Note: the downloaded file is in your current working directory{p_end}
+{phang2}. {stata net get rpaxioms}{p_end}
 
-In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
-These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.
+{pstd}Load example data {p_end}
+{phang2}. {stata use rpaxioms_example_data.dta, clear}{p_end}
 
-In order to use the command, we need to create a matrix for prices
+{pstd}In the example dataset provided, we have 20 observations of the prices and quantities of five goods.
+These have variable names p1, ..., p5 for prices, and x1, ..., x5 for quantities.{p_end}
+
+{pstd}In order to use the command, we need to create a matrix for prices
 (where each column is a good and each row is an observation).
-Likewise, we need to create a matrix for quantities.
+Likewise, we need to create a matrix for quantities.{p_end}
 
 {pstd}Make matrices P and X from variables{p_end}
 {phang2}. {stata mkmat p1-p5, matrix(P)}{p_end}
@@ -112,37 +116,37 @@ Running the last line above produces the following results:
 -----------------------------------------------
        Axiom |      Pass       #vio       %vio 
 -------------+---------------------------------
-       eGARP |         0        104      27.37 
-       eHARP |         0         20        100 
+       eGARP |         0        104      .2737 
+       eHARP |         0         20          1 
 -----------------------------------------------
 
 
-Regardless of which (or how many) {opt axiom}(s) are tested, in your results window you will always
-see the number of observations and goods as well as the efficiency level in the top-right corner.
+{pstd}Regardless of which (or how many) {opt axiom}(s) are tested, in your results window you will always
+see the number of observations and goods as well as the efficiency level in the top-right corner.{p_end}
 
-In the table, you will find four columns - {it: Axiom}, Pass, #vio and %vio.
+{pstd}In the table, you will find four columns - {it: Axiom}, Pass, #vio and %vio.
 The column {it: Axiom} specifies which axioms are being tested. 
 The column {it: Pass} specifies whether the data satisfy respective axiom.
 The column {it: #vio} specifies the number of violations of respective axiom.
-The column {it: %vio} specifies the share of violations (as a share of the total possible number of violations).
+The column {it: %vio} specifies the share of violations (as a share of the total possible number of violations).{p_end}
 
-In this example, we allow a ‘margin of error’ of 5%, meaning that we will only count bundles whose
-cost is less than 95% of an observed choice as being revealed worse than that choice.
+{pstd}In this example, we allow a ‘margin of error’ of 5%, meaning that we will only count bundles whose
+cost is less than 95% of an observed choice as being revealed worse than that choice.{p_end}
 
-When checking if GARP is satisfied at this efficiency level, we find that 27.37% of all comparisons
+{pstd}When checking if GARP is satisfied at this efficiency level, we find that 27.37% of all comparisons
 indicate a violation of GARP. Hence, taking this number as fairly large, we may conclude that these
 data cannot be rationalized by a continuous, strictly increasing and concave utility function.
 Testing the data for HARP, which in addition to continuity, monotonicity and concavity also ensures
 that the rationalizing utility function is homothetic, we find that all comparisons (100%) indicate
 a violation of HARP. Thus, using the fraction of violations as a measure of the degree of
 violations, these results show compelling evidence against that the data can be rationalized by a
-well-behaved and homothetic utility function.
+well-behaved and homothetic utility function.{p_end}
 
 {title:Examples: Looping over efficiency levels and storing output}
 
-Let's say you want to plot the fraction of violations of eGARP over different efficiency levels - specifically,
+{pstd}Let's say you want to plot the fraction of violations of eGARP over different efficiency levels - specifically,
 between efficiency(0.9) and efficiency(1) at increments of 0.001. Using the same data as in the first example,
-we could do the following:
+we could do the following:{p_end}
 
 	{hline}
 {phang2}{cmd:. matrix results = J(101, 2, .)}{p_end}
