@@ -17,10 +17,10 @@ This repo contains the code, data and output for the Stata module <b>rpaxioms</b
 ```
 
 ### Prepare example data
-> **_NOTE:_**  ```net get rpaxioms``` downloads the ancillary file __rpaxioms_example_data.dta__ to the user's current working directory. The ancillary file will be uploaded with the coming update to the package on SSC. For now, you can manually access the example dataset in the [help_files folder](https://github.com/MarcosDemetry/rpaxioms_repo/tree/RR/help_files).
+> **_NOTE:_**  ```net get rpaxioms``` downloads the ancillary file __rpaxioms_example_data.dta__ to the user's current working directory.
 ```
 * Set current working directory where you would like example data to be saved
-cwd "/PATH/TO/SOME/FOLDER"
+cd "/PATH/TO/SOME/FOLDER"
 
 * Download example data that comes with the package
 net get rpaxioms
@@ -316,11 +316,11 @@ help aei
 help powerps
 ```
 
-## Version 2.0 updates coming soon!
+## Version 2.0 updates available on SSC!
 - AEI defualt tolerance level set to <code>tolerance(6)</code>, i.e. tolerance of 10^-6
 - AEI runs faster for tolerance levels up to <code>tolerance(15)</code>
 - Help-files include examples and interpretation of results
-- Example data included in package and accessed via <code>sysuse rpaxioms_example_data.dta</code>
+- Example data included in package and accessed via <code>net get rpaxioms</code>
 - Miscellaneous aesthetic changes (e.g. report result of fraction of violations now in decimal)
 
 ## To reproduce results in the paper
