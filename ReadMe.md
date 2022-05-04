@@ -1,5 +1,4 @@
-# Stata Module 'rpaxioms' Repository
-
+# <p align="center">Stata Module 'rpaxioms' Repository</p>
 
 This repo contains the code, data and output for the Stata module <b>rpaxioms</b>. The module contains three user-written commands: <b>checkax</b>, <b>aei</b> and <b>powerps</b>.
 
@@ -9,16 +8,26 @@ This repo contains the code, data and output for the Stata module <b>rpaxioms</b
 - <b>powerps</b> calculates the power against uniform random behaviour and predictive success for the axioms at any given efficiency level.
 - Available on SSC: <code>ssc install rpaxioms</code>
 
-## Using package
+## Syntax
+```s
+checkax, price(matrix) quantity(matrix) [axiom(string) efficiency(real 1)]
+
+aei, price(matrix) quantity(matrix) [axiom(string) tolerance(real 6)]
+
+powerps, price(matrix) quantity(matrix) [axiom(string) seed(real 12345) simulations(real 1000) aei tolerance(real 6)]
+
+```
+
+# <p align="center">Tutorial</p>
 
 ### Install from SSC
-```stata
+```s
  ssc install rpaxioms
 ```
 
 ### Prepare example data
 > **_NOTE:_**  ```net get rpaxioms``` downloads the ancillary file __rpaxioms_example_data.dta__ to the user's current working directory.
-```
+```s
 * Set current working directory where you would like example data to be saved
 cd "/PATH/TO/SOME/FOLDER"
 
@@ -110,7 +119,7 @@ observatio~r |         20        10.5     5.91608          1         20
 </details>
 
 ### Running checkax
-```
+```s
  * Checkax with default settings, i.e. axiom(eGARP) and efficiency(1)
  checkax, price(P) quantity(X)
  
@@ -154,7 +163,7 @@ observatio~r |         20        10.5     5.91608          1         20
 
 
 ### Running aei
-```
+```s
  * aei with defualt settings, i.e. axiom(eGARP) and tolerance(6)
  aei, price(P) quantity(X)
  
@@ -197,7 +206,7 @@ observatio~r |         20        10.5     5.91608          1         20
 </details>
 
  ### Running powerps
- ```
+ ```s
  * powerps with default settings, i.e. axiom(eGARP) seed(12345) simulations(1000)
  powerps, price(P) quantity(X)
  
