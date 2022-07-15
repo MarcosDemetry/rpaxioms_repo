@@ -343,15 +343,21 @@ To reproduce the results:
 ## Suggestions or bugs?
 We appreciate all suggestions! Raise an issue describing the problem or request a certain feature to be added or modified.
 
-# IFN Working Paper
-You can read more about the theoretical background and technical descriptions of the commands in Demetry, Hjertstrand and Polisson (2020) "[Testing Axioms of Revealed Preference in Stata.](https://www.ifn.se/media/xf4bpowg/wp1342.pdf)" _IFN Working Paper No. 1342_.
+# <p align="center">Stata Journal article</p>
+You can read more about the theoretical background and technical descriptions of the commands in Demetry, Hjertstrand and Polisson (2022) "[Testing Axioms of Revealed Preference in Stata.](https://journals.sagepub.com/doi/abs/10.1177/1536867X221106374?journalCode=stja)"
+
+A free Working Paper version is available [here.](https://www.ifn.se/media/xf4bpowg/wp1342.pdf)
 
 ## Cite
+- To cite the Stata Journal article:
+
+Demetry, Marcos, Per Hjertstrand and Matthew Polisson (2022), Testing axioms of revealed preference in Stata. The Stata Journal, 22(2), pp.319-343.
+
 - To cite the WP:
 
 Demetry, Marcos, Per Hjertstrand and Matthew Polisson (2020), "Testing Axioms of Revealed Preference in Stata". IFN Working Paper No. 1342. Stockholm: Research Institute of Industrial Economics (IFN).
 
 - To cite the code:
 
-Marcos Demetry & Per Hjertstrand & Matthew Polisson, 2020. "RPAXIOMS: Stata module to test and evaluate axioms of revealed preferences," Statistical Software Components S458800, Boston College Department of Economics, revised 26 Nov 2020.
+Demetry, Marcos, Per Hjertstrand and Matthew Polisson (2020) "RPAXIOMS: Stata module to test and evaluate axioms of revealed preferences," Statistical Software Components S458800, Boston College Department of Economics, revised 10 Jun 2022.
 
